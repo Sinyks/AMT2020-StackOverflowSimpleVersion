@@ -1,5 +1,7 @@
 package ch.heigvd.amt.project.infrastructure.filter;
 
+import ch.heigvd.amt.project.application.*;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
