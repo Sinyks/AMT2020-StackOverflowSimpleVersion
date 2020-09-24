@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 @WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register")
@@ -23,11 +24,25 @@ public class RegisterCommandServlet extends HttpServlet {
         RegisterCommand command = RegisterCommand.builder() // creer ces trucs
                 .userName(req.getParameter("userName"))
                 .password(req.getParameter("password"))
+                .passwordConfirmation(req.getParameter("passwordConfirmation"))
                 .build();
 
-        WebZoneUser loggedInUser = null;
+        // WebZoneUser loggedInUser = null;
 
-        // stocker user dans la liste des user, puis le set comme loggedUser puis rediriger vers la cible
+        try{
+            FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
+            req.getSession().setAttribute("currentUser",req.getParameter("username"));
+            String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
+            //targetUrl = (targetUrl != null) ? targetUrl : "/jeej" // redirection vers home si user a pas de cible (définir home)
+            resp.sendRedirect(targetUrl);
+            return;
+
+        } catch (IllegalArgumentException e){
+            req.setAttribute("errors", List.of("Already registered"));
+            req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
+        }
+
+
     }
 
 }

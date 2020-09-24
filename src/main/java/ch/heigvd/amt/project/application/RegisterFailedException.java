@@ -1,4 +1,4 @@
 package ch.heigvd.amt.project.application;
 
-public class RegisterFailedException {
+public class RegisterFailedException extends Throwable {
 }

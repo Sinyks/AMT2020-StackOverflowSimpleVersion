@@ -7,5 +7,5 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 public class RegisterCommand {
     private String username;
     private String password;
-    private String confirmePassword;
+    private String confirmPassword;
 }
