@@ -17,7 +17,8 @@ public class FakeDataBase {
 
     static private boolean isCorrectPassword(String username, String password){
         if(isInDataBase(username)) {
-            return fakeDatabase.get(username).toString() == password.toString();
+            String tmp = fakeDatabase.get(username);
+            return fakeDatabase.get(username).equals(password);
         }
         return false;
     }

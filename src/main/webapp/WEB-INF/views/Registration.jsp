@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<form action="/action_page.php">
+<form action="/stackoverflow-simplified/register" method="post">
     <label for="username">username:</label><br>
     <input type="text" id="username" name="username" value="username"><br>
     <label for="password">password:</label><br>
