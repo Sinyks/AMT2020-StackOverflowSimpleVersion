@@ -9,3 +9,5 @@ The aim of this project is to create a simplified version of the famous StackOve
 ## Deployment
 
 A script using Docker launches the application in your browser.
+
+Exectue sh ./deploy.sh into the docker folder
