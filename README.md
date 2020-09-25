@@ -10,4 +10,4 @@ The aim of this project is to create a simplified version of the famous StackOve
 
 A script using Docker launches the application in your browser.
 
-Exectue sh ./deploy.sh into the docker folder
+Build the stackoverflow-simplified.war into the target folder and exectue the sh scripts deploy.sh into the docker folder
