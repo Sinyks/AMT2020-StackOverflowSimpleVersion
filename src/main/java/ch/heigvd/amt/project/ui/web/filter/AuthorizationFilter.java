@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.ui.filter;
+package ch.heigvd.amt.project.ui.web.filter;
 
 
 import javax.servlet.*;
@@ -41,9 +41,11 @@ public class AuthorizationFilter implements Filter {
 
 
     boolean isPublicResource(String uri){
-        if(uri == "/login") {
+        if(uri.equals("/login")) {
             return true;
-        } else if (uri == "/register"){
+        } else if (uri.equals("/register")){
+            return true;
+        } else if (uri.equals("/")){
             return true;
         }
         return false;

@@ -4,11 +4,11 @@
 <%@include file="fragments/header.jsp"%>
 <body>
 
-<form action="/stackoverflow-simplified/login" method="post">
+<form action="/login" method="post">
     <label for="username">username:</label><br>
     <input type="text" id="username" name="username" value="username"><br>
     <label for="password">password:</label><br>
-    <input type="text" id="password" name="password" value="password"><br><br>
+    <input type="password" id="password" name="password" value="password"><br><br>
     <input type="submit" value="Submit">
 </form>
 

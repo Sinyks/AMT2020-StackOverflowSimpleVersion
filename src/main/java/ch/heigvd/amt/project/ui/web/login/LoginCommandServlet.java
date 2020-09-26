@@ -14,12 +14,8 @@ import java.io.IOException;
 @WebServlet(name = "LoginCommandServlet", urlPatterns = "/login")
 public class LoginCommandServlet extends HttpServlet {
 
-    /*
-    @Inject
-    ServiceRegistry serviceRegistry;
-    */
 
-    @Override
+     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
     }
@@ -40,7 +36,7 @@ public class LoginCommandServlet extends HttpServlet {
             FakeDataBase.isAuth(req.getParameter("username"),req.getParameter("password")); // verif si user existe
             req.getSession().setAttribute("currentUser",req.getParameter("username")); // ajouter user comme user connecté
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/stackoverflow-simplified"; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible (définir home)
             resp.sendRedirect(targetUrl);
             return;
             /*

@@ -36,12 +36,11 @@ public class RegisterCommandServlet extends HttpServlet {
          */
         // WebZoneUser loggedInUser = null;
 
-         System.out.println("wer in");
         try{
             FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
             req.getSession().setAttribute("currentUser",req.getParameter("username"));
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/stackoverflow-simplified"; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : ""; // redirection vers home si user a pas de cible (définir home)
             resp.sendRedirect(targetUrl);
             return;
 
