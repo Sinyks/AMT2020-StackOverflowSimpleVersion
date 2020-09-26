@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
         import javax.servlet.http.HttpServletResponse;
         import java.io.IOException;
 
-@WebServlet(urlPatterns = "/private", name = "PrivatePage")
+@WebServlet(urlPatterns = "/app/private", name = "PrivatePage")
 public class PrivatePageServlet extends HttpServlet {
 
     @Override

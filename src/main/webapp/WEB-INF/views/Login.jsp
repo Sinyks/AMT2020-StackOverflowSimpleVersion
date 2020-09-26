@@ -4,7 +4,7 @@
 <%@include file="fragments/header.jsp"%>
 <body>
 
-<form action="/login" method="post">
+<form action="/app/login" method="post">
     <label for="username">username:</label><br>
     <input type="text" id="username" name="username" value="username"><br>
     <label for="password">password:</label><br>

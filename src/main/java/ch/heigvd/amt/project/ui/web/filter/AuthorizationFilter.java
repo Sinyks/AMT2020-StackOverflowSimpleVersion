@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/app/*")
 public class AuthorizationFilter implements Filter {
 
 
@@ -31,7 +31,7 @@ public class AuthorizationFilter implements Filter {
 
             req.getSession().setAttribute("targetUrl",targetUrl); // la mémoire de ou il voulait aller
 
-            ((HttpServletResponse) servletResponse).sendRedirect("/login"); // il doit se log
+            ((HttpServletResponse) servletResponse).sendRedirect("/app/login"); // il doit se log
             return;
         }
 
@@ -41,11 +41,11 @@ public class AuthorizationFilter implements Filter {
 
 
     boolean isPublicResource(String uri){
-        if(uri.equals("/login")) {
+        if(uri.equals("/app/login")) {
             return true;
-        } else if (uri.equals("/register")){
+        } else if (uri.equals("/app/register")){
             return true;
-        } else if (uri.equals("/")){
+        } else if (uri.equals("/app")){
             return true;
         }
         return false;
