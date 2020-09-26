@@ -9,8 +9,10 @@ exports.config = {
   output: './output',
   helpers: {
     WebDriver: {
-      url: 'http://localhost:8080',
-      browser: 'firefox'
+        // base url
+        url: 'http://192.168.2.1:9080',
+        browser: 'firefox',
+        //smartWait: 5000
     }
   },
   include: {
@@ -25,10 +27,10 @@ exports.config = {
       services: ['selenium-standalone']
     },
     retryFailedStep: {
-      enabled: true
+      enabled: false
     },
     screenshotOnFail: {
-      enabled: true
+      enabled: false
     }
   }
 }
