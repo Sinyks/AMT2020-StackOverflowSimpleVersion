@@ -10,11 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@wdio/selenium-standalone-service": "^6.4.7",
     "codeceptjs": "^2.6.10",
-    "selenium-standalone": "^6.20.0"
-  },
-  "dependencies": {
-    "webdriverio": "^6.5.2"
+    "puppeteer": "^5.3.1"
   }
 }
