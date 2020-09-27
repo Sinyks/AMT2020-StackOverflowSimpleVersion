@@ -43,3 +43,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build with Maven
         run: mvn clean package
+
+      - name: Build Docker image (includes mvn clean package)
+        run: |
+        echo ${{secrets.DEV_ZARETTI_PAT}}
+        echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
+        docker build -t Sinyks/AMT2020-StackOverflowSimpleVersion .
+        ./build-image.sh 
+        docker tag Sinyks/AMT2020-StackOverflowSimpleVersion ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
+        docker push ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
