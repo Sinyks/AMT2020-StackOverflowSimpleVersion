@@ -36,9 +36,9 @@ jobs:
           resotre-keys:
            ${{runner.os}}-maven-
          
-      # Runs a set of commands using the runners shell
-      #- name: Build with Maven
-      #  run: mvn clean package
+       #Runs a set of commands using the runners shell
+      - name: Build with Maven
+        run: mvn clean package
 
       #- name: Build Docker image (includes mvn clean package)
       #  run:
