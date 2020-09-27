@@ -28,7 +28,6 @@ HomePageServlet
 LoginCommandServlet
 LogoutCommandServlet
 RegisterServlet
-
 PersonDTO
 ```
 
