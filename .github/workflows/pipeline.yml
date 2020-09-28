@@ -45,6 +45,8 @@ jobs:
              echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
              docker build -t dev-zaretti/stackoverflowsimpleversion/payara ./docker/images/payara
              docker build -t dev-zaretti/stackoverflowsimpleversion/wildfly ./docker/images/wildfly
-      #    ./build-image.sh 
-      #    docker tag Sinyks/AMT2020-StackOverflowSimpleVersion ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
-      #    docker push ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
+             docker tag dev-zaretti/stackoverflowsimpleversion/payara ghcr.io/Sinyks/stackoverflowsimpleversion/payara
+             docker tag dev-zaretti/stackoverflowsimpleversion/wildfly ghcr.io/Sinyks/stackoverflowsimpleversion/wildfly 
+             docker push ghcr.io/sinyks/stackoverflowsimpleversion/payara
+             docker push ghcr.io/sinyks/stackoverflowsimpleversion/wildfly 
+             
