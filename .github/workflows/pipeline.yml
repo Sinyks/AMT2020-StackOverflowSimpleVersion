@@ -42,7 +42,8 @@ jobs:
 
       - name: Build Docker image (includes mvn clean package)
         run: echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
-      #    docker build -t Sinyks/AMT2020-StackOverflowSimpleVersion .
+             echo $GITHUB_ACTOR
+             #docker build -t dev-zaretti/StackOverflowSimpleVersion .
       #    ./build-image.sh 
       #    docker tag Sinyks/AMT2020-StackOverflowSimpleVersion ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
       #    docker push ghcr.io/Sinyks/AMT2020-StackOverflowSimpleVersion
