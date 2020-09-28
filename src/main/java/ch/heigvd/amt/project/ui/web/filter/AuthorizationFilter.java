@@ -1,5 +1,6 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
+import ch.heigvd.amt.project.infrastructure.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -7,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/app/*")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = ConstantStrings.CURRENT_PATH+"/*")
 public class AuthorizationFilter implements Filter {
 
 
@@ -31,7 +32,7 @@ public class AuthorizationFilter implements Filter {
 
             req.getSession().setAttribute("targetUrl",targetUrl); // la mémoire de ou il voulait aller
 
-            ((HttpServletResponse) servletResponse).sendRedirect("/app/login"); // il doit se log
+            ((HttpServletResponse) servletResponse).sendRedirect(ConstantStrings.CURRENT_PATH+"/login"); // il doit se log
             return;
         }
 
@@ -41,11 +42,11 @@ public class AuthorizationFilter implements Filter {
 
 
     boolean isPublicResource(String uri){
-        if(uri.equals("/app/login")) {
+        if(uri.equals(ConstantStrings.CURRENT_PATH+"/login")) {
             return true;
-        } else if (uri.equals("/app/register")){
+        } else if (uri.equals(ConstantStrings.CURRENT_PATH+"/register")){
             return true;
-        } else if (uri.equals("/app")){
+        } else if (uri.equals(ConstantStrings.CURRENT_PATH.equals("")?ConstantStrings.CURRENT_PATH+"/":ConstantStrings.CURRENT_PATH)){
             return true;
         }
         return false;

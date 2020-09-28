@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "LoginCommandServlet", urlPatterns = "/app/login")
+@WebServlet(name = "LoginCommandServlet", urlPatterns = ConstantStrings.CURRENT_PATH+"/login")
 public class LoginCommandServlet extends HttpServlet {
 
 
@@ -36,7 +36,7 @@ public class LoginCommandServlet extends HttpServlet {
             FakeDataBase.isAuth(req.getParameter("username"),req.getParameter("password")); // verif si user existe
             req.getSession().setAttribute("currentUser",req.getParameter("username")); // ajouter user comme user connecté
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/app"; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : ConstantStrings.CURRENT_PATH; // redirection vers home si user a pas de cible (définir home)
             resp.sendRedirect(targetUrl);
             return;
             /*
