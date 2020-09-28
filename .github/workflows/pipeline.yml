@@ -41,14 +41,21 @@ jobs:
         run: |
              mvn clean package
              cp ./target/stackoverflow-simplified.war ./docker/images/payara/apps
+             cp ./target/stackoverflow-simplified.war ./docker/images/wildfly/apps
+             cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
+             cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
+             
 
       - name: Build Docker image (includes mvn clean package)
         run: |
              echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
              docker build -t dev-zaretti/stackoverflowsimpleversion/payara ./docker/images/payara
              docker build -t dev-zaretti/stackoverflowsimpleversion/wildfly ./docker/images/wildfly
+             docker build -t dev-zaretti/stackoverflowsimpleversion/openliberty ./docker/images/openliberty
              docker tag dev-zaretti/stackoverflowsimpleversion/payara ghcr.io/dev-zaretti/stackoverflowsimpleversion/payara
-             docker tag dev-zaretti/stackoverflowsimpleversion/wildfly ghcr.io/dev-zaretti/stackoverflowsimpleversion/wildfly  
+             docker tag dev-zaretti/stackoverflowsimpleversion/wildfly ghcr.io/dev-zaretti/stackoverflowsimpleversion/wildfly
+             docker tag dev-zaretti/stackoverflowsimpleversion/openliberty ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
              docker push ghcr.io/dev-zaretti/stackoverflowsimpleversion/payara
              docker push ghcr.io/dev-zaretti/stackoverflowsimpleversion/wildfly 
+             docker push ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
              
