@@ -41,6 +41,7 @@ jobs:
         run: |
              mvn clean package
              cp ./target/stackoverflow-simplified.war ./docker/images/payara/apps
+             cp ./target/stackoverflow-simplified.war ./docker/images/wildfly/apps
 
       - name: Build Docker image (includes mvn clean package)
         run: |
