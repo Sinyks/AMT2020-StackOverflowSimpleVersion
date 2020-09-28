@@ -38,7 +38,9 @@ jobs:
          
       # Runs a set of commands using the runners shell
       - name: Build with Maven
-        run: mvn clean package
+        run: |
+             mvn clean package
+             cp ./target/stackoverflow-simplified.war ./docker/images/payara/apps
 
       - name: Build Docker image (includes mvn clean package)
         run: |
