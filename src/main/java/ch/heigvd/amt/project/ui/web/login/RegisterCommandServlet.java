@@ -1,24 +1,23 @@
-package ch.heigvd.amt.project.infrastructure.login;
+package ch.heigvd.amt.project.ui.web.login;
 
 
-import ch.heigvd.amt.project.application.*;
+import ch.heigvd.amt.project.infrastructure.*;
 
-import javax.imageio.spi.ServiceRegistry;
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 
-@WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register")
+@WebServlet(name = "RegisterCommandServlet", urlPatterns = ConstantStrings.CURRENT_PATH+"/register")
 public class RegisterCommandServlet extends HttpServlet {
 
+    /*
     @Inject
     ServiceRegistry serviceRegistry;
+     */
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,12 +36,11 @@ public class RegisterCommandServlet extends HttpServlet {
          */
         // WebZoneUser loggedInUser = null;
 
-         System.out.println("wer in");
         try{
             FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
             req.getSession().setAttribute("currentUser",req.getParameter("username"));
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/stackoverflow-simplified"; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : ConstantStrings.CURRENT_PATH; // redirection vers home si user a pas de cible (définir home)
             resp.sendRedirect(targetUrl);
             return;
 

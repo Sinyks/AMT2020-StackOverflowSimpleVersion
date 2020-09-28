@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.application;
+package ch.heigvd.amt.project.infrastructure;
 
 import javax.imageio.spi.ServiceRegistry;
 import javax.print.DocFlavor;

@@ -1,5 +1,7 @@
 package ch.heigvd.amt.project.ui.web;
 
+import ch.heigvd.amt.project.infrastructure.ConstantStrings;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "", name = "HomePage")
-public class HomePage extends HttpServlet {
+@WebServlet(urlPatterns = ConstantStrings.CURRENT_PATH, name = "HomePage")
+public class HomePageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
