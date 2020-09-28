@@ -42,6 +42,7 @@ jobs:
 
       - name: Build Docker image (includes mvn clean package)
         run: |
+             sh ./docker/copy.sh
              echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
              docker build -t dev-zaretti/stackoverflowsimpleversion/payara ./docker/images/payara
              docker build -t dev-zaretti/stackoverflowsimpleversion/wildfly ./docker/images/wildfly
