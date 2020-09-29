@@ -8,9 +8,10 @@ exports.config = {
   tests: './*_test.js',
   output: './output',
   helpers: {
-    WebDriver: {
-      url: 'http://localhost:8080',
-      browser: 'firefox'
+    Puppeteer: {
+      url: 'http://192.168.2.1:9080',
+      show: true,
+      windowSize: '1200x900'
     }
   },
   include: {
@@ -20,10 +21,6 @@ exports.config = {
   mocha: {},
   name: 'e2e',
   plugins: {
-    wdio: {
-      enabled: true,
-      services: ['selenium-standalone']
-    },
     retryFailedStep: {
       enabled: true
     },

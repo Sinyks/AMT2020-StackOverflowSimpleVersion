@@ -1,6 +1,7 @@
 Feature('Homepage');
 
-Scenario('test something', (I) => {
-  I.amOnPage('http://localhost:8080/stackoverflow-simplified/');
+Scenario('Visit the Homepage', (I) => {
+  I.amOnPage('/');
   I.see('Welcome');
+  // pause();
 });
