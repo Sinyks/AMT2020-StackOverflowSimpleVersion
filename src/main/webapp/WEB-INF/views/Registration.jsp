@@ -4,6 +4,8 @@
 <%@include file="fragments/header.jsp"%>
 <body>
 
+<h1>eeeeeeeeeeeee</h1>
+
 <form action="/app/register" method="post">
     <label for="username">username:</label><br>
     <input type="text" id="username" name="username" value="username"><br>

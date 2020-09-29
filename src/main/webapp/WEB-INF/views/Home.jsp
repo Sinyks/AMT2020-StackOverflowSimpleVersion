@@ -5,7 +5,7 @@
 
 <body>
 <div class="jumbotron text-center">
-    <h1>Welcome!</h1>
+    <h1>Welcomeeeeeeeeeee!</h1>
     <p>Our application doesn't have any users yet!</p>
     <p>0 questions have been asked!</p>
     <p>0 answers have been given!</p>
