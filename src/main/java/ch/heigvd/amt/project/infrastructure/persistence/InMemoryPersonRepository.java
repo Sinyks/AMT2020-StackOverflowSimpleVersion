@@ -1,11 +1,9 @@
-package ch.heigvd.amt.project.infrastructure;
+package ch.heigvd.amt.project.infrastructure.persistence;
 
-import javax.imageio.spi.ServiceRegistry;
-import javax.print.DocFlavor;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FakeDataBase {
+public class InMemoryPersonRepository {
+    /*
     private static HashMap<String,String> fakeDatabase = new HashMap<>();
 
     static public void isAuth(String username, String password){
@@ -31,5 +29,5 @@ public class FakeDataBase {
             throw new IllegalArgumentException("already in database");
         }
         fakeDatabase.put(username,password);
-    }
+    }*/
 }

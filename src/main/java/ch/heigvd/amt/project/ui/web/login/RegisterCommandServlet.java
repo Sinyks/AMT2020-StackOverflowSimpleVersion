@@ -1,7 +1,7 @@
 package ch.heigvd.amt.project.ui.web.login;
 
 
-import ch.heigvd.amt.project.infrastructure.*;
+import ch.heigvd.amt.project.infrastructure.persistence.FakeDataBase;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
