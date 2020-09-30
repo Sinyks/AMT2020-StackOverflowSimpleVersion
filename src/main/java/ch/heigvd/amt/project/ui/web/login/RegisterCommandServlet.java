@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "RegisterCommandServlet", urlPatterns = ConstantStrings.CURRENT_PATH+"/register")
+@WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register")
 public class RegisterCommandServlet extends HttpServlet {
 
     /*
@@ -40,7 +40,7 @@ public class RegisterCommandServlet extends HttpServlet {
             FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
             req.getSession().setAttribute("currentUser",req.getParameter("username"));
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : ConstantStrings.CURRENT_PATH; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : ""; // redirection vers home si user a pas de cible (définir home)
             resp.sendRedirect(targetUrl);
             return;
 

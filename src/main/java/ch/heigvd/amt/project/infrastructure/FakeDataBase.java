@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class FakeDataBase {
     private static HashMap<String,String> fakeDatabase = new HashMap<>();
 
-
     static public void isAuth(String username, String password){
         if(!isCorrectPassword(username,password)){
             throw new IllegalArgumentException("incorrect password");
