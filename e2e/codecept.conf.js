@@ -9,13 +9,14 @@ exports.config = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://192.168.2.1:9080',
+      url: 'http://localhost:9080',
       show: true,
       windowSize: '1200x900'
     }
   },
   include: {
-    I: './steps_file.js'
+    I: './actors/steps_file.js',
+    Wordlist: './actors/wordlist.js'
   },
   bootstrap: null,
   mocha: {},
