@@ -3,6 +3,7 @@ package ch.heigvd.amt.project.ui.web.login;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 
@@ -20,10 +21,7 @@ public class RegisterCommandServlet extends HttpServlet {
 
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
     private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
-    /*
-    @Inject
-    ServiceRegistry serviceRegistry;
-     */
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,25 +31,27 @@ public class RegisterCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
 
-        // req.getSession().removeAttribute("errors");
+        req.getSession().removeAttribute("errors"); // why does the professor do this?
 
         RegisterCommand registerCommand = RegisterCommand.builder() // creer ces trucs
-                .username(req.getParameter("userName"))
+                .username(req.getParameter("username"))
                 .clearTextPassword(req.getParameter("password"))
-                // passwordconfirm ?
+                .clearTextPasswordConfirm(req.getParameter("confirmPassword"))
                 .build();
 
-
-        // WebZoneUser loggedInUser = null;
+        CurrentUserDTO currentUser = null;
 
         try{
-            authenticationManagementFacade.register(registerCommand);
-            req.getRequestDispatcher("/login").forward(req,resp); // login post
+            currentUser = authenticationManagementFacade.register(registerCommand);
+            req.getSession().setAttribute("currentUser",currentUser);
+            String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
+            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible
+            resp.sendRedirect(targetUrl);
             return;
 
         } catch (RegisterFailedException e){
-            req.getSession().setAttribute("error", List.of(e.getMessage()));
-            resp.sendRedirect("login"); // login get
+            req.getSession().setAttribute("errors", List.of(e.getMessage()));
+            resp.sendRedirect("/register"); // login get
             return;
         }
 

@@ -1,7 +1,6 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
-import ch.heigvd.amt.project.infrastructure.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -19,11 +18,10 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         if(isPublicResource(req.getRequestURI())){ // on peut imméditement y acceder
-            filterChain.doFilter(servletRequest,servletResponse); // definir chain quelquepart
+            filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
 
-        //String loggedUser = (String) req.getSession().getAttribute("currentUser"); // definir le user quelque part
         CurrentUserDTO currentUser = (CurrentUserDTO)req.getSession().getAttribute("currentUser");
 
 

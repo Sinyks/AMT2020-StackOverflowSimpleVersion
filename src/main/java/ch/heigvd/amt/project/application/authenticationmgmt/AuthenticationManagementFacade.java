@@ -13,7 +13,7 @@ public class AuthenticationManagementFacade {
         this.personRepository=personRepository;
     }
 
-    public void register (RegisterCommand command) throws RegisterFailedException{
+    public CurrentUserDTO register (RegisterCommand command) throws RegisterFailedException{
         Person homonyme = personRepository.findByUsername(command.getUsername()).orElse(null);
 
         if(homonyme != null){
@@ -30,6 +30,9 @@ public class AuthenticationManagementFacade {
                     .clearTextPassword(command.getClearTextPassword())
                     .build();
             personRepository.save(newPerson);
+
+            return createCurrentUserDTO(newPerson.getUsername());
+
         } catch (Exception e){
             throw new RegisterFailedException(e.getMessage());
         }
@@ -37,8 +40,11 @@ public class AuthenticationManagementFacade {
     }
 
     public CurrentUserDTO login(LoginCommand command) throws LoginFailedException{
-        Person person = personRepository.findByUsername(command.getUsername())
-                .orElseThrow() -> new LoginFailedException("User not found");
+        Person person = personRepository.findByUsername(command.getUsername()).orElse(null);
+        if(person == null){
+            throw new LoginFailedException("User not found");
+        }
+                
 
     boolean success = person.login(command.getClearTextPassword());
 
@@ -46,10 +52,14 @@ public class AuthenticationManagementFacade {
         throw new LoginFailedException("Credentials verification failed");
     }
 
-    CurrentUserDTO currentUser = CurrentUserDTO.builder()
-            .username(person.getUsername())
-            .build();
+    return createCurrentUserDTO(person.getUsername());
+    }
 
-    return currentUser;
+    private CurrentUserDTO createCurrentUserDTO(String username){
+        CurrentUserDTO currentUser = CurrentUserDTO.builder()
+                .username(username)
+                .build();
+
+        return currentUser;
     }
 }

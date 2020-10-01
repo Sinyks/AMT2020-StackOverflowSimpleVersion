@@ -10,7 +10,7 @@
     <label for="password">password:</label><br>
     <input type="password" id="password" name="password" value="password"><br><br>
     <label for="confirmPassword">confirmPassword:</label><br>
-    <input type="password" id="confirmPassword" name="confirm password" value="confirm password"><br><br>
+    <input type="password" id="confirmPassword" name="confirmPassword" value="confirm password"><br><br>
     <input type="submit" value="Submit">
 </form>
 

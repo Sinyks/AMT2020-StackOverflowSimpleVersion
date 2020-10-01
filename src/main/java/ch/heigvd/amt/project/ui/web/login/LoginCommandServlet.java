@@ -30,7 +30,7 @@ public class LoginCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
 
-        LoginCommand loginCommand = LoginCommand.builder() // lié a lambok
+        LoginCommand loginCommand = LoginCommand.builder()
             .username(req.getParameter("userName"))
             .clearTextPassword(req.getParameter("password"))
             .build();
@@ -40,14 +40,14 @@ public class LoginCommandServlet extends HttpServlet {
             currentUser = authenticationManagementFacade.login(loginCommand);
             req.getSession().setAttribute("currentUser",currentUser);
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible
             resp.sendRedirect(targetUrl);
             return;
 
         } catch (LoginFailedException e){
-            //req.getSession().setAttribute("errors", List.of(e.getMessage()));
+            req.getSession().setAttribute("errors", List.of(e.getMessage()));
             resp.sendRedirect("/login"); // login get
-        } // si mauvaise co
+        }
 
     }
 
