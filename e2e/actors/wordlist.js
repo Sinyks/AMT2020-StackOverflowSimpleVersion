@@ -4,7 +4,7 @@ module.exports = function() {
         formField: {
             password : 'password',
             username: 'username',
-            passwordConfirmation: 'confirmPassword',
+            passwordConfirmation: 'Confirm Password',
             SubmitButton: 'Submit'
         },
         pageUrl: {
