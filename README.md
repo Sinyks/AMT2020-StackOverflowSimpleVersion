@@ -1,13 +1,11 @@
 # AMT2020-StackOverflowSimpleVersion
 
-Authors :  Alban Favre, Sacha Perdrizat, Maximilian Vogel, Guillaume Zaretti
-
 | Nom               | email                        |
 | ----------------- | ---------------------------- |
 | Alban Favre       | alban.favre@heig-vd.ch       |
 | Guillaume Zaretti | guillaume.zaretti@heig-vd.ch |
 | Sacha Perdrizat   | sacha.perdrizat@heig-vd.ch   |
-| Maximillian Vogel | maximillian.vogel@heig-vdch  |
+| Maximillian Vogel | maximillian.vogel@heig-vd.ch  |
 
 
 
