@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = ConstantStrings.CURRENT_PATH+"/*")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/*")
 public class AuthorizationFilter implements Filter {
 
 
@@ -32,7 +32,7 @@ public class AuthorizationFilter implements Filter {
 
             req.getSession().setAttribute("targetUrl",targetUrl); // la mémoire de ou il voulait aller
 
-            ((HttpServletResponse) servletResponse).sendRedirect(ConstantStrings.CURRENT_PATH+"/login"); // il doit se log
+            ((HttpServletResponse) servletResponse).sendRedirect("/login"); // il doit se log
             return;
         }
 
@@ -42,12 +42,16 @@ public class AuthorizationFilter implements Filter {
 
 
     boolean isPublicResource(String uri){
-        if(uri.equals(ConstantStrings.CURRENT_PATH+"/login")) {
+        if(uri.equals("/login")) {
             return true;
-        } else if (uri.equals(ConstantStrings.CURRENT_PATH+"/register")){
+        } else if (uri.equals("/register")){
             return true;
-        } else if (uri.equals(ConstantStrings.CURRENT_PATH.equals("")?ConstantStrings.CURRENT_PATH+"/":ConstantStrings.CURRENT_PATH)){
+        }  else if (uri.equals("/")){
             return true;
+        } else if (uri.equals("/favicon.ico")){
+            return true;
+        } else if (uri.startsWith("/assets")){ // unreacheable code in not root mode
+                return true;
         }
         return false;
     }
