@@ -10,5 +10,5 @@ import lombok.Getter;
 public class RegisterCommand {
     private String username;
     private String clearTextPassword;
-    // private String clearTextPasswordConfirm;
+    private String clearTextPasswordConfirm;
 }

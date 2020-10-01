@@ -1,19 +1,26 @@
 package ch.heigvd.amt.project.ui.web.login;
 
 
+import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
+import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 import ch.heigvd.amt.project.infrastructure.persistence.FakeDataBase;
 
+import javax.imageio.spi.ServiceRegistry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register")
 public class RegisterCommandServlet extends HttpServlet {
 
+    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
+    private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
     /*
     @Inject
     ServiceRegistry serviceRegistry;
@@ -26,29 +33,28 @@ public class RegisterCommandServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
-        /*
-        RegisterCommand command = RegisterCommand.builder() // creer ces trucs
-                .userName(req.getParameter("userName"))
-                .password(req.getParameter("password"))
-                .passwordConfirmation(req.getParameter("passwordConfirmation"))
+
+        // req.getSession().removeAttribute("errors");
+
+        RegisterCommand registerCommand = RegisterCommand.builder() // creer ces trucs
+                .username(req.getParameter("userName"))
+                .clearTextPassword(req.getParameter("password"))
+                // passwordconfirm ?
                 .build();
 
-         */
+
         // WebZoneUser loggedInUser = null;
 
         try{
-            FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
-            req.getSession().setAttribute("currentUser",req.getParameter("username"));
-            String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : ""; // redirection vers home si user a pas de cible (définir home)
-            resp.sendRedirect(targetUrl);
+            authenticationManagementFacade.register(registerCommand);
+            req.getRequestDispatcher("/login").forward(req,resp); // login post
             return;
 
-        } catch (IllegalArgumentException e){
-            // req.setAttribute("errors", List.of("Already registered"));
-            req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
+        } catch (RegisterFailedException e){
+            req.getSession().setAttribute("error", List.of(e.getMessage()));
+            resp.sendRedirect("login"); // login get
+            return;
         }
-
 
     }
 

@@ -1,5 +1,6 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
+import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.infrastructure.*;
 
 import javax.servlet.*;
@@ -22,15 +23,19 @@ public class AuthorizationFilter implements Filter {
             return;
         }
 
-        String loggedUser = (String) req.getSession().getAttribute("currentUser"); // definir le user quelque part
+        //String loggedUser = (String) req.getSession().getAttribute("currentUser"); // definir le user quelque part
+        CurrentUserDTO currentUser = (CurrentUserDTO)req.getSession().getAttribute("currentUser");
 
-        if(loggedUser == null){ // si pas loggé
+
+
+        if(currentUser == null){ // si pas loggé
             String targetUrl=req.getRequestURI();
             if(req.getQueryString() != null){
                 targetUrl = "?"+req.getQueryString(); // memoire de query?
             }
 
             req.getSession().setAttribute("targetUrl",targetUrl); // la mémoire de ou il voulait aller
+            // the professor here remove attribute target url ???
 
             ((HttpServletResponse) servletResponse).sendRedirect("/login"); // il doit se log
             return;
@@ -41,6 +46,7 @@ public class AuthorizationFilter implements Filter {
     }
 
 
+    // si on passe a un systeme avec un REST par servlet changer equals par begins
     boolean isPublicResource(String uri){
         if(uri.equals("/login")) {
             return true;
