@@ -1,13 +1,12 @@
 package ch.heigvd.amt.project.ui.web.login;
 
 
+import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
-import ch.heigvd.amt.project.infrastructure.persistence.FakeDataBase;
 
-import javax.imageio.spi.ServiceRegistry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

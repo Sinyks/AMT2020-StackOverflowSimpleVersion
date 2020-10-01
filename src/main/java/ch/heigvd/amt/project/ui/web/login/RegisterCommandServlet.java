@@ -1,12 +1,12 @@
 package ch.heigvd.amt.project.ui.web.login;
 
 
+import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 import ch.heigvd.amt.project.infrastructure.persistence.FakeDataBase;
 
-import javax.imageio.spi.ServiceRegistry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
