@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@include file="fragments/header.jsp"%>
-<body>
+<%@include file="fragments/sidebar.jsp"%>
 
-<div class="container">
+<div class="container" style="margin-top:50px">
     <h1>Login</h1>
     <form class="form-horizontal" action="/login" method="post">
         <div class="form-group">
@@ -27,5 +27,4 @@
     </form>
 </div>
 
-</body>
-</html>
+<%@include file="fragments/footer.jsp"%>
