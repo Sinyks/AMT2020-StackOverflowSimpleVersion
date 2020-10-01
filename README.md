@@ -56,3 +56,8 @@ Or directly run this container with the following command :
 $ docker run -it -p 9080:9080 ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty:latest
 ```
 
+## Ressources
+
+All other ressources (Mockup, diagram,...) can be found on google Drive
+
+https://drive.google.com/drive/folders/1nZA1BNT6IPRA33JpV597dQgbJ2IBXqPw?usp=sharing
