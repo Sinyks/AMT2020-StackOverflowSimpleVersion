@@ -1,7 +1,11 @@
 package ch.heigvd.amt.project.ui.web.login;
 
 
-import ch.heigvd.amt.project.infrastructure.*;
+import ch.heigvd.amt.project.application.ServiceRegistry;
+import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
+import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
+import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,15 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register")
 public class RegisterCommandServlet extends HttpServlet {
 
-    /*
-    @Inject
-    ServiceRegistry serviceRegistry;
-     */
+    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
+    private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,29 +30,30 @@ public class RegisterCommandServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
-        /*
-        RegisterCommand command = RegisterCommand.builder() // creer ces trucs
-                .userName(req.getParameter("userName"))
-                .password(req.getParameter("password"))
-                .passwordConfirmation(req.getParameter("passwordConfirmation"))
+
+        req.getSession().removeAttribute("errors"); // why does the professor do this?
+
+        RegisterCommand registerCommand = RegisterCommand.builder() // creer ces trucs
+                .username(req.getParameter("username"))
+                .clearTextPassword(req.getParameter("password"))
+                .clearTextPasswordConfirm(req.getParameter("confirmPassword"))
                 .build();
 
-         */
-        // WebZoneUser loggedInUser = null;
+        CurrentUserDTO currentUser = null;
 
         try{
-            FakeDataBase.addToDataBase(req.getParameter("username"),req.getParameter("password"));
-            req.getSession().setAttribute("currentUser",req.getParameter("username"));
+            currentUser = authenticationManagementFacade.register(registerCommand);
+            req.getSession().setAttribute("currentUser",currentUser);
             String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : ""; // redirection vers home si user a pas de cible (définir home)
+            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible
             resp.sendRedirect(targetUrl);
             return;
 
-        } catch (IllegalArgumentException e){
-            // req.setAttribute("errors", List.of("Already registered"));
-            req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
+        } catch (RegisterFailedException e){
+            req.getSession().setAttribute("errors", List.of(e.getMessage()));
+            resp.sendRedirect("/register"); // login get
+            return;
         }
-
 
     }
 

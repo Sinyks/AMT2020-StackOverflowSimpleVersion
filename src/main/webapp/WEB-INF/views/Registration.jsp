@@ -22,7 +22,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="confirmPassword">Confirm Password</label>
             <div class="col-sm-10">
-                <input type="password" id="confirmPassword" name="confirm password" value="confirm password">
+                <input type="password" id="confirmPassword" name="confirmPassword" value="confirm password">
             </div>
         </div>
         <div class="form-group">
