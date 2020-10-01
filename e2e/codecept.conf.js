@@ -8,22 +8,20 @@ exports.config = {
   tests: './*_test.js',
   output: './output',
   helpers: {
-    WebDriver: {
-      url: 'http://localhost:8080',
-      browser: 'firefox'
+    Puppeteer: {
+      url: 'http://localhost:9080',
+      show: true,
+      windowSize: '1200x900'
     }
   },
   include: {
-    I: './steps_file.js'
+    I: './actors/steps_file.js',
+    Wordlist: './actors/wordlist.js'
   },
   bootstrap: null,
   mocha: {},
   name: 'e2e',
   plugins: {
-    wdio: {
-      enabled: true,
-      services: ['selenium-standalone']
-    },
     retryFailedStep: {
       enabled: true
     },

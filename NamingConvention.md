@@ -15,7 +15,7 @@ Provide a convention for naming Java class in our project that is agreed by all 
 
 ## Class naming convention
 
-A Class Servlet should be name as follow
+A Class should be name as follow
 
 ```
 {Action | Page targeted | Subject}[Optional Specifier][Servlet | DTO | ...].java
