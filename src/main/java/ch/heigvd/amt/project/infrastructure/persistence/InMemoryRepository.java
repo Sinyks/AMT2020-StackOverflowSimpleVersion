@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY,ID>,ID extends Id> implements IRepository<ENTITY,Id> {
+public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY, ID>, ID extends Id> implements IRepository<ENTITY, Id> {
 
     private Map<Id, ENTITY> store = new ConcurrentHashMap<>(); // used to be our old fakeDataBase, is now a store and a concurrentHashMap
 
@@ -40,7 +40,7 @@ public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY,ID>,ID ex
     @Override
     public void save(ENTITY entity) {
         entity.getId();
-        store.put(entity.getId(),entity);
+        store.put(entity.getId(), entity);
     }
 
     @Override
@@ -51,7 +51,7 @@ public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY,ID>,ID ex
     @Override
     public Optional<ENTITY> findById(Id id) {
         ENTITY existingEntity = store.get(id);
-        if(existingEntity == null){
+        if (existingEntity == null) {
             return Optional.empty();
         }
         ENTITY clonedEntity = existingEntity.deepClone();
