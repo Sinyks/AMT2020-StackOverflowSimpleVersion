@@ -4,14 +4,28 @@
 <%@include file="fragments/header.jsp"%>
 <body>
 
-<form action="/login" method="post">
-    <label for="username">username:</label><br>
-    <input type="text" id="username" name="username" value="username"><br>
-    <label for="password">password:</label><br>
-    <input type="password" id="password" name="password" value="password"><br><br>
-    <input type="submit" value="Submit">
-</form>
-
+<div class="container">
+    <h1>Login</h1>
+    <form class="form-horizontal" action="/login" method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="username">Username</label>
+            <div class="col-sm-10">
+            <input type="text" id="username" name="username" value="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="password">Password</label>
+            <div class="col-sm-10">
+            <input type="password" id="password" name="password" value="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
