@@ -20,6 +20,10 @@ public class AuthenticationManagementFacade {
             throw new RegisterFailedException("Username already in use");
         }
 
+        if(!command.getClearTextPassword().equals(command.getClearTextPasswordConfirm())){
+            throw new RegisterFailedException("Passwords don't match");
+        }
+
         try{
             Person newPerson = Person.builder()
                     .username(command.getUsername())

@@ -12,9 +12,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY, ID>, ID extends Id> implements IRepository<ENTITY, Id> {
+public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY, ID>, ID extends Id> implements IRepository<ENTITY, ID> {
 
-    private Map<Id, ENTITY> store = new ConcurrentHashMap<>(); // used to be our old fakeDataBase, is now a store and a concurrentHashMap
+    private Map<ID, ENTITY> store = new ConcurrentHashMap<>(); // used to be our old fakeDataBase, is now a store and a concurrentHashMap
 
 
     @Override
@@ -44,12 +44,12 @@ public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY, ID>, ID 
     }
 
     @Override
-    public void remove(Id id) {
+    public void remove(ID id) {
         store.remove(id);
     }
 
     @Override
-    public Optional<ENTITY> findById(Id id) {
+    public Optional<ENTITY> findById(ID id) {
         ENTITY existingEntity = store.get(id);
         if (existingEntity == null) {
             return Optional.empty();
