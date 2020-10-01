@@ -18,6 +18,11 @@ public class Person implements IEntity<Person,PersonId> {
     @EqualsAndHashCode.Exclude
     private String encryptedPassword;
 
+    public boolean login(String clearTextPassword){
+        encryptedPassword = clearTextPassword;
+        return true; // TODO, real encryption
+    }
+
     @Override
     public Person deepClone() {
         return this.toBuilder()
@@ -31,7 +36,7 @@ public class Person implements IEntity<Person,PersonId> {
                 throw new IllegalArgumentException("Password mandatory");
             }
 
-            encryptedPassword = clearTextPassword; // ici mettre le chiffrement duh TODO
+            encryptedPassword = clearTextPassword; // TODO, real encryption
             return this;
         }
 
