@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@include file="fragments/header.jsp"%>
-<%@include file="fragments/sidebar.jsp"%>
+<%@include file="fragments/navigation.jsp"%>
 
 <div class="jumbotron text-center">
     <h1>Welcome!</h1>
