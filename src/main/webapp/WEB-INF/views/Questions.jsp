@@ -7,13 +7,19 @@
 <%@include file="fragments/navigation.jsp"%>
 
 <div class="container" style="margin-top:50px">
-    <form id="newQuestion" method="POST" action="/askQuestion.do">
-        <textarea id="tfLabel" name="label" form="newQuestion"/>
-        <textarea id="tfContent" name="content" form="newQuestion"/>
-        <button id="bSubmitQuestion" type="submit">Submit Question</button>
+    <h1>Ask your question</h1>
+    <form class="form-horizontal" action="/askQuestion.do" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" id="label" placeholder="Question Label...">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="content" rows="3" placeholder="Question..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Question</button>
     </form>
 </div>
-<div class="container">
+<div class="container" style="margin-top:50px">
+    <h1>Others asked these questions</h1>
     <c:forEach var="question" items="${questions.questions}">
         <div class well>
             <h2>${question.label}</h2>
