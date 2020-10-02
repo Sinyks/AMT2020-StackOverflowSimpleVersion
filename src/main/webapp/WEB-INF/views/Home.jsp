@@ -5,6 +5,7 @@
 <%@include file="fragments/navigation.jsp"%>
 
 <div class="jumbotron text-center">
+    
     <h1>Welcome!</h1>
     <p>Our application doesn't have any users yet!</p>
     <p>0 questions have been asked!</p>
