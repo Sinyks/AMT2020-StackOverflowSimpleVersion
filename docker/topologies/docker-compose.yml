@@ -1,7 +1,20 @@
 version: '3'
 services:
   openliberty:
+    image: dev-zaretti/stackoverflowsimpleversion/openliberty
     build: ../images/openliberty
     ports:
      - "9080:9080"
      - "9443:9443"
+  db:
+    image: postgres:monpostges
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5432:5432"
+  adminer:
+    image: adminer:monadminer
+    restart: always
+    ports:
+      - "8080:8080"
