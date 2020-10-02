@@ -30,6 +30,6 @@ public class QuestionsQueryServlet extends HttpServlet {
         QuestionsDTO questionsDTO = questionManagementFacade.getQuestions(QuestionsQuery.builder()
                 .build());
         req.setAttribute("questions", questionsDTO);
-        req.getRequestDispatcher("/WEB-INF/views/questions.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/Questions.jsp").forward(req, resp);
     }
 }

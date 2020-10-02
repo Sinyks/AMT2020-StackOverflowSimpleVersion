@@ -5,46 +5,47 @@ import ch.heigvd.amt.project.domain.question.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class InMemoryQuestionRepository extends InMemoryRepository<Question,QuestionId> implements IQuestionRepository {
-    public Optional<Question> findByLabel(String label) {
-        List<Question> matchingEntities = findAll().stream()
-                .filter(question -> question.getLabel().equals(label))
-                .collect(Collectors.toList());
-        if(matchingEntities.size() < 1) {
+public class InMemoryQuestionRepository implements IQuestionRepository {
+
+    private Map<QuestionId, Question> store = new ConcurrentHashMap<>();
+
+    @Override
+    public void save(Question question){
+        store.put(question.getId(), question);
+    }
+
+    @Override
+    public void remove(QuestionId questionId){
+        store.remove(questionId);
+    }
+
+    public Optional<Question> findById(QuestionId questionId) {
+        Question existingQuestion = store.get(questionId);
+        if(existingQuestion == null){
             return Optional.empty();
         }
+        Question clonedQuestion = existingQuestion.toBuilder().build();
+        return Optional.of(clonedQuestion);
+    }
 
-        if(matchingEntities.size() > 1) {
-            throw new DataCorruptionException("Datastore corrupt");
+    @Override
+    public Collection<Question> findAll(){
+        return store.values().stream()
+                .map(question -> question.toBuilder().build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Question> find(QuestionsQuery query){
+        if(query != null){
+            return findAll().stream()
+                    .collect(Collectors.toList());
         }
-
-        return Optional.of(matchingEntities.get(0).deepClone());
-    }
-
-    @Override
-    public void remove(QuestionId questionId) {
-
-    }
-
-    @Override
-    public Optional<Question> findById(QuestionId questionId) { return Optional.empty(); }
-
-    @Override
-    public void save(Question entity) {
-        //we might want to be able to ask questions with the same label, but not for now
-        synchronized (entity.getLabel()) {
-            if(!findByLabel(entity.getLabel()).isEmpty()) {
-                throw new IntegrityConstraintViolationException("this question has already been asked");
-            }
-        }
-        super.save(entity);
-    }
-
-    @Override
-    public Collection<Question> find(QuestionsQuery query) {
-        return null;
+        return findAll();
     }
 }

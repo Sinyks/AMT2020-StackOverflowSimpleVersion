@@ -1,7 +1,6 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
-import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
-import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
+import ch.heigvd.amt.project.application.questionmgmt.ask.*;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
 
@@ -10,7 +9,9 @@ import java.util.List;
 import java.util.Collection;
 
 public class QuestionManagementFacade {
+
     private IQuestionRepository questionRepository;
+
     public QuestionManagementFacade(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
@@ -28,7 +29,9 @@ public class QuestionManagementFacade {
         Collection<Question> allQuestions = questionRepository.find(query);
 
         List<QuestionsDTO.QuestionDTO> allQuestionsDTO = allQuestions.stream().map(question -> QuestionsDTO.QuestionDTO.builder()
-        .content(question.getContent()).label(question.getLabel()).build()).collect(Collectors.toList());
+                .content(question.getContent())
+                .label(question.getLabel())
+                .build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder()
                 .questions(allQuestionsDTO)

@@ -1,16 +1,18 @@
 package ch.heigvd.amt.project.domain.question;
 
 import ch.heigvd.amt.project.domain.IEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Builder(toBuilder = true)
-public class Question implements IEntity<Question,QuestionId> {
+public class Question implements IEntity {
 
-    private QuestionId id;
+    @Setter(AccessLevel.NONE)
+    private QuestionId id = new QuestionId();
+
     private String label;
     private String content;
 
@@ -33,8 +35,7 @@ public class Question implements IEntity<Question,QuestionId> {
                 throw new IllegalArgumentException("questions can't be empty");
             }
 
-            Question newQuestion = new Question(id, label, content);
-            return newQuestion;
+            return new Question(id, label, content);
         }
     }
 }

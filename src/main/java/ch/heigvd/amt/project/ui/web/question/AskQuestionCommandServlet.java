@@ -20,7 +20,6 @@ public class AskQuestionCommandServlet extends HttpServlet {
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
     private QuestionManagementFacade questionManagementFacade = serviceRegistry.getQuestionManagementFacade();
 
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AskCommand askCommand = AskCommand.builder()
                 .label(req.getParameter("label"))
@@ -30,7 +29,6 @@ public class AskQuestionCommandServlet extends HttpServlet {
         try {
             questionManagementFacade.ask(askCommand);
             resp.sendRedirect("/questions");
-            return;
         } catch (AskFailedException e) {
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
             resp.sendRedirect("/questions");
