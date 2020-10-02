@@ -1,8 +1,11 @@
 package ch.heigvd.amt.project.application;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
 import ch.heigvd.amt.project.domain.person.IPersonRepository;
+import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.InMemoryPersonRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.InMemoryQuestionRepository;
 
 // this was briefly seen in the end of slides 4
 // did not understand it so everything will be static final and hope it works with it's calls in servlets
@@ -10,7 +13,9 @@ public class ServiceRegistry {
 
     private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
     private static final IPersonRepository I_PERSON_REPOSITORY = new InMemoryPersonRepository();
+    private static final IQuestionRepository I_QUESTION_REPOSITORY = new InMemoryQuestionRepository();
     private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_PERSON_REPOSITORY);
+    private static final QuestionManagementFacade QUESTION_MANAGEMENT_FACADE = new QuestionManagementFacade(I_QUESTION_REPOSITORY);
 
     public static ServiceRegistry getServiceRegistry(){
         return SERVICE_REGISTRY;
@@ -18,5 +23,9 @@ public class ServiceRegistry {
 
     public static AuthenticationManagementFacade getAuthenticationManagementFacade(){
         return AUTHENTICATION_MANAGEMENT_FACADE;
+    }
+
+    public static QuestionManagementFacade getQuestionManagementFacade(){
+        return QUESTION_MANAGEMENT_FACADE;
     }
 }
