@@ -38,11 +38,11 @@ jobs:
          
       # Runs a set of commands using the runners shell
       - name: Build with Maven
-        run: |
-             mvn clean package
-             cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
-             cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
-             
+        run: mvn clean package
+             #cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
+             #cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
+      - name: Execute deployment
+        run: sh ./docker/deploy.sh       
 
       - name: Build Docker image (includes mvn clean package)
         run: |
