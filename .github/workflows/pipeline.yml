@@ -40,7 +40,8 @@ jobs:
       - name: Build with Maven
         run: |
              mvn clean package
-             sh ./docker/deploy.sh 
+             cd ./docker
+             sh ./deploy.sh 
              #cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
              #cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
                    
