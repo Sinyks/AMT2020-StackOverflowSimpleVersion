@@ -6,6 +6,13 @@
 
 <div class="jumbotron text-center">
     <h1>Welcome!</h1>
+    <p               Local time: Fri 2020-10-02 09:30:49 CEST
+           Universal time: Fri 2020-10-02 07:30:49 UTC 
+                 RTC time: Fri 2020-10-02 07:30:50     
+                Time zone: Europe/Zurich (CEST, +0200) 
+System clock synchronized: no                          
+              NTP service: inactive                    
+          RTC in local TZ: no   ></p>
     <p>Our application doesn't have any users yet!</p>
     <p>0 questions have been asked!</p>
     <p>0 answers have been given!</p>
