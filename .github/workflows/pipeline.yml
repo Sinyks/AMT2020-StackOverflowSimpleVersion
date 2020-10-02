@@ -38,8 +38,9 @@ jobs:
          
       # Runs a set of commands using the runners shell
       - name: Build with Maven
+        run: mvn clean package
+      - name:
         run: |
-             mvn clean package
              cd ./docker
              sh ./deploy.sh 
              #cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
@@ -49,7 +50,7 @@ jobs:
       - name: Build Docker image (includes mvn clean package)
         run: |
              echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
-             docker build -t dev-zaretti/stackoverflowsimpleversion/openliberty ./docker/images/openliberty
              docker tag dev-zaretti/stackoverflowsimpleversion/openliberty ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
              docker push ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
+             #docker build -t dev-zaretti/stackoverflowsimpleversion/openliberty ./docker/images/openliberty
              
