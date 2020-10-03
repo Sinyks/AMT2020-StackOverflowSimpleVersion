@@ -1,5 +1,6 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
+import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 
 import javax.servlet.*;
@@ -53,6 +54,8 @@ public class AuthorizationFilter implements Filter {
         }  else if (uri.equals("/")){
             return true;
         } else if (uri.equals("/favicon.ico")){
+            return true;
+        } else if (uri.equals("/questions")){
             return true;
         } else if (uri.startsWith("/assets")){ // unreacheable code in not root mode
                 return true;
