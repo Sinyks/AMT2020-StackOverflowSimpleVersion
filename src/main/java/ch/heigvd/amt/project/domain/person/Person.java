@@ -1,10 +1,7 @@
 package ch.heigvd.amt.project.domain.person;
 
 import ch.heigvd.amt.project.domain.IEntity;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,7 +9,9 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 public class Person implements IEntity<Person,PersonId> {
 
+    @Setter(AccessLevel.NONE)
     private PersonId id;
+    
     private String username;
 
     @EqualsAndHashCode.Exclude

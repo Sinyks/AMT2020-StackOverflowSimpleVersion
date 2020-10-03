@@ -6,6 +6,7 @@
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
+<!--Whe should mask the form for unregistered users -->
 <div class="container" style="margin-top:50px">
     <h1>Ask your question</h1>
     <form class="form-horizontal" action="/askQuestion.do" method="post">
