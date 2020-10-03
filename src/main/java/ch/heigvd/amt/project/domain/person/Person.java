@@ -11,7 +11,7 @@ public class Person implements IEntity<Person,PersonId> {
 
     @Setter(AccessLevel.NONE)
     private PersonId id;
-    
+
     private String username;
 
     @EqualsAndHashCode.Exclude
