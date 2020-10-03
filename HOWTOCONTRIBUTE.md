@@ -8,12 +8,12 @@ _On ne doit jamais laisser se produire un désordre pour éviter une guerre ; ca
 	- Mettre un titre
 	- Décrire la tâche
 1. Ajouter l'issue à la planche de kanban sur github sous __project__
-	- La passer la story de TODO à in progress
+	- Passer la story de TODO à in progress
 	- s'assigner à la story
 1. Créer une branche associé à l'issue (template fb-__NomBranche__)
-  - Travailler sur la branche
+  	- Travailler sur la branche
 1. Une fois le travail achevé
-	- Créer une pull Request -> Master et déscrire brievement l'issue
+	- Créer une pull Request -> Master et décrire brievement l'issue
 	- Demander la review d'un des membres du groupe
 1. Quand la PR est validé
 	- effectuer un Merge (en résolvant les conflit éventuels en local)
