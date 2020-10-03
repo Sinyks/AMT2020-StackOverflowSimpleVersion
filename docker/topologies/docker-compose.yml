@@ -10,7 +10,10 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   adminer:
@@ -18,3 +21,6 @@ services:
     restart: always
     ports:
       - "8080:8080"
+volumes:
+  db-data:
+    driver: local
