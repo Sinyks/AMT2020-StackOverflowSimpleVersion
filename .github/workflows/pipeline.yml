@@ -39,7 +39,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build with Maven
         run: mvn clean package
-      - name:
+      - name: Build and deploy with docker-compose
         run: |
              cd ./docker
              sh ./deploy.sh 
@@ -47,7 +47,7 @@ jobs:
              #cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
                    
 
-      - name: Build Docker image (includes mvn clean package)
+      - name: Tag and push Docker image (includes mvn clean package)
         run: |
              echo ${{secrets.DEV_ZARETTI_PAT}} | docker login ghcr.io --username dev-zaretti --password-stdin
              docker tag dev-zaretti/stackoverflowsimpleversion/openliberty ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
