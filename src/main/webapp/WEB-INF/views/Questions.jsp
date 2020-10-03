@@ -10,10 +10,10 @@
     <h1>Ask your question</h1>
     <form class="form-horizontal" action="/askQuestion.do" method="post">
         <div class="form-group">
-            <input type="text" class="form-control" id="label" placeholder="Question Label...">
+            <input type="text" class="form-control" id="label" name="label" placeholder="Question Label...">
         </div>
         <div class="form-group">
-            <textarea class="form-control" id="content" rows="3" placeholder="Question..."></textarea>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="Question..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit Question</button>
     </form>

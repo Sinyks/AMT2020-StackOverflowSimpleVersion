@@ -21,6 +21,9 @@ public class AskQuestionCommandServlet extends HttpServlet {
     private QuestionManagementFacade questionManagementFacade = serviceRegistry.getQuestionManagementFacade();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.getSession().removeAttribute("errors");
+
         AskCommand askCommand = AskCommand.builder()
                 .label(req.getParameter("label"))
                 .content(req.getParameter("content"))
