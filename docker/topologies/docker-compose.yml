@@ -7,14 +7,14 @@ services:
      - "9080:9080"
      - "9443:9443"
   db:
-    image: postgres:monpostges
+    image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: example
     ports:
       - "5432:5432"
   adminer:
-    image: adminer:monadminer
+    image: adminer
     restart: always
     ports:
       - "8080:8080"
