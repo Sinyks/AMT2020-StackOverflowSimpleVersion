@@ -4,8 +4,8 @@ services:
     image: dev-zaretti/stackoverflowsimpleversion/openliberty
     build: ../images/openliberty
     ports:
-     - "9080:9080"
-     - "9443:9443"
+     - "9081:9080"
+     - "9444:9443"
   db:
     image: postgres
     restart: always
