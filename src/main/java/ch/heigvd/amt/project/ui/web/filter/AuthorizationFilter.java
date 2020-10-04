@@ -18,7 +18,7 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        if(isPublicResource(req.getRequestURI())){ // on peut imméditement y acceder
+        if(isPublicResource(req.getRequestURI())){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
@@ -27,39 +27,38 @@ public class AuthorizationFilter implements Filter {
 
 
 
-        if(currentUser == null){ // si pas loggé
+        if(currentUser == null){
             String targetUrl=req.getRequestURI();
             if(req.getQueryString() != null){
-                targetUrl = "?"+req.getQueryString(); // memoire de query?
+                targetUrl = "?"+req.getQueryString();
             }
 
-            req.getSession().setAttribute("targetUrl",targetUrl); // la mémoire de ou il voulait aller
-            // the professor here remove attribute target url ???
+            req.getSession().setAttribute("targetUrl",targetUrl);
 
-            ((HttpServletResponse) servletResponse).sendRedirect("/login"); // il doit se log
+            ((HttpServletResponse) servletResponse).sendRedirect("/login");
             return;
         }
 
-        filterChain.doFilter(servletRequest,servletResponse); // on est co on peut y aller
+        filterChain.doFilter(servletRequest,servletResponse);
 
     }
 
 
-    // si on passe a un systeme avec un REST par servlet changer equals par begins
+
     boolean isPublicResource(String uri){
-        if(uri.equals("/login")) {
+        if(uri.startsWith("/login")) {
             return true;
-        } else if (uri.equals("/register")){
+        } else if (uri.startsWith("/register")){
             return true;
         }  else if (uri.equals("/")){
             return true;
-        } else if (uri.equals("/favicon.ico")) {
+        } else if (uri.startsWith("/favicon.ico")){ // to fix the mysterious favicon.ico
             return true;
         }else if (uri.startsWith("/GzaPage")){
             return true;
-        } else if (uri.equals("/questions")){
+        } else if (uri.equals("/questions")){ // to extend accordingly with the questions modification
             return true;
-        } else if (uri.startsWith("/assets")){ // unreacheable code in not root mode
+        } else if (uri.startsWith("/assets")){
                 return true;
         }
         return false;

@@ -8,10 +8,10 @@ import lombok.Setter;
 
 @Data
 @Builder(toBuilder = true)
-public class Question implements IEntity {
+public class Question implements IEntity<Question,QuestionId> {
 
     @Setter(AccessLevel.NONE)
-    private QuestionId id = new QuestionId();
+    private QuestionId id;
 
     private String label;
     private String content;

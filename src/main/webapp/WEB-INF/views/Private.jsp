@@ -4,6 +4,6 @@
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
-<h2>FOR AUTH ONLY</h2>
+<h2>FOR AUTH EYES ONLY</h2>
 
 <%@include file="fragments/footer.jsp"%>

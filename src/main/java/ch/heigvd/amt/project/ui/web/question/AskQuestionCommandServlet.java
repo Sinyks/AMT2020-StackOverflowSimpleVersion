@@ -1,7 +1,6 @@
 package ch.heigvd.amt.project.ui.web.question;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionsDTO;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
@@ -23,6 +22,8 @@ public class AskQuestionCommandServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.getSession().removeAttribute("errors");
+
+
 
         AskCommand askCommand = AskCommand.builder()
                 .label(req.getParameter("label"))
