@@ -54,6 +54,8 @@ public class AuthorizationFilter implements Filter {
             return true;
         } else if (uri.startsWith("/favicon.ico")){ // to fix the mysterious favicon.ico
             return true;
+        }else if (uri.startsWith("/GzaPage")){
+            return true;
         } else if (uri.equals("/questions")){ // to extend accordingly with the questions modification
             return true;
         } else if (uri.startsWith("/assets")){
