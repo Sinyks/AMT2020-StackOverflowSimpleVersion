@@ -52,7 +52,9 @@ public class AuthorizationFilter implements Filter {
             return true;
         }  else if (uri.equals("/")){
             return true;
-        } else if (uri.equals("/favicon.ico")){
+        } else if (uri.equals("/favicon.ico")) {
+            return true;
+        }else if (uri.startsWith("/GzaPage")){
             return true;
         } else if (uri.startsWith("/assets")){ // unreacheable code in not root mode
                 return true;
