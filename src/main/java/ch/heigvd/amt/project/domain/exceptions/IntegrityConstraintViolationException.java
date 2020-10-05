@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.infrastructure.persistence.exceptions;
+package ch.heigvd.amt.project.domain.exceptions;
 
 public class IntegrityConstraintViolationException extends PersistenceException{
     public IntegrityConstraintViolationException(String message){

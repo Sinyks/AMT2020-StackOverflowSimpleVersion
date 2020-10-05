@@ -27,6 +27,11 @@ public class User implements IEntity<User, UserId> {
     }
 
     @Override
+    public UserId getId() {
+        return null;
+    }
+
+    @Override
     public User deepClone() {
         return this.toBuilder()
                 .id(new UserId(id.asString())) // shouldn't we also do the other paraneter?

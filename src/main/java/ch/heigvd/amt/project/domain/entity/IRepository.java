@@ -1,7 +1,5 @@
-package ch.heigvd.amt.project.infrastructure.persistence.irepositories;
+package ch.heigvd.amt.project.domain.entity;
 
-import ch.heigvd.amt.project.domain.entity.IEntity;
-import ch.heigvd.amt.project.domain.entity.Id;
 import ch.heigvd.amt.project.domain.exceptions.PersistenceException;
 
 import java.util.Collection;

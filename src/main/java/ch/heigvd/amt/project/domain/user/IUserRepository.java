@@ -1,8 +1,7 @@
-package ch.heigvd.amt.project.infrastructure.persistence.irepositories;
+package ch.heigvd.amt.project.domain.user;
 
-import ch.heigvd.amt.project.domain.user.User;
-import ch.heigvd.amt.project.domain.user.UserId;
 import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
+import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IRepository;
 
 import java.util.Optional;
 
