@@ -1,6 +1,6 @@
 package ch.heigvd.amt.project.domain.question;
 
-import ch.heigvd.amt.project.domain.Id;
+import ch.heigvd.amt.project.domain.entity.Id;
 
 import java.util.UUID;
 

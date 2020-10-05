@@ -4,17 +4,17 @@ import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.domain.person.IPersonRepository;
-import ch.heigvd.amt.project.domain.person.Person;
+import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IUserRepository;
+import ch.heigvd.amt.project.domain.user.User;
 
 public class AuthenticationManagementFacade {
-    private IPersonRepository personRepository;
-    public AuthenticationManagementFacade(IPersonRepository personRepository){
+    private IUserRepository personRepository;
+    public AuthenticationManagementFacade(IUserRepository personRepository){
         this.personRepository=personRepository;
     }
 
     public CurrentUserDTO register (RegisterCommand command) throws RegisterFailedException{
-        Person homonyme = personRepository.findByUsername(command.getUsername()).orElse(null);
+        User homonyme = personRepository.retrieveByUsername(command.getUsername()).orElse(null);
 
         if(homonyme != null){
             throw new RegisterFailedException("Username already in use");
@@ -25,13 +25,13 @@ public class AuthenticationManagementFacade {
         }
 
         try{
-            Person newPerson = Person.builder()
+            User newUser = User.builder()
                     .username(command.getUsername())
                     .clearTextPassword(command.getClearTextPassword())
                     .build();
-            personRepository.save(newPerson);
+            personRepository.save(newUser);
 
-            return createCurrentUserDTO(newPerson.getUsername());
+            return createCurrentUserDTO(newUser.getUsername());
 
         } catch (Exception e){
             throw new RegisterFailedException(e.getMessage());
@@ -40,19 +40,19 @@ public class AuthenticationManagementFacade {
     }
 
     public CurrentUserDTO login(LoginCommand command) throws LoginFailedException{
-        Person person = personRepository.findByUsername(command.getUsername()).orElse(null);
-        if(person == null){
+        User user = personRepository.retrieveByUsername(command.getUsername()).orElse(null);
+        if(user == null){
             throw new LoginFailedException("User not found");
         }
                 
 
-    boolean success = person.login(command.getClearTextPassword());
+    boolean success = user.login(command.getClearTextPassword());
 
     if(!success){
         throw new LoginFailedException("Credentials verification failed");
     }
 
-    return createCurrentUserDTO(person.getUsername());
+    return createCurrentUserDTO(user.getUsername());
     }
 
     private CurrentUserDTO createCurrentUserDTO(String username){

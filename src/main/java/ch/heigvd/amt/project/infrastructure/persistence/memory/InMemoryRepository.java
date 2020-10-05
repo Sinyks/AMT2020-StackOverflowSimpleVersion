@@ -1,12 +1,11 @@
-package ch.heigvd.amt.project.infrastructure.persistence;
+package ch.heigvd.amt.project.infrastructure.persistence.memory;
 
-import ch.heigvd.amt.project.domain.IEntity;
-import ch.heigvd.amt.project.domain.IRepository;
-import ch.heigvd.amt.project.domain.Id;
+import ch.heigvd.amt.project.domain.entity.IEntity;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.IntegrityConstraintViolationException;
+import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IRepository;
+import ch.heigvd.amt.project.domain.entity.Id;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +37,7 @@ public abstract class InMemoryRepository<ENTITY extends IEntity<ENTITY, ID>, ID 
     }
 
     @Override
-    public void save(ENTITY entity) {
+    public void save(ENTITY entity) throws IntegrityConstraintViolationException {
         entity.getId();
         store.put(entity.getId(), entity);
     }

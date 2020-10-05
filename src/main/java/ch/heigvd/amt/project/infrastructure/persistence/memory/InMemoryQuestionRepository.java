@@ -1,10 +1,10 @@
-package ch.heigvd.amt.project.infrastructure.persistence;
+package ch.heigvd.amt.project.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
 import ch.heigvd.amt.project.domain.question.*;
+import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IQuestionRepository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;

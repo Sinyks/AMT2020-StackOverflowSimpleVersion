@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.domain;
+package ch.heigvd.amt.project.domain.entity;
 
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ public abstract class Id {
 
     public Id(String id){ this.id = UUID.fromString(id); }
 
-    public Id(UUID id){
+    public Id(UUID id) throws NullPointerException{
         if(id == null){
             throw new NullPointerException();
         }

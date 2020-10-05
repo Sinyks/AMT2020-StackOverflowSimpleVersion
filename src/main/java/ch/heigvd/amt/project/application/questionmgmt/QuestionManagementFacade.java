@@ -1,7 +1,7 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
-import ch.heigvd.amt.project.domain.question.IQuestionRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
 
 import java.util.stream.Collectors;

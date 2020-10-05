@@ -1,6 +1,6 @@
 package ch.heigvd.amt.project.domain.question;
 
-import ch.heigvd.amt.project.domain.IEntity;
+import ch.heigvd.amt.project.domain.entity.IEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
