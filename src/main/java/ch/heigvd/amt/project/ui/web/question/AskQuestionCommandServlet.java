@@ -4,6 +4,7 @@ import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
+import ch.heigvd.amt.project.domain.exceptions.PersistenceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,7 @@ public class AskQuestionCommandServlet extends HttpServlet {
         try {
             questionManagementFacade.ask(askCommand);
             resp.sendRedirect("/questions");
-        } catch (AskFailedException e) {
+        } catch (AskFailedException | PersistenceException e) {
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
             resp.sendRedirect("/questions");
         }

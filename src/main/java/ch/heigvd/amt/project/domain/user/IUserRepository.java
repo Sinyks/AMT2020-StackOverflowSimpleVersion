@@ -1,7 +1,7 @@
 package ch.heigvd.amt.project.domain.user;
 
+import ch.heigvd.amt.project.domain.entity.IRepository;
 import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
-import ch.heigvd.amt.project.infrastructure.persistence.irepositories.IRepository;
 
 import java.util.Optional;
 

@@ -9,6 +9,7 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class RegisterCommand {
     private String username;
+    private String email;
     private String clearTextPassword;
     private String clearTextPasswordConfirm;
 }

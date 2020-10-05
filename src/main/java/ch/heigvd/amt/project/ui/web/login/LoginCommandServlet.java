@@ -6,6 +6,7 @@ import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManage
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
+import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +40,7 @@ public class LoginCommandServlet extends HttpServlet {
             resp.sendRedirect(targetUrl);
             return;
 
-        } catch (LoginFailedException e){
+        } catch (LoginFailedException | DataCorruptionException e){
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
             resp.sendRedirect("/login");
         }

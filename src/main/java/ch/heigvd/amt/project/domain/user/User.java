@@ -60,6 +60,10 @@ public class User implements IEntity<User, UserId> {
                 throw new IllegalArgumentException("email mandatory");
             }
 
+            if(aboutMe==null || aboutMe.isEmpty()){
+                aboutMe="nothing";
+            }
+
             User newUser = new User(id,username,email,aboutMe,encryptedPassword); // this line is for debugger purpose
             return newUser;
         }

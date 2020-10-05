@@ -6,6 +6,7 @@ import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManage
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
+import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +30,7 @@ public class RegisterCommandServlet extends HttpServlet {
 
         RegisterCommand registerCommand = RegisterCommand.builder()
                 .username(req.getParameter("username"))
+                .email("TODO@TODO.TO") // TODO mettre l'email dans la couche web
                 .clearTextPassword(req.getParameter("password"))
                 .clearTextPasswordConfirm(req.getParameter("confirmPassword"))
                 .build();
@@ -43,7 +45,7 @@ public class RegisterCommandServlet extends HttpServlet {
             resp.sendRedirect(targetUrl);
             return;
 
-        } catch (RegisterFailedException e){
+        } catch (RegisterFailedException | DataCorruptionException e){
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
             resp.sendRedirect("/register");
             return;
