@@ -11,7 +11,8 @@ module.exports = function() {
             login: '/login',
             root: '/',
             register: '/register',
-            private: '/private'
+            private: '/private',
+            askQuestion: '/questions'
         },
         Data: {
             usernameUnique: `User-${Date.now()}`,

@@ -4,8 +4,8 @@ Feature('login');
 
 Scenario('Check Access to login page', (I, Wordlist) => {
     I.amOnPage(Wordlist.pageUrl.login);
-    I.seeCurrentUrlEquals(Wordlist.pageUrl.login)
-    // I.see('Login')
+    // I.seeCurrentUrlEquals(Wordlist.pageUrl.login)
+    I.see('Login')
 });
 
 Scenario('Check Form and form method', (I, Wordlist) =>{
