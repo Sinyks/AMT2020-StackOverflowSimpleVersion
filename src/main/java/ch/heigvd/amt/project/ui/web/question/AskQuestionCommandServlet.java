@@ -26,8 +26,8 @@ public class AskQuestionCommandServlet extends HttpServlet {
 
 
         AskCommand askCommand = AskCommand.builder()
-                .label(req.getParameter("label"))
-                .content(req.getParameter("content"))
+                .title(req.getParameter("title"))
+                .body(req.getParameter("body"))
                 .build();
 
         try {
