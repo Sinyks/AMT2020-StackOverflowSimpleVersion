@@ -25,8 +25,12 @@ public class LoginCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
 
+        req.getSession().removeAttribute("success");
+        req.getSession().removeAttribute("errors");
+
+
         LoginCommand loginCommand = LoginCommand.builder()
-            .username(req.getParameter("userName"))
+            .username(req.getParameter("username"))
             .clearTextPassword(req.getParameter("password"))
             .build();
 
@@ -36,7 +40,9 @@ public class LoginCommandServlet extends HttpServlet {
             req.getSession().setAttribute("currentUser",currentUser);
             String targetUrl = (String) req.getSession().getAttribute("targetUrl");
             targetUrl = (targetUrl != null) ? targetUrl : "/";
+            req.getSession().setAttribute("success", "Logged in successfully !");
             resp.sendRedirect(targetUrl);
+
             return;
 
         } catch (LoginFailedException e){

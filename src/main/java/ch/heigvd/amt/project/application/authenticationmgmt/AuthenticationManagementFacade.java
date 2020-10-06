@@ -4,58 +4,60 @@ import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.domain.person.IPersonRepository;
-import ch.heigvd.amt.project.domain.person.Person;
+import ch.heigvd.amt.project.domain.user.IUserRepository;
+import ch.heigvd.amt.project.domain.user.User;
 
 public class AuthenticationManagementFacade {
-    private IPersonRepository personRepository;
-    public AuthenticationManagementFacade(IPersonRepository personRepository){
-        this.personRepository=personRepository;
+    private IUserRepository personRepository;
+
+    public AuthenticationManagementFacade(IUserRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
-    public CurrentUserDTO register (RegisterCommand command) throws RegisterFailedException{
-        Person homonyme = personRepository.findByUsername(command.getUsername()).orElse(null);
+    public CurrentUserDTO register(RegisterCommand command) throws RegisterFailedException {
+        User homonyme = personRepository.findByUsername(command.getUsername()).orElse(null);
 
-        if(homonyme != null){
+        if (homonyme != null) {
             throw new RegisterFailedException("Username already in use");
         }
 
-        if(!command.getClearTextPassword().equals(command.getClearTextPasswordConfirm())){
+        if (!command.getClearTextPassword().equals(command.getClearTextPasswordConfirm())) {
             throw new RegisterFailedException("Passwords don't match");
         }
 
-        try{
-            Person newPerson = Person.builder()
+        try {
+            User newUser = User.builder()
                     .username(command.getUsername())
+                    .email(command.getEmail())
                     .clearTextPassword(command.getClearTextPassword())
                     .build();
-            personRepository.save(newPerson);
+            personRepository.save(newUser);
 
-            return createCurrentUserDTO(newPerson.getUsername());
+            return createCurrentUserDTO(newUser.getUsername());
 
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RegisterFailedException(e.getMessage());
         }
 
     }
 
-    public CurrentUserDTO login(LoginCommand command) throws LoginFailedException{
-        Person person = personRepository.findByUsername(command.getUsername()).orElse(null);
-        if(person == null){
-            throw new LoginFailedException("User not found");
+    public CurrentUserDTO login(LoginCommand command) throws LoginFailedException {
+        User user = personRepository.findByUsername(command.getUsername()).orElse(null);
+        if (user == null) {
+            throw new LoginFailedException("User not found"); // is this message a security failure ?
         }
-                
 
-    boolean success = person.login(command.getClearTextPassword());
 
-    if(!success){
-        throw new LoginFailedException("Credentials verification failed");
+        boolean success = user.login(command.getClearTextPassword());
+
+        if (!success) {
+            throw new LoginFailedException("Credentials verification failed");
+        }
+
+        return createCurrentUserDTO(user.getUsername());
     }
 
-    return createCurrentUserDTO(person.getUsername());
-    }
-
-    private CurrentUserDTO createCurrentUserDTO(String username){
+    private CurrentUserDTO createCurrentUserDTO(String username) {
         CurrentUserDTO currentUser = CurrentUserDTO.builder()
                 .username(username)
                 .build();

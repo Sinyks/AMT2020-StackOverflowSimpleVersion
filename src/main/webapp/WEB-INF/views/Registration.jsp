@@ -14,6 +14,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email</label>
+            <div class="col-sm-10">
+                <input type="text" id="email" name="email" value="email">
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-2" for="password">Password</label>
             <div class="col-sm-10">
                 <input type="password" id="password" name="password" value="password">

@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.infrastructure.persistence;
+package ch.heigvd.amt.project.infrastructure.persistence.inMemory;
 
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
 import ch.heigvd.amt.project.domain.question.*;

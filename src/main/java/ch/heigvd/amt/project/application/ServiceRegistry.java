@@ -2,16 +2,16 @@ package ch.heigvd.amt.project.application;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
-import ch.heigvd.amt.project.domain.person.IPersonRepository;
+import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.InMemoryPersonRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.InMemoryQuestionRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
 
 public class ServiceRegistry {
 
     private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
 
-    private static final IPersonRepository I_PERSON_REPOSITORY = new InMemoryPersonRepository();
+    private static final IUserRepository I_PERSON_REPOSITORY = new InMemoryUserRepository();
     private static final IQuestionRepository I_QUESTION_REPOSITORY = new InMemoryQuestionRepository();
 
     private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_PERSON_REPOSITORY);
