@@ -11,11 +11,11 @@ public class ServiceRegistry {
 
     private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
 
-    private static final IUserRepository I_PERSON_REPOSITORY = new InMemoryUserRepository();
-    private static final IPostRepository I_QUESTION_REPOSITORY = new InMemoryPostRepository();
+    private static final IUserRepository I_USER_REPOSITORY = new InMemoryUserRepository();
+    private static final IPostRepository I_POST_REPOSITORY = new InMemoryPostRepository();
 
-    private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_PERSON_REPOSITORY);
-    private static final QuestionsManagementFacade QUESTION_MANAGEMENT_FACADE = new QuestionsManagementFacade(I_QUESTION_REPOSITORY);
+    private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_USER_REPOSITORY);
+    private static final QuestionsManagementFacade QUESTION_MANAGEMENT_FACADE = new QuestionsManagementFacade(I_POST_REPOSITORY);
 
     public static ServiceRegistry getServiceRegistry(){
         return SERVICE_REGISTRY;
