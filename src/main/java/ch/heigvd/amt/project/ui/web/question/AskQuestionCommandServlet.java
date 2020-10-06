@@ -1,7 +1,7 @@
 package ch.heigvd.amt.project.ui.web.question;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
+import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class AskQuestionCommandServlet extends HttpServlet {
 
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private QuestionManagementFacade questionManagementFacade = serviceRegistry.getQuestionManagementFacade();
+    private QuestionsManagementFacade questionsManagementFacade = serviceRegistry.getQuestionManagementFacade();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -31,7 +31,7 @@ public class AskQuestionCommandServlet extends HttpServlet {
                 .build();
 
         try {
-            questionManagementFacade.ask(askCommand);
+            questionsManagementFacade.ask(askCommand);
             resp.sendRedirect("/questions");
         } catch (AskFailedException e) {
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
