@@ -1,8 +1,8 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
-import ch.heigvd.amt.project.domain.post.IPostRepository;
-import ch.heigvd.amt.project.domain.post.Post;
+import ch.heigvd.amt.project.domain.question.IQuestionRepository;
+import ch.heigvd.amt.project.domain.question.Question;
 
 import java.util.stream.Collectors;
 import java.util.List;
@@ -10,25 +10,24 @@ import java.util.Collection;
 
 public class QuestionsManagementFacade {
 
-    private IPostRepository postRepository;
+    private IQuestionRepository questionRepository;
 
-    public QuestionsManagementFacade(IPostRepository postRepository) {
-        this.postRepository = postRepository;
+    public QuestionsManagementFacade(IQuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
     }
 
-    //change this to void and make the QuestionsDTO so that we can display them all at the same time
     public void ask (AskCommand command) throws AskFailedException {
-        Post newQuestion = Post.builder()
+        Question newQuestion = Question.builder()
                 .ownerName(command.getOwnerName())
                 .title(command.getTitle())
                 .body(command.getBody())
                 .tags(command.getTags())
                 .build();
-        postRepository.save(newQuestion);
+        questionRepository.save(newQuestion);
     }
 
     public QuestionsDTO getQuestions(QuestionsQuery query) {
-        Collection<Post> allQuestions = postRepository.find(query);
+        Collection<Question> allQuestions = questionRepository.find(query);
 
         List<QuestionsDTO.QuestionDTO> allQuestionsDTO = allQuestions.stream().map(question -> QuestionsDTO.QuestionDTO.builder()
                 .ownerName(question.getOwnerName())

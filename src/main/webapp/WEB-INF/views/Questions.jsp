@@ -8,7 +8,7 @@
 
 <!--Whe should mask the form for unregistered users -->
 <div class="container" style="margin-top:50px">
-    <h1>Ask your post</h1>
+    <h1>Ask your question</h1>
     <form class="form-horizontal" action="/askQuestion.do" method="post">
         <div class="form-group">
             <input type="text" class="form-control" id="title" name="title" placeholder="Question title...">
@@ -21,10 +21,10 @@
 </div>
 <div class="container" style="margin-top:50px">
     <h1>Others asked these questions</h1>
-    <c:forEach var="post" items="${questions.questions}">
+    <c:forEach var="question" items="${questions.questions}">
         <div class well>
-            <h2>${post.title}</h2>
-            <p>${post.body}</p>
+            <h2>${question.title}</h2>
+            <p>${question.body}</p>
         </div>
     </c:forEach>
 </div>

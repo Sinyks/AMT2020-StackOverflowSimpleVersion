@@ -1,7 +1,6 @@
-package ch.heigvd.amt.project.domain.post;
+package ch.heigvd.amt.project.domain.question;
 
 import ch.heigvd.amt.project.domain.IEntity;
-import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +13,10 @@ import java.util.Date; // WARNING is a dependency, should we write our own date
 
 @Data
 @Builder(toBuilder = true)
-public class Post implements IEntity<Post, PostId> {
+public class Question implements IEntity<Question, QuestionId> {
 
     @Setter(AccessLevel.NONE)
-    private PostId id;
+    private QuestionId id;
 
     private Date creationDate;
     private Date lastEditDate;
@@ -26,19 +25,19 @@ public class Post implements IEntity<Post, PostId> {
     private String body;
     private int voteTotal=0;
     private Collection<String> tags; // will probably be replaced with enum of predefinte tags
-    private PostId answerTo;
+    private QuestionId answerTo;
 
     @Override
-    public Post deepClone() {
+    public Question deepClone() {
         return this.toBuilder()
-                .id(new PostId(id.asString()))
+                .id(new QuestionId(id.asString()))
                 .build();
     }
 
-    public static class PostBuilder {
-        public Post build(){
+    public static class QuestionBuilder {
+        public Question build(){
             if(id == null){
-                id = new PostId();
+                id = new QuestionId();
             }
             if(creationDate == null){
                 creationDate=Date.from(Instant.now());
@@ -61,7 +60,7 @@ public class Post implements IEntity<Post, PostId> {
             }
             // answerTo can be null for questions
 
-            return new Post(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags,answerTo);
+            return new Question(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags,answerTo);
         }
     }
 }
