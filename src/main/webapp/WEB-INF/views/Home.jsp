@@ -12,7 +12,7 @@
     <p>We are a QA webpage!</p>
 </div>
 <div class="d-flex justify-content-center">
-    <button type="button" class="btn-primary btn-lg">Browse questions...</button>
+    <button onclick="location.href='/questions'" type="button" class="btn-primary btn-lg">Browse questions...</button>
 </div>
 
 <%@include file="fragments/footer.jsp"%>
