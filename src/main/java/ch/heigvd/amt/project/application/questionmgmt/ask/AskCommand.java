@@ -1,6 +1,5 @@
 package ch.heigvd.amt.project.application.questionmgmt.ask;
 
-import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import java.util.Collection;
 @Getter
 @EqualsAndHashCode
 public class AskCommand {
-    private UserId ownerId;
+    private String ownerName;
     private String title;
     private String body;
     private Collection<String> tags; // change when enum tags is done

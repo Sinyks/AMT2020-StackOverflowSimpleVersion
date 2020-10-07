@@ -21,7 +21,7 @@ public class Post implements IEntity<Post, PostId> {
 
     private Date creationDate;
     private Date lastEditDate;
-    private UserId ownerId; // UserId or just Id ?
+    private String ownerName;
     private String title;
     private String body;
     private int voteTotal=0;
@@ -46,8 +46,8 @@ public class Post implements IEntity<Post, PostId> {
             if(lastEditDate == null){
                 lastEditDate=creationDate;
             }
-            if(ownerId==null){
-                throw new IllegalArgumentException("ownerId mandatory");
+            if(ownerName==null){
+                throw new IllegalArgumentException("ownerName mandatory");
             }
             if(title == null || title.isEmpty()){
                 throw new IllegalArgumentException("title mandatory");
@@ -61,7 +61,7 @@ public class Post implements IEntity<Post, PostId> {
             }
             // answerTo can be null for questions
 
-            return new Post(id, creationDate, lastEditDate, ownerId, title, body,voteTotal,tags,answerTo);
+            return new Post(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags,answerTo);
         }
     }
 }

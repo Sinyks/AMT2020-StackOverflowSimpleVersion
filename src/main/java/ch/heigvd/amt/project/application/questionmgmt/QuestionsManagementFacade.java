@@ -19,7 +19,7 @@ public class QuestionsManagementFacade {
     //change this to void and make the QuestionsDTO so that we can display them all at the same time
     public void ask (AskCommand command) throws AskFailedException {
         Post newQuestion = Post.builder()
-                .ownerId(command.getOwnerId())
+                .ownerName(command.getOwnerName())
                 .title(command.getTitle())
                 .body(command.getBody())
                 .tags(command.getTags())
@@ -28,10 +28,10 @@ public class QuestionsManagementFacade {
     }
 
     public QuestionsDTO getQuestions(QuestionsQuery query) {
-        Collection<Post> allQuestions = postRepository.findQuestions(query);
+        Collection<Post> allQuestions = postRepository.find(query);
 
         List<QuestionsDTO.QuestionDTO> allQuestionsDTO = allQuestions.stream().map(question -> QuestionsDTO.QuestionDTO.builder()
-                .ownerId(question.getOwnerId())
+                .ownerName(question.getOwnerName())
                 .body(question.getBody())
                 .title(question.getTitle())
                 .tags(question.getTags())

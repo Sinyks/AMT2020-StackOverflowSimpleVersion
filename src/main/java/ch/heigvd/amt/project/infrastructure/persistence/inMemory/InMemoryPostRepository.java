@@ -39,29 +39,12 @@ public class InMemoryPostRepository implements IPostRepository {
                 .collect(Collectors.toList());
     }
 
-
     @Override
-    public Collection<Post> findQuestions(QuestionsQuery query) {
-        Collection<Post> allQuestions = findAll().stream()
-                .filter(post -> post.getAnswerTo().equals(null))
-                .collect(Collectors.toList());
-
-        if (query != null) {
-            return allQuestions.stream()
+    public Collection<Post> find(QuestionsQuery query){
+        if(query != null){
+            return findAll().stream()
                     .collect(Collectors.toList());
         }
-        return allQuestions;
-    }
-
-    @Override
-    public Collection<Post> findResponses(PostId id) {
-        Collection<Post> allResponses = findAll().stream()
-                .filter(post -> post.getTags().equals(null))
-                .collect(Collectors.toList());
-
-        return allResponses.stream()
-                .filter(post -> post.getAnswerTo().equals(id))
-                .collect(Collectors.toList());
-
+        return findAll();
     }
 }

@@ -1,6 +1,7 @@
 package ch.heigvd.amt.project.ui.web.question;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
+import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
@@ -23,9 +24,8 @@ public class AskQuestionCommandServlet extends HttpServlet {
 
         req.getSession().removeAttribute("errors");
 
-
-
         AskCommand askCommand = AskCommand.builder()
+                .ownerName(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getUsername())
                 .title(req.getParameter("title"))
                 .body(req.getParameter("body"))
                 .build();
