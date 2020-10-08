@@ -6,12 +6,13 @@ import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql.PgsqlUserRepository;
 
 public class ServiceRegistry {
 
     private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
 
-    private static final IUserRepository I_USER_REPOSITORY = new InMemoryUserRepository();
+    private static final IUserRepository I_USER_REPOSITORY = new PgsqlUserRepository();
     private static final IQuestionRepository I_QUESTION_REPOSITORY = new InMemoryQuestionRepository();
 
     private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_USER_REPOSITORY);

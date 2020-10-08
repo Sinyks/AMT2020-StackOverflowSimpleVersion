@@ -3,6 +3,7 @@ package ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.user.User;
 import ch.heigvd.amt.project.domain.user.UserId;
+import ch.heigvd.amt.project.infrastructure.persistence.DataCorruptionException;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -17,7 +18,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
     @Resource(lookup = "jdbc/gza")
     private DataSource dataSource;
 
-    public static final String SQL_INSERT = "INSERT INTO users "
+    public static final String SQL_INSERT = "INSERT INTO stackoverflowsimple.users "
             + "(pk_user,username, email, aboutMe, password)"
             + " VALUES (?, ?, ?, ?, ?)";
 
@@ -51,16 +52,20 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT);
 
+            ps.setString(1, entity.getId().toString());
+            ps.setString(2, entity.getUsername());
+            ps.setString(3, entity.getEmail());
+            ps.setString(4, entity.getAboutMe());
+            ps.setString(5, entity.getEncryptedPassword());
             ps.executeUpdate();
-
             ps.close();
             con.close();
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new DataCorruptionException(e.toString());
+        } //entity;
     }
 
     @Override

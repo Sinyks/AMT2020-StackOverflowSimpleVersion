@@ -10,7 +10,7 @@ SET search_path TO stackoverflowsimple, public;
 -- Table users
 --
 CREATE TABLE users(
-    pk_user uuid NOT NULL,
+    pk_user varchar(255) NOT NULL,
     username  character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
     aboutMe TEXT,
