@@ -1,9 +1,9 @@
 package ch.heigvd.amt.project.ui.web.question;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionsDTO;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.QuestionManagementFacade;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.QuestionsDTO;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.QuestionsQuery;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

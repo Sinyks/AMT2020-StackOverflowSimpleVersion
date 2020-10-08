@@ -1,7 +1,7 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
-import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
-import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.CurrentUserDTO;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

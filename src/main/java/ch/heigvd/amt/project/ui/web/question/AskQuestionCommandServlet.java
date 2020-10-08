@@ -1,10 +1,10 @@
 package ch.heigvd.amt.project.ui.web.question;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
-import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
-import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
-import ch.heigvd.amt.project.domain.exceptions.PersistenceException;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.QuestionManagementFacade;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.ask.AskCommand;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.ask.AskFailedException;
+import ch.heigvd.amt.project.application.core.domain.exceptions.PersistenceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

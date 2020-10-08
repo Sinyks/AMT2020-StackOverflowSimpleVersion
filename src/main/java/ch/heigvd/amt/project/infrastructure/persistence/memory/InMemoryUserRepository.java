@@ -1,9 +1,9 @@
 package ch.heigvd.amt.project.infrastructure.persistence.memory;
 
-import ch.heigvd.amt.project.domain.exceptions.PersistenceException;
-import ch.heigvd.amt.project.domain.user.*;
-import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
-import ch.heigvd.amt.project.domain.exceptions.IntegrityConstraintViolationException;
+import ch.heigvd.amt.project.application.core.domain.exceptions.PersistenceException;
+import ch.heigvd.amt.project.application.core.domain.user.*;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.DataCorruptionException;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.IntegrityConstraintViolationException;
 
 import java.util.Collection;
 import java.util.List;

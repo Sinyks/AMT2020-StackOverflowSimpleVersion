@@ -1,10 +1,10 @@
 package ch.heigvd.amt.project.infrastructure.persistence.memory;
 
-import ch.heigvd.amt.project.domain.entity.IEntity;
-import ch.heigvd.amt.project.domain.entity.IRepository;
-import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
-import ch.heigvd.amt.project.domain.exceptions.IntegrityConstraintViolationException;
-import ch.heigvd.amt.project.domain.entity.Id;
+import ch.heigvd.amt.project.application.core.domain.entity.IEntity;
+import ch.heigvd.amt.project.application.core.domain.entity.IRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.DataCorruptionException;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.IntegrityConstraintViolationException;
+import ch.heigvd.amt.project.application.core.domain.entity.Id;
 
 import java.util.Collection;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package ch.heigvd.amt.project.infrastructure.persistence.memory;
 
-import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
-import ch.heigvd.amt.project.domain.exceptions.PersistenceException;
-import ch.heigvd.amt.project.domain.question.*;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.questionmgmt.QuestionsQuery;
+import ch.heigvd.amt.project.application.core.domain.exceptions.PersistenceException;
+import ch.heigvd.amt.project.application.core.domain.question.*;
 
 import java.util.Collection;
 import java.util.Map;

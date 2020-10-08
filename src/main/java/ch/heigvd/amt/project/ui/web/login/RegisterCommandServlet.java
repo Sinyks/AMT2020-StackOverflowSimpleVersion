@@ -2,18 +2,17 @@ package ch.heigvd.amt.project.ui.web.login;
 
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
-import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
-import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
-import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.domain.exceptions.DataCorruptionException;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.AuthenticationManagementFacade;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.CurrentUserDTO;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.register.RegisterCommand;
+import ch.heigvd.amt.project.application.core.app.servicies.authenticationmgmt.register.RegisterFailedException;
+import ch.heigvd.amt.project.infrastructure.persistence.exceptions.DataCorruptionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 
