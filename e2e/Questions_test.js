@@ -11,10 +11,10 @@ Scenario('Submit a Question', (I, Wordlist) => {
     I.registerRandomUser();
     I.amOnPage(Wordlist.pageUrl.askQuestion);
 
-    I.fillField('label','aaaa');
-    I.fillField('content','aaa');
+    I.fillField(Wordlist.formField.Qlabel,Wordlist.Data.questionLabel);
+    I.fillField(Wordlist.formField.Qcontent,Wordlist.Data.questionContent);
     I.click(Wordlist.formField.SubmitButton);
     I.wait(1);
-    I.see('aaaa');
+    I.see(Wordlist.Data.questionLabel);
 
 });
