@@ -14,7 +14,6 @@ Scenario('Check Form and form method', (I, Wordlist) =>{
 });
 
 Scenario('Check register with correct attribute', (I, Wordlist) => {
-    I.amOnPage(Wordlist.pageUrl.register)
     I.registerRandomUser();
 
     /** TODO
