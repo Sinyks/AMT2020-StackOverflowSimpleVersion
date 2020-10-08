@@ -5,7 +5,9 @@ module.exports = function() {
             password : 'password',
             username: 'username',
             passwordConfirmation: 'Confirm Password',
-            SubmitButton: 'Submit'
+            SubmitButton: 'Submit',
+            Qlabel: 'label',
+            Qcontent: 'content'
         },
         pageUrl: {
             login: '/login',
@@ -16,7 +18,9 @@ module.exports = function() {
         },
         Data: {
             usernameUnique: `User-${Date.now()}`,
-            password: 'pass1234'
+            password: 'pass1234',
+            questionLabel: 'to be or not to be?',
+            questionContent: '... not to be'
         }
 
     });
