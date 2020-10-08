@@ -26,7 +26,8 @@ __Chaque développeur se doit d'implémenter des tests unitaire qu'il juge appro
 
 Lors d'ajout de code/fonction, rajouter sous ``src/test/<cheminfichuer>`` la classe appropriée aux test. Utiliser les fonction d'assertion de l'API de __JUnit__ pour vérifier les conditions.
 
-Les questions de __quoi tester__ et __comment tester__ sont à se poser avant chaque rédaction, elle n'ont pas forcément de réponse évidente.
+Les questions de __quoi tester__ et __comment tester__ sont à se poser avant chaque rédaction, elles n'ont pas forcément de réponse évidente.
 
-## référence utiles
-[](https://www.martinfowler.com/bliki/UnitTest.html)
+## Référence utiles
+[https://dreamix.eu/blog/java/what-needs-to-be-unit-tested-how-much-code-coverage-is-needed](https://dreamix.eu/blog/java/what-needs-to-be-unit-tested-how-much-code-coverage-is-needed)
+[https://www.martinfowler.com/bliki/UnitTest.html](https://www.martinfowler.com/bliki/UnitTest.html)
