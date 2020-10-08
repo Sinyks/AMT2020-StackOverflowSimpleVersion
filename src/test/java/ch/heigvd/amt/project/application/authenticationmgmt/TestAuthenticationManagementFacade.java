@@ -71,7 +71,7 @@ public class TestAuthenticationManagementFacade {
 
 
     @Test
-    public void loginWithExistigUserMustReturnNonNullObject(){
+    public void loginWithExistigUserMustReturnValidObject(){
         CurrentUserDTO cUser = null;
 
         try {
@@ -82,6 +82,7 @@ public class TestAuthenticationManagementFacade {
         }
 
         assertNotNull(cUser);
+        assertEquals(cUser.getUsername(),loginUsername);
     }
 
     @Test
