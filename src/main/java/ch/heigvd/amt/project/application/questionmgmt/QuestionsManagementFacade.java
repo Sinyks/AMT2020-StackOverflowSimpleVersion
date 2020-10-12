@@ -8,19 +8,20 @@ import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Collection;
 
-public class QuestionManagementFacade {
+public class QuestionsManagementFacade {
 
     private IQuestionRepository questionRepository;
 
-    public QuestionManagementFacade(IQuestionRepository questionRepository) {
+    public QuestionsManagementFacade(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
-    //change this to void and make the QuestionsDTO so that we can display them all at the same time
     public void ask (AskCommand command) throws AskFailedException {
         Question newQuestion = Question.builder()
-                .label(command.getLabel())
-                .content(command.getContent())
+                .ownerName(command.getOwnerName())
+                .title(command.getTitle())
+                .body(command.getBody())
+                .tags(command.getTags())
                 .build();
         questionRepository.save(newQuestion);
     }
@@ -29,8 +30,10 @@ public class QuestionManagementFacade {
         Collection<Question> allQuestions = questionRepository.find(query);
 
         List<QuestionsDTO.QuestionDTO> allQuestionsDTO = allQuestions.stream().map(question -> QuestionsDTO.QuestionDTO.builder()
-                .content(question.getContent())
-                .label(question.getLabel())
+                .ownerName(question.getOwnerName())
+                .body(question.getBody())
+                .title(question.getTitle())
+                .tags(question.getTags())
                 .build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder()

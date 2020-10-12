@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class QuestionsQuery {
-
+    // what is this for ?
 }

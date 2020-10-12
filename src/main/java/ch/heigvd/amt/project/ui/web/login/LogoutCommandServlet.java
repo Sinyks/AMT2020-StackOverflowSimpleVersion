@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutCommandServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
+        req.getSession().removeAttribute("success");
         req.getSession().invalidate();
+        req.getSession().setAttribute("success", "Logged out successfully !");
         resp.sendRedirect("");
     }
 

@@ -1,10 +1,9 @@
-package ch.heigvd.amt.project.infrastructure.persistence;
+package ch.heigvd.amt.project.infrastructure.persistence.inMemory;
 
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
 import ch.heigvd.amt.project.domain.question.*;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,18 +14,18 @@ public class InMemoryQuestionRepository implements IQuestionRepository {
     private Map<QuestionId, Question> store = new ConcurrentHashMap<>();
 
     @Override
-    public void save(Question question){
+    public void save(Question question) {
         store.put(question.getId(), question);
     }
 
     @Override
-    public void remove(QuestionId questionId){
+    public void remove(QuestionId questionId) {
         store.remove(questionId);
     }
 
     public Optional<Question> findById(QuestionId questionId) {
         Question existingQuestion = store.get(questionId);
-        if(existingQuestion == null){
+        if (existingQuestion == null) {
             return Optional.empty();
         }
         Question clonedQuestion = existingQuestion.toBuilder().build();
@@ -34,7 +33,7 @@ public class InMemoryQuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public Collection<Question> findAll(){
+    public Collection<Question> findAll() {
         return store.values().stream()
                 .map(question -> question.toBuilder().build())
                 .collect(Collectors.toList());

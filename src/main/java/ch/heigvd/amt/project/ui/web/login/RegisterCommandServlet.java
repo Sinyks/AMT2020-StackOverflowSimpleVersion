@@ -26,9 +26,11 @@ public class RegisterCommandServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
 
         req.getSession().removeAttribute("errors");
+        req.getSession().removeAttribute("success");
 
         RegisterCommand registerCommand = RegisterCommand.builder()
                 .username(req.getParameter("username"))
+                .email(req.getParameter("email"))
                 .clearTextPassword(req.getParameter("password"))
                 .clearTextPasswordConfirm(req.getParameter("confirmPassword"))
                 .build();
@@ -40,6 +42,7 @@ public class RegisterCommandServlet extends HttpServlet {
             req.getSession().setAttribute("currentUser",currentUser);
             String targetUrl = (String) req.getSession().getAttribute("targetUrl");
             targetUrl = (targetUrl != null) ? targetUrl : "/";
+            req.getSession().setAttribute("success", "Account created successfully !");
             resp.sendRedirect(targetUrl);
             return;
 

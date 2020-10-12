@@ -3,17 +3,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/questions">Questions</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout.do">Logout</a>
-            </li>
+            <c:if test="${not empty sessionScope.currentUser.username}">
+                <li class="nav-item">
+                    <a class="nav-link" href="/private">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout.do">Logout</a>
+                </li>
+            </c:if>
+            <c:if test="${empty sessionScope.currentUser.username}">
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </c:if>
         </ul>
     </div>
 </nav>
