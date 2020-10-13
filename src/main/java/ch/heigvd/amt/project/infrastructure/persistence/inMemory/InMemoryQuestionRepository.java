@@ -3,12 +3,16 @@ package ch.heigvd.amt.project.infrastructure.persistence.inMemory;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
 import ch.heigvd.amt.project.domain.question.*;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
+@Named("InMemoryQuestionRepository")
 public class InMemoryQuestionRepository implements IQuestionRepository {
 
     private Map<QuestionId, Question> store = new ConcurrentHashMap<>();

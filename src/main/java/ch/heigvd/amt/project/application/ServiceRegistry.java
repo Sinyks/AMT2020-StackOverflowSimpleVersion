@@ -23,7 +23,7 @@ public class ServiceRegistry {
      */
 
     //Injecting the repositories, maybe we need to do it for the facades too, but not everything at once
-    @Inject @Named("PgsqlUserRepository")
+    @Inject @Named("InMemoryUserRepository")
     IUserRepository userRepository;
 
     @Inject @Named("InMemoryQuestionRepository")
