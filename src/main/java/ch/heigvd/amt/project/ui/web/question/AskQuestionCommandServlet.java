@@ -6,6 +6,7 @@ import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +18,12 @@ import java.util.List;
 @WebServlet(name = "AskCommandServlet", urlPatterns = "/askQuestion.do")
 public class AskQuestionCommandServlet extends HttpServlet {
 
-    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private QuestionsManagementFacade questionsManagementFacade = serviceRegistry.getQuestionManagementFacade();
+    @Inject
+    ServiceRegistry serviceRegistry;
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        QuestionsManagementFacade questionsManagementFacade = serviceRegistry.getQuestionManagementFacade();
 
         req.getSession().removeAttribute("errors");
 

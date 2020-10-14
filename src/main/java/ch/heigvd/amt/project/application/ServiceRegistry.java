@@ -8,25 +8,39 @@ import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRep
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql.PgsqlUserRepository;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@ApplicationScoped
 public class ServiceRegistry {
 
-    private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
+    //Injecting the repositories
+    @Inject @Named("InMemoryUserRepository")
+    IUserRepository userRepository;
 
-    private static final IUserRepository I_USER_REPOSITORY = new PgsqlUserRepository();
-    private static final IQuestionRepository I_QUESTION_REPOSITORY = new InMemoryQuestionRepository();
+    @Inject @Named("InMemoryQuestionRepository")
+    IQuestionRepository questionRepository;
 
-    private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_USER_REPOSITORY);
-    private static final QuestionsManagementFacade QUESTION_MANAGEMENT_FACADE = new QuestionsManagementFacade(I_QUESTION_REPOSITORY);
+    //Management facades
+    private static QuestionsManagementFacade questionsManagementFacade;
+    private static AuthenticationManagementFacade authenticationManagementFacade;
 
-    public static ServiceRegistry getServiceRegistry(){
-        return SERVICE_REGISTRY;
+    public AuthenticationManagementFacade getAuthenticationManagementFacade(){
+        return authenticationManagementFacade;
     }
 
-    public static AuthenticationManagementFacade getAuthenticationManagementFacade(){
-        return AUTHENTICATION_MANAGEMENT_FACADE;
+    public QuestionsManagementFacade getQuestionManagementFacade(){
+        return questionsManagementFacade;
     }
 
-    public static QuestionsManagementFacade getQuestionManagementFacade(){
-        return QUESTION_MANAGEMENT_FACADE;
+    public ServiceRegistry(){}
+
+    @PostConstruct
+    private void initInjection(){
+        authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
+        questionsManagementFacade = new QuestionsManagementFacade(questionRepository);
     }
+
 }

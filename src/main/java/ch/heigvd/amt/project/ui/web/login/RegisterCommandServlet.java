@@ -7,6 +7,7 @@ import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +20,13 @@ import java.util.List;
 @WebServlet(name = "RegisterCommand", urlPatterns = "/register.do")
 public class RegisterCommandServlet extends HttpServlet {
 
-    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
+    @Inject
+    ServiceRegistry serviceRegistry;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
+
+        AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
 
         req.getSession().removeAttribute("errors");
         req.getSession().removeAttribute("success");
