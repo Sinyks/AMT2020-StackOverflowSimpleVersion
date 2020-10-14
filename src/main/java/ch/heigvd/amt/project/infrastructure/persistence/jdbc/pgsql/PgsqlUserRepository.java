@@ -6,6 +6,8 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import ch.heigvd.amt.project.infrastructure.persistence.DataCorruptionException;
 
 import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
+@ApplicationScoped
+@Named("PgsqlUserRepository")
 public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implements IUserRepository {
 
     @Resource(lookup = "jdbc/gza")

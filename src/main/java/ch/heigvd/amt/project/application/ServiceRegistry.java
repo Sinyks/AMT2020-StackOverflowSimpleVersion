@@ -17,7 +17,7 @@ import javax.inject.Named;
 public class ServiceRegistry {
 
     //Injecting the repositories
-    @Inject @Named("InMemoryUserRepository")
+    @Inject @Named("PgsqlUserRepository")
     IUserRepository userRepository;
 
     @Inject @Named("InMemoryQuestionRepository")
