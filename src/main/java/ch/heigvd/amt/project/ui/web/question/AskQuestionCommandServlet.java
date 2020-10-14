@@ -21,9 +21,9 @@ public class AskQuestionCommandServlet extends HttpServlet {
     @Inject
     ServiceRegistry serviceRegistry;
 
-    private QuestionsManagementFacade questionsManagementFacade = serviceRegistry.getQuestionManagementFacade();
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        QuestionsManagementFacade questionsManagementFacade = serviceRegistry.getQuestionManagementFacade();
 
         req.getSession().removeAttribute("errors");
 

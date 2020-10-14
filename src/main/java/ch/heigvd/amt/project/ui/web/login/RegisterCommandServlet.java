@@ -23,10 +23,10 @@ public class RegisterCommandServlet extends HttpServlet {
     @Inject
     ServiceRegistry serviceRegistry;
 
-    private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
+
+        AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
 
         req.getSession().removeAttribute("errors");
         req.getSession().removeAttribute("success");
