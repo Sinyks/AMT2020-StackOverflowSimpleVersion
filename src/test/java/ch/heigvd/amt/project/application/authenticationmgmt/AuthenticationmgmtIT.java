@@ -1,23 +1,17 @@
 package ch.heigvd.amt.project.application.authenticationmgmt;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 import javax.inject.Inject;
+
+import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
 public class AuthenticationmgmtIT {
@@ -37,6 +31,6 @@ public class AuthenticationmgmtIT {
     public void registerUserMustReturnValidObject() {
         AuthenticationManagementFacade amf = serviceRegistry.getAuthenticationManagementFacade();
 
-        Assertions.assertNotNull(amf);
+        assertNotNull(amf);
     }
 }
