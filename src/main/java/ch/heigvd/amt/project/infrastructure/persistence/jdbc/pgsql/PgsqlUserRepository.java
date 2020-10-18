@@ -56,7 +56,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT);
 
-            ps.setString(1, entity.getId().toString());
+            ps.setObject(1, entity.getId().getId());
             ps.setString(2, entity.getUsername());
             ps.setString(3, entity.getEmail());
             ps.setString(4, entity.getAboutMe());

@@ -1,10 +1,13 @@
 package ch.heigvd.amt.project.domain.user;
 
 import ch.heigvd.amt.project.domain.Id;
+import lombok.*;
 
 import java.util.UUID;
 
+@Getter
 public class UserId extends Id {
+
 
     //constructors
     public UserId(){
