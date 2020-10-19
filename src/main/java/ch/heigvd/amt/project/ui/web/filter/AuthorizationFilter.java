@@ -63,6 +63,6 @@ public class AuthorizationFilter implements Filter {
         } else if (uri.startsWith("/arquillian-managed")){
             return true;
         }
-        return false;
+        return true;
     }
 }
