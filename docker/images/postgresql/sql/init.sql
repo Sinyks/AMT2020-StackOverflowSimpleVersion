@@ -1,6 +1,8 @@
+
 DROP SCHEMA IF EXISTS stackoverflowsimple CASCADE;
 CREATE SCHEMA IF NOT EXISTS stackoverflowsimple;
 SET search_path TO stackoverflowsimple, public;
+
 
 --
 -- Creat user and grant prevelege

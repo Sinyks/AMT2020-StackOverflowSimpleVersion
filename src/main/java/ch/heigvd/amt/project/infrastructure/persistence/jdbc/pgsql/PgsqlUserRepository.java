@@ -19,10 +19,10 @@ import java.util.Optional;
 @Named("PgsqlUserRepository")
 public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implements IUserRepository {
 
-    @Resource(lookup = "jdbc/gza")
+    @Resource(lookup = "jdbc/stackoverflowsimple")
     private DataSource dataSource;
 
-    public static final String SQL_INSERT = "INSERT INTO stackoverflowsimple.users "
+    public static final String SQL_INSERT = "INSERT INTO users "
             + "(pk_user,username, email, aboutMe, password)"
             + " VALUES (?, ?, ?, ?, ?)";
 

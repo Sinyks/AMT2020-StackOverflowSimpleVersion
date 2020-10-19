@@ -3,11 +3,11 @@
         <feature>webProfile-8.0</feature>
     </featureManager>
 
-    <dataSource id="jdbc/postgres"  jndiName="jdbc/gza" >
+    <dataSource id="jdbc/postgres"  jndiName="jdbc/stackoverflowsimple" >
         <jdbcDriver libraryRef="postgresql-library" />
         <properties serverName="localhost"
                     portNumber="5432"
-                    databaseName="gza"
+                    databaseName="postgres"
                     user="postgres"
                     password="postgres"/>
     </dataSource>
