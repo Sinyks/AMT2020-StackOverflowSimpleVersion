@@ -4,9 +4,8 @@ import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.domain.person.Person;
-import ch.heigvd.amt.project.infrastructure.persistence.InMemoryPersonRepository;
-import org.junit.jupiter.api.BeforeAll;
+import ch.heigvd.amt.project.domain.user.User;
+import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +16,8 @@ public class TestAuthenticationManagementFacade {
     private final String newPassword = "pass";
 
     private final String loginUsername = "User";
+    private final String loginEmail = "test@test.te";
+
     private final String loginPassword = "pass";
 
     private final String passwordMatchError = "Passwords don't match";
@@ -27,8 +28,13 @@ public class TestAuthenticationManagementFacade {
 
     @BeforeEach
     public void loadStore(){
-        Person testPerson = Person.builder().username(loginUsername).clearTextPassword(loginPassword).build();
-        InMemoryPersonRepository testStore = new InMemoryPersonRepository();
+        User testPerson = User.builder()
+                .username(loginUsername)
+                .email(loginEmail)
+                .clearTextPassword(loginPassword)
+                .build();
+
+        InMemoryUserRepository testStore = new InMemoryUserRepository();
         testStore.save(testPerson);
         amf = new AuthenticationManagementFacade(testStore);
     }
@@ -38,11 +44,13 @@ public class TestAuthenticationManagementFacade {
 
         CurrentUserDTO cUser = null;
         try {
-            cUser = amf.register(RegisterCommand.builder()
-                                                .username(newUsername)
-                                                .clearTextPassword(newPassword)
-                                                .clearTextPasswordConfirm(newPassword)
-                                                .build());
+            cUser = amf.register(
+                    RegisterCommand.builder()
+                            .username(newUsername)
+                            .email(loginEmail)
+                            .clearTextPassword(newPassword)
+                            .clearTextPasswordConfirm(newPassword)
+                            .build());
         } catch (RegisterFailedException e) {
             e.printStackTrace();
             fail();
