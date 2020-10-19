@@ -49,7 +49,9 @@ jobs:
               mvn liberty:configure-arquillian
 
       - name: Run Arquillian Integration Test
-        run: lsof | grep 9080 | grep LISTEN
+        run: | 
+              mvn failsafe:integration-test
+              mvn failsafe:verify 
 
       - name: Build and deploy with docker-compose
         run: |
