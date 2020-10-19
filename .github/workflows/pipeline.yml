@@ -47,7 +47,6 @@ jobs:
         run: | 
               mvn liberty:create liberty:install-feature liberty:deploy
               mvn liberty:configure-arquillian
-              mvn liberty:start
               mvn verify
               
       - name: Build and deploy with docker-compose
