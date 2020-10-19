@@ -28,24 +28,36 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          
+
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
           key: ${{runner.os}}-maven-${{hashFiles('**/pom.xml')}}
-          resotre-keys:
+          restore-keys:
            ${{runner.os}}-maven-
-         
+
       # Runs a set of commands using the runners shell
       - name: Build with Maven
         run: mvn clean package
+
+      - name: Run Junit Test
+        run: mvn test
+
+      - name: Run Arquillian Integration Test
+        run: |
+             mvn liberty:create liberty:install-feature liberty:deploy
+             mvn liberty:start
+             mvn verify
+
+
       - name: Build and deploy with docker-compose
         run: |
              cd ./docker
-             sh ./deploy.sh 
+             sh ./deploy.sh
              #cp ./target/stackoverflow-simplified.war ./docker/images/openliberty/apps
              #cp ./src/main/liberty/config/server.xml ./docker/images/openliberty/configs
-                   
+
+
 
       - name: Tag and push Docker image (includes mvn clean package)
         run: |
@@ -53,4 +65,3 @@ jobs:
              docker tag dev-zaretti/stackoverflowsimpleversion/openliberty ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
              docker push ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty
              #docker build -t dev-zaretti/stackoverflowsimpleversion/openliberty ./docker/images/openliberty
-             
