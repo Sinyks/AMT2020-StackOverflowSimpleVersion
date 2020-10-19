@@ -1,4 +1,6 @@
+/*
 package ch.heigvd.amt.project.application.questionmgmt;
+
 
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
@@ -10,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestQuestionManagementFacade {
 
-    private final String titleQuestion = "ToBeOrNotToBe";
-    private final String ownerNameQuestion = "jeanTest";
-    private final String bodyQuestion = "... Not to Be";
+    private static String titleQuestion;
+    private static String ownerNameQuestion;
+    private static String bodyQuestion;
 
-    private final QuestionsManagementFacade qmf = new QuestionsManagementFacade(new InMemoryQuestionRepository());
+    private static QuestionsManagementFacade qmf;
 
     @Test
     public void askQuestionMustNotThrowErrorIfCommandIsCorrect(){
@@ -39,3 +41,4 @@ public class TestQuestionManagementFacade {
 
     }
 }
+*/

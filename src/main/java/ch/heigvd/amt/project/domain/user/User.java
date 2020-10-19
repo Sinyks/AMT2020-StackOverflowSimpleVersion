@@ -2,6 +2,10 @@ package ch.heigvd.amt.project.domain.user;
 
 import ch.heigvd.amt.project.domain.IEntity;
 import lombok.*;
+import org.mindrot.jbcrypt.BCrypt;
+// http://www.mindrot.org/projects/jBCrypt/
+
+
 
 @Getter
 @Setter
@@ -22,14 +26,13 @@ public class User implements IEntity<User, UserId> {
     private String encryptedPassword;
 
     public boolean login(String clearTextPassword){
-        encryptedPassword = clearTextPassword;
-        return true; // TODO, real encryption
+        return BCrypt.checkpw(clearTextPassword,encryptedPassword);
     }
 
     @Override
     public User deepClone() {
         return this.toBuilder()
-                .id(new UserId(id.asString())) // shouldn't we also do the other paraneter?
+                .id(new UserId(id.asString())) // shouldn't we also do the other parameter?
                 .build();
     }
 
@@ -39,7 +42,7 @@ public class User implements IEntity<User, UserId> {
                 throw new IllegalArgumentException("Password mandatory");
             }
 
-            encryptedPassword = clearTextPassword; // TODO, real encryption
+            encryptedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
             return this;
         }
 

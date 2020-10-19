@@ -1,3 +1,4 @@
+/*
 package ch.heigvd.amt.project.application.authenticationmgmt;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
@@ -6,26 +7,33 @@ import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCom
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 import ch.heigvd.amt.project.domain.user.User;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAuthenticationManagementFacade {
 
-    private final String newUsername = "Vincent";
-    private final String newPassword = "pass";
 
-    private final String loginUsername = "User";
-    private final String loginEmail = "test@test.te";
+    private static String passwordMatchError = "Passwords don't match";
+    private static  String nonExistingUserError = "User not found";
+    private static  String incorrectPasswordError = "Credentials verification failed";
 
-    private final String loginPassword = "pass";
+    private static AuthenticationManagementFacade amf;
+    private static User user;
 
-    private final String passwordMatchError = "Passwords don't match";
-    private final  String nonExistingUserError = "User not found";
-    private final  String incorrectPasswordError = "Credentials verification failed";
+    // this is to initiate all that is needed for all the tests
+    @BeforeAll
+    static void newUser(){
+        user = User.builder()
+                .username("JeanTest")
+                .email("test@test.te")
+                .aboutMe("i am a test person")
+                .clearTextPassword("p4ssw0rd")
+                .build();
+    }
 
-    private AuthenticationManagementFacade amf = null;
-
+    // this is for all that needs to be brought back in an initial states for each tests
     @BeforeEach
     public void loadStore(){
         User testPerson = User.builder()
@@ -114,3 +122,4 @@ public class TestAuthenticationManagementFacade {
 
     }
 }
+*/
