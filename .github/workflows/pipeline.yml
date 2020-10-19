@@ -43,14 +43,11 @@ jobs:
       - name: Run Junit Test
         run: mvn test
 
-      - name: Deploy application Integration Test
-        run: |
-             mvn liberty:create liberty:install-feature liberty:deploy
-             mvn liberty:configure-arquillian
+      - name: prepare for Integration test
+        run: mvn liberty:configure-arquillian
 
       - name: Run Arquillian Integration Test
-        run: |
-            mvn verify
+        run: mvn verify
 
       - name: Build and deploy with docker-compose
         run: |
