@@ -49,8 +49,8 @@ jobs:
              mvn liberty:configure-arquillian
              mvn liberty:start
 
-     - name: Run Arquillian Integration Test
-       run: |
+      - name: Run Arquillian Integration Test
+        run: |
             mvn verify
             mvn liberty:stop
 
