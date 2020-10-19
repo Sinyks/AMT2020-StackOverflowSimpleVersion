@@ -7,5 +7,5 @@ mvn liberty:create liberty:install-feature liberty:deploy
 mvn liberty:start
 # mvn liberty:configure-arquillian
 
-mvn verify -X
-mvn liberty:stop
+mvn verify
+#mvn liberty:stop
