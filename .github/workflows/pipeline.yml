@@ -44,7 +44,10 @@ jobs:
         run: mvn test
 
       - name: prepare for Integration test
-        run: mvn liberty:configure-arquillian
+        run: | 
+              mvn liberty:create liberty:install-feature liberty:deploy
+              mvn liberty:configure-arquillian
+              mvn liberty:stop
 
       - name: Run Arquillian Integration Test
         run: mvn verify
