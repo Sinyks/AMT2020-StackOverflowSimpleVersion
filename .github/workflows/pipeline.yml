@@ -46,7 +46,6 @@ jobs:
       - name: Run Arquillian Integration Test
         run: | 
               mvn liberty:create liberty:install-feature liberty:deploy
-              mvn liberty:configure-arquillian
               mvn verify
               
       - name: Build and deploy with docker-compose
