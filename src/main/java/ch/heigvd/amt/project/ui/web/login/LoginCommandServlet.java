@@ -7,31 +7,32 @@ import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "LoginCommandServlet", urlPatterns = "/login")
+@WebServlet(name = "LoginCommand", urlPatterns = "/login.do")
 public class LoginCommandServlet extends HttpServlet {
 
-    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
-
-     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
-    }
+    @Inject
+    ServiceRegistry serviceRegistry;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
 
+        AuthenticationManagementFacade authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
+
+        req.getSession().removeAttribute("success");
+        req.getSession().removeAttribute("errors");
+
+
         LoginCommand loginCommand = LoginCommand.builder()
-            .username(req.getParameter("userName"))
+            .username(req.getParameter("username"))
             .clearTextPassword(req.getParameter("password"))
             .build();
 
@@ -39,14 +40,16 @@ public class LoginCommandServlet extends HttpServlet {
         try {
             currentUser = authenticationManagementFacade.login(loginCommand);
             req.getSession().setAttribute("currentUser",currentUser);
-            String targetUrl = (String) req.getSession().getAttribute("targetUrl"); // recup l'url cible
-            targetUrl = (targetUrl != null) ? targetUrl : "/"; // redirection vers home si user a pas de cible
+            String targetUrl = (String) req.getSession().getAttribute("targetUrl");
+            targetUrl = (targetUrl != null) ? targetUrl : "/";
+            req.getSession().setAttribute("success", "Logged in successfully !");
             resp.sendRedirect(targetUrl);
+
             return;
 
         } catch (LoginFailedException e){
             req.getSession().setAttribute("errors", List.of(e.getMessage()));
-            resp.sendRedirect("/login"); // login get
+            resp.sendRedirect("/login");
         }
 
     }

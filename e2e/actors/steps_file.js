@@ -13,6 +13,7 @@ module.exports = function() {
     },
 
     register: function(username, password) {
+      this.amOnPage(Wordlist.pageUrl.register);
       this.fillField(Wordlist.formField.username, username);
       this.fillField(Wordlist.formField.password, password);
       this.fillField(Wordlist.formField.passwordConfirmation, password);

@@ -1,19 +1,22 @@
-package ch.heigvd.amt.project.domain.person;
+package ch.heigvd.amt.project.domain.user;
 
 import ch.heigvd.amt.project.domain.IEntity;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
-public class Person implements IEntity<Person,PersonId> {
+public class User implements IEntity<User, UserId> {
 
-    private PersonId id;
+    @Setter(AccessLevel.NONE)
+    private UserId id;
+
     private String username;
+
+    private String email;
+
+    private String aboutMe;
 
     @EqualsAndHashCode.Exclude
     private String encryptedPassword;
@@ -24,14 +27,14 @@ public class Person implements IEntity<Person,PersonId> {
     }
 
     @Override
-    public Person deepClone() {
+    public User deepClone() {
         return this.toBuilder()
-                .id(new PersonId(id.asString())) // shouldn't we also do the other paraneter?
+                .id(new UserId(id.asString())) // shouldn't we also do the other paraneter?
                 .build();
     }
 
-    public static class PersonBuilder {
-        public PersonBuilder clearTextPassword(String clearTextPassword){
+    public static class UserBuilder {
+        public UserBuilder clearTextPassword(String clearTextPassword){
             if(clearTextPassword == null || clearTextPassword.isEmpty()){
                 throw new IllegalArgumentException("Password mandatory");
             }
@@ -40,17 +43,23 @@ public class Person implements IEntity<Person,PersonId> {
             return this;
         }
 
-        public Person build(){
+        public User build(){
 
             if(id == null){
-                id =new PersonId();
+                id =new UserId();
             }
             if(username==null || username.isEmpty()){
                 throw new IllegalArgumentException("username mandatory");
             }
+            if(email==null || email.isEmpty()){
+                throw new IllegalArgumentException("email mandatory");
+            }
+            if(aboutMe==null || aboutMe.isEmpty()){
+                aboutMe="no informations";
+            }
 
-            Person newPerson = new Person(id,username,encryptedPassword); // this line is for debugger purpose
-            return newPerson;
+            User newUser = new User(id,username,email,aboutMe,encryptedPassword); // this line is for debugger purpose
+            return newUser;
         }
     }
 }

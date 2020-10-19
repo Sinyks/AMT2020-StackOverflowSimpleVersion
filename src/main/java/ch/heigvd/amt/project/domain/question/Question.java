@@ -6,15 +6,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date; // WARNING is a dependency, should we write our own date
+
 @Data
 @Builder(toBuilder = true)
-public class Question implements IEntity {
+public class Question implements IEntity<Question, QuestionId> {
 
     @Setter(AccessLevel.NONE)
-    private QuestionId id = new QuestionId();
+    private QuestionId id;
 
-    private String label;
-    private String content;
+    private Date creationDate;
+    private Date lastEditDate;
+    private String ownerName;
+    private String title;
+    private String body;
+    private int voteTotal=0;
+    private Collection<String> tags; // will probably be replaced with enum of predefinte tags
+    private QuestionId answerTo;
 
     @Override
     public Question deepClone() {
@@ -28,14 +39,28 @@ public class Question implements IEntity {
             if(id == null){
                 id = new QuestionId();
             }
-            if(label == null || label.isEmpty()){
-                throw new IllegalArgumentException("questions need a label");
+            if(creationDate == null){
+                creationDate=Date.from(Instant.now());
             }
-            if(content == null || content.isEmpty()){
-                throw new IllegalArgumentException("questions can't be empty");
+            if(lastEditDate == null){
+                lastEditDate=creationDate;
             }
+            if(ownerName==null){
+                throw new IllegalArgumentException("ownerName mandatory");
+            }
+            if(title == null || title.isEmpty()){
+                throw new IllegalArgumentException("title mandatory");
+            }
+            if(body == null || body.isEmpty()){
+                throw new IllegalArgumentException("body mandatory");
+            }
+            // voteTotal init to 0 by default in java
+            if(tags==null){
+                tags=new ArrayList<String>(); // until enum is done
+            }
+            // answerTo can be null for questions
 
-            return new Question(id, label, content);
+            return new Question(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags,answerTo);
         }
     }
 }

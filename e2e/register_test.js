@@ -1,13 +1,11 @@
 const { I, Wordlist } = inject();
 
-// We will use chanceJS to generate username and password pseudo-randomly
-
 Feature('Register');
 
 Scenario('Check access to register page',(I, Wordlist) =>{
     I.amOnPage(Wordlist.pageUrl.register)
-    I.seeCurrentUrlEquals(Wordlist.pageUrl.register)
-    // I.see('Register')
+    // I.seeCurrentUrlEquals(Wordlist.pageUrl.register)
+    I.see('Register')
 });
 
 Scenario('Check Form and form method', (I, Wordlist) =>{
@@ -16,7 +14,6 @@ Scenario('Check Form and form method', (I, Wordlist) =>{
 });
 
 Scenario('Check register with correct attribute', (I, Wordlist) => {
-    I.amOnPage(Wordlist.pageUrl.register)
     I.registerRandomUser();
 
     /** TODO
@@ -25,7 +22,7 @@ Scenario('Check register with correct attribute', (I, Wordlist) => {
 });
 
 /**
- * TODO: 
+ * TODO:
  * check submit with uncorrect password
  * check sumbit with empty username
  * check submit with already existing user

@@ -1,31 +1,45 @@
 package ch.heigvd.amt.project.application;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
-import ch.heigvd.amt.project.application.questionmgmt.QuestionManagementFacade;
-import ch.heigvd.amt.project.domain.person.IPersonRepository;
+import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
+import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.InMemoryPersonRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.InMemoryQuestionRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@ApplicationScoped
 public class ServiceRegistry {
 
-    private static final ServiceRegistry SERVICE_REGISTRY = new ServiceRegistry();
+    //Injecting the repositories
+    @Inject @Named("InMemoryUserRepository")
+    IUserRepository userRepository;
 
-    private static final IPersonRepository I_PERSON_REPOSITORY = new InMemoryPersonRepository();
-    private static final IQuestionRepository I_QUESTION_REPOSITORY = new InMemoryQuestionRepository();
+    @Inject @Named("InMemoryQuestionRepository")
+    IQuestionRepository questionRepository;
 
-    private static final AuthenticationManagementFacade AUTHENTICATION_MANAGEMENT_FACADE = new AuthenticationManagementFacade(I_PERSON_REPOSITORY);
-    private static final QuestionManagementFacade QUESTION_MANAGEMENT_FACADE = new QuestionManagementFacade(I_QUESTION_REPOSITORY);
+    //Management facades
+    private static QuestionsManagementFacade questionsManagementFacade;
+    private static AuthenticationManagementFacade authenticationManagementFacade;
 
-    public static ServiceRegistry getServiceRegistry(){
-        return SERVICE_REGISTRY;
+    public AuthenticationManagementFacade getAuthenticationManagementFacade(){
+        return authenticationManagementFacade;
     }
 
-    public static AuthenticationManagementFacade getAuthenticationManagementFacade(){
-        return AUTHENTICATION_MANAGEMENT_FACADE;
+    public QuestionsManagementFacade getQuestionManagementFacade(){
+        return questionsManagementFacade;
     }
 
-    public static QuestionManagementFacade getQuestionManagementFacade(){
-        return QUESTION_MANAGEMENT_FACADE;
+    public ServiceRegistry(){}
+
+    @PostConstruct
+    private void initInjection(){
+        authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
+        questionsManagementFacade = new QuestionsManagementFacade(questionRepository);
     }
+
 }

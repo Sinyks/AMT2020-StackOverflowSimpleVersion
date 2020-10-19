@@ -6,14 +6,15 @@
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
+<!--Whe should mask the form for unregistered users -->
 <div class="container" style="margin-top:50px">
     <h1>Ask your question</h1>
     <form class="form-horizontal" action="/askQuestion.do" method="post">
         <div class="form-group">
-            <input type="text" class="form-control" id="label" name="label" placeholder="Question Label...">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Question title...">
         </div>
         <div class="form-group">
-            <textarea class="form-control" id="content" name="content" rows="3" placeholder="Question..."></textarea>
+            <textarea class="form-control" id="body" name="body" rows="3" placeholder="Question..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit Question</button>
     </form>
@@ -22,8 +23,8 @@
     <h1>Others asked these questions</h1>
     <c:forEach var="question" items="${questions.questions}">
         <div class well>
-            <h2>${question.label}</h2>
-            <p>${question.content}</p>
+            <h2>${question.title}</h2>
+            <p>${question.body}</p>
         </div>
     </c:forEach>
 </div>
