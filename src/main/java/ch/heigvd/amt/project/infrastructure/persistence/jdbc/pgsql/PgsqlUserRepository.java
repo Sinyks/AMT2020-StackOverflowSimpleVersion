@@ -22,7 +22,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
     @Resource(lookup = "jdbc/stackoverflowsimple")
     private DataSource dataSource;
 
-    public static final String SQL_INSERT = "INSERT INTO users "
+    public static final String SQL_INSERT = "INSERT INTO postgres.stackoverflowsimple.users "
             + "(pk_user,username, email, aboutMe, password)"
             + " VALUES (?, ?, ?, ?, ?)";
 
