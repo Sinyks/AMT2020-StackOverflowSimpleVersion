@@ -1,11 +1,11 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
-import ch.heigvd.amt.project.domain.question.QuestionId;
 import lombok.*;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -16,7 +16,7 @@ public class QuestionsDTO {
     @Getter
     @EqualsAndHashCode
     public static class QuestionDTO {
-        private QuestionId id;
+        private UUID id;
         private Date creationDate;
         private Date lastEditDate;
         private String ownerName;

@@ -31,7 +31,7 @@ public class QuestionsManagementFacade {
         Question question = questionRepository.findById(id).orElse(null);
 
         return QuestionsDTO.QuestionDTO.builder()
-                .id(question.getId())
+                .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
                 .ownerName(question.getOwnerName())
@@ -46,7 +46,7 @@ public class QuestionsManagementFacade {
         Collection<Question> allQuestions = questionRepository.find(query);
 
         List<QuestionsDTO.QuestionDTO> allQuestionsDTO = allQuestions.stream().map(question -> QuestionsDTO.QuestionDTO.builder()
-                .id(question.getId())
+                .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
                 .ownerName(question.getOwnerName())
