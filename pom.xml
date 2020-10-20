@@ -17,9 +17,6 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <!-- Liberty configuration -->
-        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
-        <liberty.var.default.https.port>9443</liberty.var.default.https.port>
     </properties>
 
     <dependencyManagement>
@@ -97,18 +94,6 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.2.3</version>
-                <configuration>
-                    <bootstrapProperties>
-            			<default.http.port>9080</default.http.port>
-            			<default.https.port>9443</default.https.port>
-            			<build.directory>${project.build.directory}</build.directory>
-            		</bootstrapProperties>
-                    <!-- begin configure-arquillian -->
-            		<arquillianProperties>
-            			<verifyApps>arquillian-test</verifyApps>
-            		</arquillianProperties>
-                    <!-- end configure-arquillian -->
-                </configuration>
                 <!-- uncomment this to generate an executable jar - but packaging a .war in a Docker image is faster
                 <executions>
                     <execution>
