@@ -25,7 +25,6 @@ public class Question implements IEntity<Question, QuestionId> {
     private String body;
     private int voteTotal=0;
     private Collection<String> tags; // will probably be replaced with enum of predefinte tags
-    private QuestionId answerTo;
 
     @Override
     public Question deepClone() {
@@ -60,7 +59,7 @@ public class Question implements IEntity<Question, QuestionId> {
             }
             // answerTo can be null for questions
 
-            return new Question(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags,answerTo);
+            return new Question(id, creationDate, lastEditDate, ownerName, title, body,voteTotal,tags);
         }
     }
 }

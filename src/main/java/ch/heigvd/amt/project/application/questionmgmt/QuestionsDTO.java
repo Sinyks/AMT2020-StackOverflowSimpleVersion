@@ -3,7 +3,9 @@ package ch.heigvd.amt.project.application.questionmgmt;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -14,9 +16,13 @@ public class QuestionsDTO {
     @Getter
     @EqualsAndHashCode
     public static class QuestionDTO {
+        private UUID id;
+        private Date creationDate;
+        private Date lastEditDate;
         private String ownerName;
         private String title;
         private String body;
+        private int voteTotal;
         private Collection<String> tags;
     }
 

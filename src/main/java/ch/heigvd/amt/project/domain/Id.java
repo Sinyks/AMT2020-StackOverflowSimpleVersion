@@ -8,7 +8,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Getter
 public abstract class Id {
-
+    @Getter
     private UUID id;
 
     public Id(){ id = UUID.randomUUID(); }

@@ -33,7 +33,12 @@ public class AuthenticationManagementFacade {
                     .build();
             personRepository.save(newUser);
 
-            return createCurrentUserDTO(newUser.getUsername());
+            return CurrentUserDTO.builder()
+                    .id(newUser.getId())
+                    .username((newUser.getUsername()))
+                    .email(newUser.getEmail())
+                    .aboutMe(newUser.getAboutMe())
+                    .build();
 
         } catch (Exception e) {
             throw new RegisterFailedException(e.getMessage());
@@ -54,14 +59,11 @@ public class AuthenticationManagementFacade {
             throw new LoginFailedException("Credentials verification failed");
         }
 
-        return createCurrentUserDTO(user.getUsername());
-    }
-
-    private CurrentUserDTO createCurrentUserDTO(String username) {
-        CurrentUserDTO currentUser = CurrentUserDTO.builder()
-                .username(username)
+        return CurrentUserDTO.builder()
+                .id(user.getId())
+                .username((user.getUsername()))
+                .email(user.getEmail())
+                .aboutMe(user.getAboutMe())
                 .build();
-
-        return currentUser;
     }
 }

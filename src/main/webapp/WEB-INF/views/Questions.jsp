@@ -22,7 +22,7 @@
 <div class="container" style="margin-top:50px">
     <h1>Others asked these questions</h1>
     <c:forEach var="question" items="${questions.questions}">
-        <div class well>
+        <div class well onclick="location.href='/question?questionId=${question.id}'">
             <h2>${question.title}</h2>
             <p>${question.body}</p>
         </div>
