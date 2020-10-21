@@ -32,11 +32,11 @@ public class GzaTestServlet extends HttpServlet {
 
         try{
             Connection con = dataSource.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM public.te");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM stackoverflowsimple.users");
             ResultSet rs = ps.executeQuery();
             this.message = "satrt here ---> ";
             while (rs.next()){
-                this.message += rs.getString("nom") + " " + rs.getInt("id") +"\n";
+                this.message += rs.getString("username") + " " + rs.getString("pk_user") +"\n";
             }
 
             ps.close();

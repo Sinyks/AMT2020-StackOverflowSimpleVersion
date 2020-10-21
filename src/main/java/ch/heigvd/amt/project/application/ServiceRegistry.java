@@ -6,6 +6,7 @@ import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
+import ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql.PgsqlUserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -16,7 +17,7 @@ import javax.inject.Named;
 public class ServiceRegistry {
 
     //Injecting the repositories
-    @Inject @Named("InMemoryUserRepository")
+    @Inject @Named("PgsqlUserRepository")
     IUserRepository userRepository;
 
     @Inject @Named("InMemoryQuestionRepository")

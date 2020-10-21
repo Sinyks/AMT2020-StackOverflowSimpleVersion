@@ -1,10 +1,12 @@
 package ch.heigvd.amt.project.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.UUID;
 
 @EqualsAndHashCode
+@Getter
 public abstract class Id {
 
     private UUID id;
