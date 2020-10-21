@@ -9,11 +9,8 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Optional;
+import java.sql.*;
+import java.util.*;
 
 @ApplicationScoped
 @Named("PgsqlUserRepository")
@@ -22,32 +19,80 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
     @Resource(lookup = "jdbc/stackoverflowsimple")
     private DataSource dataSource;
 
+    public static final String TABLE_ATTRIBUT_CLE = "pk_user";
+    public static final String TABLE_ATTRIBUT_USERNAME = "username";
+    public static final String TABLE_ATTRIBUT_EMAIL = "email";
+    public static final String TABLE_ATTRIBUT_ABOUT_ME = "aboutMe";
+    public static final String TABLE_ATTRIBUT_PASSWORD = "password";
+
     public static final String SQL_INSERT = "INSERT INTO postgres.stackoverflowsimple.users "
             + "(pk_user,username, email, aboutMe, password)"
             + " VALUES (?, ?, ?, ?, ?)";
 
     public static final String SQL_UPDATE_BY_ID = "UPDATE users "
-            + "SET username = ?,"
-            + "email = ?, "
-            + "aboutMe = ?, "
-            + "password = ? "
-            + "WHERE pk_user = ? ";
+            + "SET "+TABLE_ATTRIBUT_USERNAME+" = ?,"
+            + TABLE_ATTRIBUT_USERNAME+" = ?, "
+            + TABLE_ATTRIBUT_ABOUT_ME +" = ?, "
+            + TABLE_ATTRIBUT_PASSWORD +" = ? "
+            + "WHERE " + TABLE_ATTRIBUT_CLE +" = ? ";
 
     public static final String SQL_DELETE_BY_ID = "DELETE FROM users "
-            + "WHERE pk_user = ?";
+            + "WHERE "+TABLE_ATTRIBUT_CLE+" = ?";
 
-    public static final String SQL_SELECT_ALL = "SELECT pk_user, username, email, "
-            + "aboutMe, password, "
+    public static final String SQL_SELECT_ALL = "SELECT "+TABLE_ATTRIBUT_CLE+", "+TABLE_ATTRIBUT_USERNAME+", "+TABLE_ATTRIBUT_EMAIL+", "
+            + TABLE_ATTRIBUT_ABOUT_ME+", "+TABLE_ATTRIBUT_PASSWORD+", "
             + "FROM users ";
 
     public static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL
-            + " WHERE pk_user = ? ";
+            + " WHERE "+TABLE_ATTRIBUT_CLE+" = ? ";
+
+    public static final String SQL_SELECT_BY_NAME = SQL_SELECT_ALL
+            + " WHERE "+TABLE_ATTRIBUT_USERNAME+" = ? ";
+
+
+
 
     @Override
     public Optional<User> findByUsername(String username) {
+        Optional<User> usr = Optional.empty();
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_NAME);
 
-        return Optional.empty();
+            try {
+                ps.setString(1, username);
+            } catch (NumberFormatException ex) {
+
+            }
+
+            try (ResultSet result = ps.executeQuery()) {
+
+                    usr = this.createEntite(result);
+            }
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return usr;
     }
+
+    protected Optional<User> createEntite(ResultSet result) throws DataCorruptionException {
+        Optional<User> user = Optional.empty();
+        try {
+            user = Optional.ofNullable(User.builder().id(new UserId(result.getString(TABLE_ATTRIBUT_CLE)))
+                    .username(result.getString(TABLE_ATTRIBUT_USERNAME))
+                    .email(result.getString(TABLE_ATTRIBUT_EMAIL))
+                    .aboutMe(result.getString(TABLE_ATTRIBUT_ABOUT_ME))
+                    .hashedPassword(result.getString(TABLE_ATTRIBUT_PASSWORD))
+                    .build());
+
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
+        return user;
+    }
+
+
 
     @Override
     public void save(User entity) {
@@ -60,30 +105,75 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             ps.setString(2, entity.getUsername());
             ps.setString(3, entity.getEmail());
             ps.setString(4, entity.getAboutMe());
-            ps.setString(5, entity.getEncryptedPassword());
+            ps.setString(5, entity.getHashedPassword());
             ps.executeUpdate();
             ps.close();
             con.close();
 
 
         } catch (Exception e) {
-            System.out.println(e);
             throw new DataCorruptionException(e.toString());
-        } //entity;
+        }
     }
 
     @Override
     public void remove(UserId id) {
-
+            try {
+                Connection con = dataSource.getConnection();
+                PreparedStatement ps = con.prepareStatement(SQL_DELETE_BY_ID);
+                ps.setObject(1, id.getId());
+                ps.executeUpdate();
+                ps.close();
+                con.close();
+            } catch (SQLException e) {
+                throw new DataCorruptionException(e.toString());
+            }
     }
 
     @Override
     public Optional<User> findById(UserId id) {
-        return Optional.empty();
+        Optional<User> usr = Optional.empty();
+        try {
+            if (id != null) {
+                Connection con = dataSource.getConnection();
+                PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_ID);
+                ps.setObject(1, id.getId());
+
+                try (ResultSet result = ps.executeQuery()) {
+                    usr = createEntite(result);
+                }
+                ps.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return usr;
     }
 
     @Override
     public Collection<User> findAll() {
-        return null;
+
+        Collection<User> list = new ArrayList<User>();
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<User> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
+        
+
     }
 }
