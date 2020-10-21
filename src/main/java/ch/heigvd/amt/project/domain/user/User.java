@@ -2,6 +2,10 @@ package ch.heigvd.amt.project.domain.user;
 
 import ch.heigvd.amt.project.domain.IEntity;
 import lombok.*;
+import org.mindrot.jbcrypt.BCrypt;
+// http://www.mindrot.org/projects/jBCrypt/
+
+
 
 @Getter
 @Setter
@@ -19,17 +23,26 @@ public class User implements IEntity<User, UserId> {
     private String aboutMe;
 
     @EqualsAndHashCode.Exclude
-    private String encryptedPassword;
+    @Setter(AccessLevel.NONE)
+    private String hashedPassword;
 
     public boolean login(String clearTextPassword){
-        encryptedPassword = clearTextPassword;
-        return true; // TODO, real encryption
+        return BCrypt.checkpw(clearTextPassword, hashedPassword);
+    }
+
+    public boolean updatePassword(String oldPassword, String newPassword){
+        if(login(oldPassword)){
+            this.hashedPassword =BCrypt.hashpw(newPassword,BCrypt.gensalt());
+            return true;
+        }
+        return false;
+
     }
 
     @Override
     public User deepClone() {
         return this.toBuilder()
-                .id(new UserId(id.asString())) // shouldn't we also do the other paraneter?
+                .id(new UserId(id.asString()))
                 .build();
     }
 
@@ -39,7 +52,7 @@ public class User implements IEntity<User, UserId> {
                 throw new IllegalArgumentException("Password mandatory");
             }
 
-            encryptedPassword = clearTextPassword; // TODO, real encryption
+            hashedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
             return this;
         }
 
@@ -58,7 +71,11 @@ public class User implements IEntity<User, UserId> {
                 aboutMe="no informations";
             }
 
-            User newUser = new User(id,username,email,aboutMe,encryptedPassword); // this line is for debugger purpose
+            if( this.hashedPassword == null || this.hashedPassword.isEmpty()){
+                throw new IllegalArgumentException("Password mandatory");
+            }
+
+            User newUser = new User(id,username,email,aboutMe,hashedPassword); // this line is for debugger purpose
             return newUser;
         }
     }
