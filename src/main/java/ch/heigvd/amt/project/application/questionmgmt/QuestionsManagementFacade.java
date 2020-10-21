@@ -30,6 +30,10 @@ public class QuestionsManagementFacade {
     public QuestionsDTO.QuestionDTO getQuestion(QuestionId id){
         Question question = questionRepository.findById(id).orElse(null);
 
+        if(question == null){
+            throw new NullPointerException("No question exists with this id.");
+        }
+
         return QuestionsDTO.QuestionDTO.builder()
                 .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
