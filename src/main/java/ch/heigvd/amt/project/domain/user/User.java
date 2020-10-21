@@ -23,16 +23,26 @@ public class User implements IEntity<User, UserId> {
     private String aboutMe;
 
     @EqualsAndHashCode.Exclude
-    private String encryptedPassword;
+    @Setter(AccessLevel.NONE)
+    private String hashedPassword;
 
     public boolean login(String clearTextPassword){
-        return BCrypt.checkpw(clearTextPassword,encryptedPassword);
+        return BCrypt.checkpw(clearTextPassword, hashedPassword);
+    }
+
+    public boolean updatePassword(String oldPassword, String newPassword){
+        if(login(oldPassword)){
+            this.hashedPassword =BCrypt.hashpw(newPassword,BCrypt.gensalt());
+            return true;
+        }
+        return false;
+
     }
 
     @Override
     public User deepClone() {
         return this.toBuilder()
-                .id(new UserId(id.asString())) // shouldn't we also do the other parameter?
+                .id(new UserId(id.asString()))
                 .build();
     }
 
@@ -42,7 +52,7 @@ public class User implements IEntity<User, UserId> {
                 throw new IllegalArgumentException("Password mandatory");
             }
 
-            encryptedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
+            hashedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
             return this;
         }
 
@@ -61,7 +71,11 @@ public class User implements IEntity<User, UserId> {
                 aboutMe="no informations";
             }
 
-            User newUser = new User(id,username,email,aboutMe,encryptedPassword); // this line is for debugger purpose
+            if( this.hashedPassword == null || this.hashedPassword.isEmpty()){
+                throw new IllegalArgumentException("Password mandatory");
+            }
+
+            User newUser = new User(id,username,email,aboutMe,hashedPassword); // this line is for debugger purpose
             return newUser;
         }
     }
