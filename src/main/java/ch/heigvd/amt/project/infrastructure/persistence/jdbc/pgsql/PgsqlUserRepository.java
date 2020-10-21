@@ -83,7 +83,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
                     .username(result.getString(TABLE_ATTRIBUT_USERNAME))
                     .email(result.getString(TABLE_ATTRIBUT_EMAIL))
                     .aboutMe(result.getString(TABLE_ATTRIBUT_ABOUT_ME))
-                    .encryptedPassword(result.getString(TABLE_ATTRIBUT_PASSWORD))
+                    .hashedPassword(result.getString(TABLE_ATTRIBUT_PASSWORD))
                     .build());
 
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             ps.setString(2, entity.getUsername());
             ps.setString(3, entity.getEmail());
             ps.setString(4, entity.getAboutMe());
-            ps.setString(5, entity.getEncryptedPassword());
+            ps.setString(5, entity.getHashedPassword());
             ps.executeUpdate();
             ps.close();
             con.close();
