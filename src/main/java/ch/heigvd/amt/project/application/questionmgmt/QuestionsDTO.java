@@ -1,5 +1,6 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
+import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 import java.util.Collection;
@@ -19,11 +20,11 @@ public class QuestionsDTO {
         private UUID id;
         private Date creationDate;
         private Date lastEditDate;
-        private String ownerName;
+        private UserId ownerId;
         private String title;
         private String body;
-        private int voteTotal;
-        private Collection<String> tags;
+        /*private int voteTotal;
+        private Collection<String> tags;*/
     }
 
     @Singular

@@ -17,7 +17,7 @@ public class Vote implements IEntity<Vote, VoteId> {
 
     private QuestionId questionId;
     private AnswerId answerId;
-    private UserId userId;
+    private UserId ownerId;
     private boolean isUpVote;
 
     @Override
@@ -38,11 +38,11 @@ public class Vote implements IEntity<Vote, VoteId> {
             if(answerId==null){
                 throw new IllegalArgumentException("answerId mandatory");
             }
-            if(userId==null){
+            if(ownerId==null){
                 throw new IllegalArgumentException("userId mandatory");
             }
 
-            Vote newVote = new Vote(id, questionId, answerId, userId, isUpVote);
+            Vote newVote = new Vote(id, questionId, answerId, ownerId, isUpVote);
             return newVote;
         }
     }
