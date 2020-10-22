@@ -70,8 +70,8 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             }
 
             try (ResultSet result = ps.executeQuery()) {
-                if (result.isBeforeFirst() ) {
-                    usr = this.createEntite(result);
+                while (result.next()) {
+                    usr = createEntite(result);
                 }
 
             }
@@ -145,8 +145,8 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
                 ps.setObject(1, id.getId());
 
                 try (ResultSet result = ps.executeQuery()) {
-                    if (result.isBeforeFirst() ) {
-                        usr = this.createEntite(result);
+                    while (result.next()) {
+                        usr = createEntite(result);
                     }
 
                 }
