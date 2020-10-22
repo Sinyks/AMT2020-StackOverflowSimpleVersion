@@ -121,7 +121,7 @@ public class PgsqlQuestionRepository extends PgsqlRepository<Question, QuestionI
                 ps.setObject(1, id.getId());
 
                 try (ResultSet result = ps.executeQuery()) {
-                    if (result.isBeforeFirst() ) {
+                    while (result.next()) {
                         quest = createEntite(result);
                     }
                 }

@@ -113,7 +113,7 @@ public class PgsqlAnswerRepository extends PgsqlRepository<Answer, AnswerId> imp
                 ps.setObject(1, id.getId());
 
                 try (ResultSet result = ps.executeQuery()) {
-                    if (result.isBeforeFirst() ) {
+                    while (result.next()) {
                         answ = createEntite(result);
                     }
                 }
