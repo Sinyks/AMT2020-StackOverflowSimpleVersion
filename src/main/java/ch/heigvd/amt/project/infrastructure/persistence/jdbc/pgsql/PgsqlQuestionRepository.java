@@ -113,7 +113,42 @@ public class PgsqlQuestionRepository extends PgsqlRepository<Question, QuestionI
 
     @Override
     public Optional<Question> findById(QuestionId id) {
-        return Optional.empty();
+        Optional<Question>  quest = Optional.empty();
+        try {
+            if (id != null) {
+                Connection con = dataSource.getConnection();
+                PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_ID);
+                ps.setObject(1, id.getId());
+
+                try (ResultSet result = ps.executeQuery()) {
+                    quest = createEntite(result);
+                }
+                ps.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return quest;
+    }
+
+    protected Optional<Question> createEntite(ResultSet result) throws DataCorruptionException {
+        Optional<Question> quest = Optional.empty();
+        try {
+            quest = Optional.ofNullable(Question.builder().id(new QuestionId(result.getString(TABLE_ATTRIBUT_CLE)))
+                    .ownerId(new UserId(result.getString(TABLE_ATTRIBUT_OWNER)))
+                    .title(result.getString(TABLE_ATTRIBUT_TITLE))
+                    .creationDate(result.getDate(TABLE_ATTRIBUT_CREATION_DATE))
+                    .lastEditDate(result.getDate(TABLE_ATTRIBUT_LAST_EDIT_DATE))
+                    .body(result.getString(TABLE_ATTRIBUT_BODY))
+
+                    .build());
+
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
+        return quest;
     }
 
     @Override
