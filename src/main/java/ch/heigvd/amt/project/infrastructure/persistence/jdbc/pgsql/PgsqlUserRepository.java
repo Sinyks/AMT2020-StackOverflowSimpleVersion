@@ -100,7 +100,6 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
 
     @Override
     public void save(User entity) {
-
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(SQL_INSERT);

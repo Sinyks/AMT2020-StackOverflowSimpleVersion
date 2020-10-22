@@ -71,11 +71,29 @@ public class PgsqlQuestionRepository extends PgsqlRepository<Question, QuestionI
 
     @Override
     public Collection<Question> find(QuestionsQuery query) {
-        return null;
+        return findAll();
     }
 
     @Override
     public void save(Question entity) {
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT);
+
+            ps.setObject(1, entity.getId().getId());
+            ps.setObject(2, entity.getOwnerId().getId());
+            ps.setString(3, entity.getTitle());
+            ps.setDate(4, new java.sql.Date(entity.getCreationDate().getTime()));
+            ps.setDate(5, new java.sql.Date(entity.getLastEditDate().getTime()));
+            ps.setString(6, entity.getBody());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+
+
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
 
     }
 
