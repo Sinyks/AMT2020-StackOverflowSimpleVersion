@@ -11,4 +11,12 @@
     <p>${question.body}</p>
 </div>
 
+<c:forEach items="answer" var="${Answers.answers}">
+    <div class="card">
+        <div class="card-body">
+            <p>${answer.body}</p>
+        </div>
+    </div>
+</c:forEach>
+
 <%@include file="fragments/footer.jsp"%>
