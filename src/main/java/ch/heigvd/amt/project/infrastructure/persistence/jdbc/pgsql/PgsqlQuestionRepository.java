@@ -99,7 +99,16 @@ public class PgsqlQuestionRepository extends PgsqlRepository<Question, QuestionI
 
     @Override
     public void remove(QuestionId id) {
-
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_DELETE_BY_ID);
+            ps.setObject(1, id.getId());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
     }
 
     @Override

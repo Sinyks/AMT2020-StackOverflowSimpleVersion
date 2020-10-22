@@ -14,6 +14,7 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -92,7 +93,16 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
 
     @Override
     public void remove(CommentId id) {
-
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_DELETE_BY_ID);
+            ps.setObject(1, id.getId());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
     }
 
     @Override
