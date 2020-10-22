@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @ApplicationScoped
-@Named("PgsqlUserRepository")
+@Named("PgsqlCommentRepository")
 public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> implements ICommentRepository {
 
     @Resource(lookup = "jdbc/stackoverflowsimple")

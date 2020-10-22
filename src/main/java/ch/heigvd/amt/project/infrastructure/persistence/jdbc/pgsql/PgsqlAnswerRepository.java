@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @ApplicationScoped
-@Named("PgsqlUserRepository")
+@Named("PgsqlAnswerRepository")
 public class PgsqlAnswerRepository extends PgsqlRepository<Answer, AnswerId> implements IAnswerRepository {
 
     @Resource(lookup = "jdbc/stackoverflowsimple")
@@ -165,3 +165,4 @@ public class PgsqlAnswerRepository extends PgsqlRepository<Answer, AnswerId> imp
         return list;
     }
 }
+
