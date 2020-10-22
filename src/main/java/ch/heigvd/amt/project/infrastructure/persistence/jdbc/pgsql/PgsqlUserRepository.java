@@ -45,7 +45,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
 
     public static final String SQL_SELECT_ALL = "SELECT "+TABLE_ATTRIBUT_CLE+", "+TABLE_ATTRIBUT_USERNAME+", "+TABLE_ATTRIBUT_EMAIL+", "
             + TABLE_ATTRIBUT_ABOUT_ME+", "+TABLE_ATTRIBUT_PASSWORD+" "
-            + "FROM users ";
+            + "FROM postgres.stackoverflowsimple.users ";
 
     public static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL
             + " WHERE "+TABLE_ATTRIBUT_CLE+" = ? ";
@@ -70,8 +70,10 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
             }
 
             try (ResultSet result = ps.executeQuery()) {
-
+                if (result.isBeforeFirst() ) {
                     usr = this.createEntite(result);
+                }
+
             }
         } catch (SQLException e) {
             throw new DataCorruptionException(e.toString());
