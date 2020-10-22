@@ -18,12 +18,12 @@ public class AnswersQueryServlet extends HttpServlet {
     @Inject
     ServiceRegistry serviceRegistry;
 
-    private AnswerManagementFacade answerManagementFacade;
+    // private AnswerManagementFacade answerManagementFacade;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        answerManagementFacade = serviceRegistry.getAnswerManagementFacade();
+         // answerManagementFacade = serviceRegistry.getAnswerManagementFacade();
     }
 
     @Override
@@ -31,10 +31,11 @@ public class AnswersQueryServlet extends HttpServlet {
 
         // get Answers related to the question
         QuestionId questionId = new QuestionId(req.getParameter("questionId"));
+        // TODO
         // retrieve all answers for this question
         // AnswersDTO answers = answerManagementFacade.getAnswers(questionId);
 
-        // redirect to specific question
+        // TODO
         // req.setAttribute("answers",answers);
 
         super.doGet(req, resp);
