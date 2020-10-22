@@ -145,7 +145,10 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
                 ps.setObject(1, id.getId());
 
                 try (ResultSet result = ps.executeQuery()) {
-                    usr = createEntite(result);
+                    if (result.isBeforeFirst() ) {
+                        usr = this.createEntite(result);
+                    }
+
                 }
                 ps.close();
                 con.close();

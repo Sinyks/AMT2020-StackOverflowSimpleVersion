@@ -119,7 +119,9 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
                 ps.setObject(1, id.getId());
 
                 try (ResultSet result = ps.executeQuery()) {
-                    comme = createEntite(result);
+                    if (result.isBeforeFirst() ) {
+                        comme = createEntite(result);
+                    }
                 }
                 ps.close();
                 con.close();
