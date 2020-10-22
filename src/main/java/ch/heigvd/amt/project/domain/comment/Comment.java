@@ -17,7 +17,7 @@ public class Comment implements IEntity<Comment, CommentId> {
     @Setter(AccessLevel.NONE)
     private CommentId id;
 
-    private UserId userId;
+    private UserId ownerId;
     private AnswerId answerId;
     private QuestionId questionId;
     private Date creationDate;
@@ -36,7 +36,7 @@ public class Comment implements IEntity<Comment, CommentId> {
             if(id == null){
                 id = new CommentId();
             }
-            if(userId==null){
+            if(ownerId==null){
                 throw new IllegalArgumentException("userId mandatory");
             }
             if(answerId == null && questionId == null){
@@ -55,7 +55,7 @@ public class Comment implements IEntity<Comment, CommentId> {
                 throw new IllegalArgumentException("body mandatory");
             }
 
-            Comment newComment = new Comment(id, userId, answerId, questionId, creationDate, lastEditDate, body);
+            Comment newComment = new Comment(id, ownerId, answerId, questionId, creationDate, lastEditDate, body);
             return newComment;
         }
     }

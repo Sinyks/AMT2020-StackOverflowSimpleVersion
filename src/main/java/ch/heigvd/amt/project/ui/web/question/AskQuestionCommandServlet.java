@@ -28,7 +28,7 @@ public class AskQuestionCommandServlet extends HttpServlet {
         req.getSession().removeAttribute("errors");
 
         AskCommand askCommand = AskCommand.builder()
-                .ownerName(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getUsername())
+                .ownerId(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
                 .title(req.getParameter("title"))
                 .body(req.getParameter("body"))
                 .build();
