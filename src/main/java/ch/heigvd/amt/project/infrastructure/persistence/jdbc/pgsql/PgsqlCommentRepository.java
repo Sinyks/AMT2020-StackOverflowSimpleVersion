@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -150,6 +151,23 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
 
     @Override
     public Collection<Comment> findAll() {
-        return null;
+        Collection<Comment> list = new ArrayList<Comment>();
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Comment> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
     }
 }

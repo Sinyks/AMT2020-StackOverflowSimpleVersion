@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -144,6 +145,23 @@ public class PgsqlAnswerRepository extends PgsqlRepository<Answer, AnswerId> imp
 
     @Override
     public Collection<Answer> findAll() {
-        return null;
+        Collection<Answer> list = new ArrayList<Answer>();
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Answer> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
     }
 }

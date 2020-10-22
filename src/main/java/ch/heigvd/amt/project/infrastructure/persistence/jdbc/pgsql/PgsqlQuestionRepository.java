@@ -153,6 +153,23 @@ public class PgsqlQuestionRepository extends PgsqlRepository<Question, QuestionI
 
     @Override
     public Collection<Question> findAll() {
-        return null;
+        Collection<Question> list = new ArrayList<Question>();
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Question> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
     }
 }
