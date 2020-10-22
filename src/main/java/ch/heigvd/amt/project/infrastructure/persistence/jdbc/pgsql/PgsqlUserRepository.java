@@ -26,21 +26,25 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
     public static final String TABLE_ATTRIBUT_PASSWORD = "password";
 
     public static final String SQL_INSERT = "INSERT INTO postgres.stackoverflowsimple.users "
-            + "(pk_user,username, email, aboutMe, password)"
+            + "("+TABLE_ATTRIBUT_CLE+", "
+            +TABLE_ATTRIBUT_USERNAME+", "
+            +TABLE_ATTRIBUT_EMAIL+", "
+            +TABLE_ATTRIBUT_ABOUT_ME+", "
+            +TABLE_ATTRIBUT_PASSWORD+")"
             + " VALUES (?, ?, ?, ?, ?)";
 
-    public static final String SQL_UPDATE_BY_ID = "UPDATE users "
+    public static final String SQL_UPDATE_BY_ID = "UPDATE postgres.stackoverflowsimple.users "
             + "SET "+TABLE_ATTRIBUT_USERNAME+" = ?,"
             + TABLE_ATTRIBUT_USERNAME+" = ?, "
             + TABLE_ATTRIBUT_ABOUT_ME +" = ?, "
             + TABLE_ATTRIBUT_PASSWORD +" = ? "
             + "WHERE " + TABLE_ATTRIBUT_CLE +" = ? ";
 
-    public static final String SQL_DELETE_BY_ID = "DELETE FROM users "
+    public static final String SQL_DELETE_BY_ID = "DELETE FROM postgres.stackoverflowsimple.users "
             + "WHERE "+TABLE_ATTRIBUT_CLE+" = ?";
 
     public static final String SQL_SELECT_ALL = "SELECT "+TABLE_ATTRIBUT_CLE+", "+TABLE_ATTRIBUT_USERNAME+", "+TABLE_ATTRIBUT_EMAIL+", "
-            + TABLE_ATTRIBUT_ABOUT_ME+", "+TABLE_ATTRIBUT_PASSWORD+", "
+            + TABLE_ATTRIBUT_ABOUT_ME+", "+TABLE_ATTRIBUT_PASSWORD+" "
             + "FROM users ";
 
     public static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL
