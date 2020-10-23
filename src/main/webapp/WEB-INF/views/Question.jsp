@@ -11,7 +11,7 @@
     <p>${question.body}</p>
 </div>
 
-<c:forEach items="answer" var="${Answers.answers}">
+<c:forEach var="answer" items="${question.answers.answers}">
     <div class="card">
         <div class="card-body">
             <p>${answer.body}</p>
