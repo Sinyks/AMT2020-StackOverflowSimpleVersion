@@ -11,6 +11,17 @@
     <p>${question.body}</p>
 </div>
 
+<div class="card card-body">
+    <form action="/answerQuestion.do" method="post">
+        <div class="form-group">
+            <label for="answerBody">Your answer</label>
+            <textarea class="form-control" name="answerBody" id="answerBody" rows="3"></textarea>
+            <input type="hidden" name="questionId" value="${question.id}"/>
+            <input type="submit" class="btn btn-primary" name="submit" value="post answer"/>
+        </div>
+    </form>
+</div>
+
 <c:forEach var="answer" items="${question.answers.answers}">
     <div class="card">
         <div class="card-body">
@@ -18,5 +29,6 @@
         </div>
     </div>
 </c:forEach>
+
 
 <%@include file="fragments/footer.jsp"%>

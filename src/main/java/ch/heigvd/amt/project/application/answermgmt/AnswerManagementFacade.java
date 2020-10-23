@@ -1,5 +1,7 @@
 package ch.heigvd.amt.project.application.answermgmt;
 
+import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
+import ch.heigvd.amt.project.application.answermgmt.answer.AnswerFailedException;
 import ch.heigvd.amt.project.domain.answer.Answer;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.question.QuestionId;
@@ -47,5 +49,15 @@ public class AnswerManagementFacade {
         return AnswersDTO.builder()
                 .answers(allAnswersDTO)
                 .build();
+    }
+
+    public void answer(AnswerCommand command) throws AnswerFailedException {
+        Answer newAnswer = Answer.builder()
+                .body(command.getBody())
+                .ownerId(command.getOwnerID())
+                .questionId(command.getQuestionId())
+                .build();
+
+        answerRepository.save(newAnswer);
     }
 }
