@@ -1,10 +1,8 @@
 package ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql;
 
+import ch.heigvd.amt.project.domain.tag.ITagRepository;
 import ch.heigvd.amt.project.domain.tag.Tag;
 import ch.heigvd.amt.project.domain.tag.TagId;
-import ch.heigvd.amt.project.domain.user.IUserRepository;
-import ch.heigvd.amt.project.domain.user.User;
-import ch.heigvd.amt.project.domain.user.UserId;
 import ch.heigvd.amt.project.domain.vote.IVoteRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.DataCorruptionException;
 
@@ -22,7 +20,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Named("PgsqlTagRepository")
-public class PgsqlTagRepository extends PgsqlRepository<Tag, TagId> implements IVoteRepository {
+public class PgsqlTagRepository extends PgsqlRepository<Tag, TagId> implements ITagRepository {
 
     @Resource(lookup = "jdbc/stackoverflowsimple")
     private DataSource dataSource;
