@@ -64,4 +64,11 @@ CREATE TABLE votes(
     CONSTRAINT votes_uk_kf_ownerId_and_fk_answerId UNIQUE (fk_ownerId,fk_answerId)
 );
 
+CREATE TABLE tags(
+    pk_tag uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    CONSTRAINT tags_pk_tag PRIMARY KEY(pk_tag),
+    CONSTRAINT tags_uk_tag UNIQUE (name)
+);
+
 

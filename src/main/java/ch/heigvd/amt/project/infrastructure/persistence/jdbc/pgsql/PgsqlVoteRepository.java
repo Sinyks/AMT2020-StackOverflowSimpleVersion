@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @ApplicationScoped
-@Named("PgsqlCommentRepository")
+@Named("PgsqlVoteRepository")
 public class PgsqlVoteRepository extends PgsqlRepository<Vote, VoteId> implements IVoteRepository {
 
 
