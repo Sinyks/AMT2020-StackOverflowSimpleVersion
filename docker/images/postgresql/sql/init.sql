@@ -50,3 +50,18 @@ CREATE TABLE comments(
     CONSTRAINT comments_pk_fk_answerId FOREIGN KEY(fk_answerId) REFERENCES answers(pk_answer)  ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE votes(
+    pk_vote uuid NOT NULL,
+    fk_ownerId uuid NOT NULL,
+    fk_questionId uuid NULL,
+    fk_answerId uuid NULL,
+    isUpVote boolean NOT NULL,
+    CONSTRAINT votes_pk_vote PRIMARY KEY(pk_vote),
+    CONSTRAINT votes_pk_fk_ownerId FOREIGN KEY(fk_ownerId) REFERENCES users(pk_user) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT votes_pk_fk_questionId FOREIGN KEY(fk_questionId) REFERENCES questions(pk_question)  ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT votes_pk_fk_answerId FOREIGN KEY(fk_answerId) REFERENCES answers(pk_answer)  ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT votes_uk_fk_ownerId_and_fk_questionId UNIQUE (fk_ownerId,fk_questionId),
+    CONSTRAINT votes_uk_kf_ownerId_and_fk_answerId UNIQUE (fk_ownerId,fk_answerId)
+);
+
+
