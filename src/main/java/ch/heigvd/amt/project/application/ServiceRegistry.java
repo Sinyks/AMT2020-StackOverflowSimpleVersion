@@ -1,7 +1,9 @@
 package ch.heigvd.amt.project.application;
 
+import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
+import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
@@ -20,12 +22,16 @@ public class ServiceRegistry {
     @Inject @Named("PgsqlUserRepository")
     IUserRepository userRepository;
 
-    @Inject @Named("InMemoryQuestionRepository")
+    @Inject @Named("PgsqlQuestionRepository")
     IQuestionRepository questionRepository;
+
+    @Inject @Named("PgsqlAnswerRepository")
+    IAnswerRepository answerRepository;
 
     //Management facades
     private static QuestionsManagementFacade questionsManagementFacade;
     private static AuthenticationManagementFacade authenticationManagementFacade;
+    private static AnswerManagementFacade answerManagementFacade;
 
     public AuthenticationManagementFacade getAuthenticationManagementFacade(){
         return authenticationManagementFacade;
@@ -35,12 +41,16 @@ public class ServiceRegistry {
         return questionsManagementFacade;
     }
 
+    public AnswerManagementFacade getAnswerManagementFacade(){ return answerManagementFacade;}
+
     public ServiceRegistry(){}
 
     @PostConstruct
     private void initInjection(){
         authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
-        questionsManagementFacade = new QuestionsManagementFacade(questionRepository);
+        answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository);
+        questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade);
+
     }
 
 }
