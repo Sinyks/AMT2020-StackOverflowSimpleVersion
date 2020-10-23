@@ -16,6 +16,7 @@ public class UserTest {
     static String aboutMe;
     static String clearTextPassword;
     static String newClearTextPassword;
+    static String preHashedPassword;
 
     @BeforeAll
     static void setForBeforeAll(){
@@ -25,6 +26,7 @@ public class UserTest {
         aboutMe = "I'm a test user";
         clearTextPassword = "p4ssw0rd";
         newClearTextPassword = "&WrWQbYUt8L#)Pc5";
+        preHashedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
     }
 
     @BeforeEach
@@ -63,6 +65,21 @@ public class UserTest {
         assertNotNull(testUser);
         assertNotNull(testUser.getId());
         assertEquals("no informations",testUser.getAboutMe());
+    }
+
+    @Test
+    void buildWithHashedPasswordTest(){
+
+        testUser = User.builder()
+                .email(email)
+                .username(username)
+                .hashedPassword(preHashedPassword)
+                .build();
+
+        assertNotNull(testUser);
+        assertEquals(email,testUser.getEmail());
+        assertEquals(username,testUser.getUsername());
+        assertEquals(preHashedPassword,testUser.getHashedPassword());
     }
 
     @Test
@@ -137,7 +154,7 @@ public class UserTest {
                 .email(email)
                 .username(username)
                 .aboutMe(aboutMe)
-                .clearTextPassword(clearTextPassword)
+                .hashedPassword(preHashedPassword)
                 .build();
         testUser = testUser.deepClone();
 
@@ -146,7 +163,9 @@ public class UserTest {
         assertEquals(email,testUser.getEmail());
         assertEquals(username,testUser.getUsername());
         assertEquals(aboutMe,testUser.getAboutMe());
-        assertNotNull(testUser.getHashedPassword());
+        assertEquals(preHashedPassword,testUser.getHashedPassword());
     }
+
+
 
 }

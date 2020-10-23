@@ -19,10 +19,10 @@ public class QuestionsManagementFacade {
 
     public void ask (AskCommand command) throws AskFailedException {
         Question newQuestion = Question.builder()
-                .ownerName(command.getOwnerName())
+                .ownerId(command.getOwnerId())
                 .title(command.getTitle())
                 .body(command.getBody())
-                .tags(command.getTags())
+                /*.tags(command.getTags())*/
                 .build();
         questionRepository.save(newQuestion);
     }
@@ -38,11 +38,11 @@ public class QuestionsManagementFacade {
                 .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
-                .ownerName(question.getOwnerName())
+                .ownerId(question.getOwnerId())
                 .body(question.getBody())
                 .title(question.getTitle())
-                .voteTotal(question.getVoteTotal())
-                .tags(question.getTags())
+                /*.voteTotal(question.getVoteTotal())
+                .tags(question.getTags())*/
                 .build();
     }
 
@@ -53,11 +53,11 @@ public class QuestionsManagementFacade {
                 .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
-                .ownerName(question.getOwnerName())
+                .ownerId(question.getOwnerId())
                 .body(question.getBody())
                 .title(question.getTitle())
-                .voteTotal(question.getVoteTotal())
-                .tags(question.getTags())
+                /*.voteTotal(question.getVoteTotal())
+                .tags(question.getTags())*/
                 .build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder()
