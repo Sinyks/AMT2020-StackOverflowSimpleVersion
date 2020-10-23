@@ -2,6 +2,7 @@ package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
 import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
+import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
@@ -21,11 +22,18 @@ public class QuestionsManagementFacade {
     private IUserRepository userRepository;
 
     private AnswerManagementFacade answerManagementFacade;
+    private CommentManagementFacade commentManagementFacade;
 
-    public QuestionsManagementFacade(IQuestionRepository questionRepository, IUserRepository userRepository, AnswerManagementFacade answerManagementFacade) {
+    public QuestionsManagementFacade(IQuestionRepository questionRepository,
+                                     IUserRepository userRepository,
+                                     AnswerManagementFacade answerManagementFacade,
+                                     CommentManagementFacade commentManagementFacade)
+    {
+
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.answerManagementFacade = answerManagementFacade;
+        this.commentManagementFacade = commentManagementFacade;
     }
 
     public void ask (AskCommand command) throws AskFailedException {
@@ -66,6 +74,9 @@ public class QuestionsManagementFacade {
                 .answers(
                         answerManagementFacade.getAnswers(question.getId())
                 )
+                .comments(
+                        commentManagementFacade.getComments(question.getId())
+                )
                 /*.voteTotal(question.getVoteTotal())
                 .tags(question.getTags())*/
                 .build();
@@ -84,6 +95,9 @@ public class QuestionsManagementFacade {
                 .title(question.getTitle())
                 .answers(
                         answerManagementFacade.getAnswers(question.getId())
+                )
+                .comments(
+                        commentManagementFacade.getComments(question.getId())
                 )
                 /*.voteTotal(question.getVoteTotal())
                 .tags(question.getTags())*/

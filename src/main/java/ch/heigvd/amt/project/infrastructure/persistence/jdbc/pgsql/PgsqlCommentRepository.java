@@ -71,6 +71,12 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
    public static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL
             + " WHERE "+TABLE_ATTRIBUT_CLE+" = ? ";
 
+    public static final String SQL_SELECT_BY_QUESTIONID = SQL_SELECT_ALL
+           + " WHERE "+TABLE_ATTRIBUT_QUESTION + " = ?" ;
+
+    public static final String SQL_SELECT_BY_ANSWERID = SQL_SELECT_ALL
+            + " WHERE "+TABLE_ATTRIBUT_ANSWER + " = ?" ;
+
 
     @Override
     public void save(Comment entity) {
@@ -158,6 +164,57 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Comment> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
+    }
+
+    @Override
+    public Collection<Comment> findByQuestionID(QuestionId questionId) {
+
+        Collection<Comment> list = new ArrayList<>();
+
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_QUESTIONID);
+            ps.setObject(1, questionId.getId());
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Comment> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
+
+    }
+
+    @Override
+    public Collection<Comment> findByAnswerID(AnswerId answerId) {
+
+        Collection<Comment> list = new ArrayList<>();
+
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_ANSWERID);
+            ps.setObject(1, answerId.getId());
 
             try (ResultSet result = ps.executeQuery()) {
                 while (result.next()) {

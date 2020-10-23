@@ -2,12 +2,16 @@ package ch.heigvd.amt.project.application.answermgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerFailedException;
+import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.domain.answer.Answer;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.project.domain.comment.Comment;
+import ch.heigvd.amt.project.domain.comment.ICommentRepository;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.user.User;
 import ch.heigvd.amt.project.domain.user.UserId;
+import lombok.Builder;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,10 +21,13 @@ public class AnswerManagementFacade {
     private IAnswerRepository answerRepository;
     private IUserRepository userRepository;
 
+    private CommentManagementFacade commentManagementFacade;
 
-    public AnswerManagementFacade(IAnswerRepository answerRepository, IUserRepository userRepository) {
+
+    public AnswerManagementFacade(IAnswerRepository answerRepository, IUserRepository userRepository, CommentManagementFacade commentManagementFacade) {
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
+        this.commentManagementFacade = commentManagementFacade;
     }
 
     private String getUserNameById(UserId id){
@@ -44,6 +51,9 @@ public class AnswerManagementFacade {
                 .ownerId(answer.getOwnerId())
                 .ownerName(getUserNameById(answer.getOwnerId()))
                 .body(answer.getBody())
+                .comments(
+                        commentManagementFacade.getComments(answer.getId())
+                )
                 .build()).collect(Collectors.toList());
 
         return AnswersDTO.builder()
