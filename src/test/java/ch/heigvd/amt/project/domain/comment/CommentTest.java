@@ -27,7 +27,7 @@ public class CommentTest {
     static String body;
 
     @BeforeAll
-    static void setForBeforeAll(){
+    static void setForBeforeAll() {
         commentId = new CommentId();
         ownerId = new UserId(); // Richard Stallman
         answerId = new AnswerId();
@@ -44,37 +44,37 @@ public class CommentTest {
                 " vital system components comprising a full OS as" +
                 " defined by POSIX.";
     }
+
     @BeforeEach
-    void setForBeforeEach(){
-        commentTest=null;
+    void setForBeforeEach() {
+        commentTest = null;
     }
 
 
-
     @ParameterizedTest
-    @ValueSource(ints = {0,1,2,3})
-    void buildFullCommentTest(int passNumber){
-        commentTest= Comment.builder()
+    @ValueSource(ints = {0, 1, 2, 3})
+    void buildFullCommentAndDeepCloneTest(int passNumber) {
+        commentTest = Comment.builder()
                 .id(commentId)
                 .ownerId(ownerId)
-                .questionId((passNumber%2==0)?questionId:null)
-                .answerId((passNumber%2==0)?null:answerId)
+                .questionId((passNumber % 2 == 0) ? questionId : null)
+                .answerId((passNumber % 2 == 0) ? null : answerId)
                 .creationDate(creationDate)
                 .lastEditDate(lastEditDate)
                 .body(body)
                 .build();
 
-        if(passNumber/2==1){
-            commentTest=commentTest.deepClone();
+        if (passNumber / 2 == 1) { // pass 2 and 3 test the deepClone
+            commentTest = commentTest.deepClone();
         }
 
         assertNotNull(commentTest);
         assertEquals(commentId, commentTest.getId());
-        assertEquals(ownerId,commentTest.getOwnerId());
-        if(passNumber%2==0){
-            assertEquals(questionId,commentTest.getQuestionId());
+        assertEquals(ownerId, commentTest.getOwnerId());
+        if (passNumber % 2 == 0) {
+            assertEquals(questionId, commentTest.getQuestionId());
         } else {
-            assertEquals(answerId,commentTest.getAnswerId());
+            assertEquals(answerId, commentTest.getAnswerId());
         }
         assertEquals(creationDate, commentTest.getCreationDate());
         assertEquals(lastEditDate, commentTest.getLastEditDate());
@@ -83,11 +83,11 @@ public class CommentTest {
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    void buildMinimalCommentTest(boolean isQuestion){
-        commentTest= Comment.builder()
+    void buildMinimalCommentTest(boolean isQuestion) {
+        commentTest = Comment.builder()
                 .ownerId(ownerId)
-                .questionId(isQuestion?questionId:null)
-                .answerId(isQuestion?null:answerId)
+                .questionId(isQuestion ? questionId : null)
+                .answerId(isQuestion ? null : answerId)
                 .body(body)
                 .build();
 
@@ -100,11 +100,11 @@ public class CommentTest {
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    void missingMandatoryOwnerIdTest(boolean isQuestion){
-        try{
-            commentTest= Comment.builder()
-                    .questionId(isQuestion?questionId:null)
-                    .answerId(isQuestion?null:answerId)
+    void missingMandatoryOwnerIdTest(boolean isQuestion) {
+        try {
+            commentTest = Comment.builder()
+                    .questionId(isQuestion ? questionId : null)
+                    .answerId(isQuestion ? null : answerId)
                     .body(body)
                     .build();
             fail("did not throw expected exception");
@@ -114,9 +114,9 @@ public class CommentTest {
     }
 
     @Test
-    void missingMandatoryQuestionAndAnswerIdTest(){
-        try{
-            commentTest= Comment.builder()
+    void missingMandatoryQuestionAndAnswerIdTest() {
+        try {
+            commentTest = Comment.builder()
                     .ownerId(ownerId)
                     .body(body)
                     .build();
@@ -128,12 +128,12 @@ public class CommentTest {
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    void missingMandatoryBodyTest(boolean isQuestion){
-        try{
-            commentTest= Comment.builder()
+    void missingMandatoryBodyTest(boolean isQuestion) {
+        try {
+            commentTest = Comment.builder()
                     .ownerId(ownerId)
-                    .questionId(isQuestion?questionId:null)
-                    .answerId(isQuestion?null:answerId)
+                    .questionId(isQuestion ? questionId : null)
+                    .answerId(isQuestion ? null : answerId)
                     .build();
             fail("did not throw expected exception");
         } catch (final IllegalArgumentException e) {
@@ -142,9 +142,9 @@ public class CommentTest {
     }
 
     @Test
-    void answerIdAndQuestionIdPresentTest(){
-        try{
-            commentTest= Comment.builder()
+    void answerIdAndQuestionIdPresentTest() {
+        try {
+            commentTest = Comment.builder()
                     .ownerId(ownerId)
                     .questionId(questionId)
                     .answerId(answerId)
@@ -155,7 +155,6 @@ public class CommentTest {
             assertTrue(true);
         }
     }
-
 
 
 }

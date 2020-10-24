@@ -4,6 +4,8 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Date;
 
@@ -36,8 +38,9 @@ public class QuestionTest {
         questionTest = null;
     }
 
-    @Test
-    void buildFullQuestionTest() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void buildFullQuestionAndDeepCloneTest(boolean isDeepCloneTest) {
         questionTest = Question.builder()
                 .id(questionId)
                 .creationDate(creationDate)
@@ -46,6 +49,10 @@ public class QuestionTest {
                 .title(title)
                 .body(body)
                 .build();
+
+        if (isDeepCloneTest) {
+            questionTest = questionTest.deepClone();
+        }
 
         assertNotNull(questionTest);
         assertEquals(questionId, questionTest.getId());
@@ -72,7 +79,6 @@ public class QuestionTest {
 
     @Test
     void missingMandatoryOwnerIdTest() {
-
         try {
             questionTest = Question.builder()
                     .title(title)
@@ -82,12 +88,10 @@ public class QuestionTest {
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
-
     }
 
     @Test
     void missingMandatoryTitleTest() {
-
         try {
             questionTest = Question.builder()
                     .ownerId(ownerId)
@@ -97,12 +101,10 @@ public class QuestionTest {
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
-
     }
 
     @Test
     void missingMandatoryBodyTest() {
-
         try {
             questionTest = Question.builder()
                     .ownerId(ownerId)
@@ -112,28 +114,6 @@ public class QuestionTest {
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
-
     }
 
-    @Test
-    void deepCloneTest() {
-        questionTest = Question.builder()
-                .id(questionId)
-                .creationDate(creationDate)
-                .lastEditDate(lastEditDate)
-                .ownerId(ownerId)
-                .title(title)
-                .body(body)
-                .build();
-
-        questionTest=questionTest.deepClone();
-
-        assertNotNull(questionTest);
-        assertEquals(questionId, questionTest.getId());
-        assertEquals(creationDate, questionTest.getCreationDate());
-        assertEquals(lastEditDate, questionTest.getLastEditDate());
-        assertEquals(ownerId, questionTest.getOwnerId());
-        assertEquals(title, questionTest.getTitle());
-        assertEquals(body, questionTest.getBody());
-    }
 }

@@ -3,6 +3,8 @@ package ch.heigvd.amt.project.domain.user;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mindrot.jbcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,31 +21,36 @@ public class UserTest {
     static String preHashedPassword;
 
     @BeforeAll
-    static void setForBeforeAll(){
+    static void setForBeforeAll() {
         userId = new UserId();
         username = "jean";
         email = "test@test.te";
         aboutMe = "I'm a test user";
         clearTextPassword = "p4ssw0rd";
         newClearTextPassword = "&WrWQbYUt8L#)Pc5";
-        preHashedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
+        preHashedPassword = BCrypt.hashpw(clearTextPassword, BCrypt.gensalt());
     }
 
     @BeforeEach
-    void setForBeforeEach(){
+    void setForBeforeEach() {
         userTest = null;
     }
 
 
-    @Test
-    void buildFullUserTest(){
-            userTest = User.builder()
-                    .id(userId)
-                    .email(email)
-                    .username(username)
-                    .aboutMe(aboutMe)
-                    .clearTextPassword(clearTextPassword)
-                    .build();
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void buildFullUserAndDeepCloneTest(boolean isDeepCloneTest) {
+        userTest = User.builder()
+                .id(userId)
+                .email(email)
+                .username(username)
+                .aboutMe(aboutMe)
+                .clearTextPassword(clearTextPassword)
+                .build();
+
+        if (isDeepCloneTest) {
+            userTest = userTest.deepClone();
+        }
 
         assertNotNull(userTest);
         assertEquals(userId, userTest.getId());
@@ -55,7 +62,7 @@ public class UserTest {
     }
 
     @Test
-    void buildMinimalUserTest(){
+    void buildMinimalUserTest() {
         userTest = User.builder()
                 .username(username)
                 .email(email)
@@ -68,8 +75,7 @@ public class UserTest {
     }
 
     @Test
-    void buildWithHashedPasswordTest(){
-
+    void buildWithHashedPasswordTest() {
         userTest = User.builder()
                 .email(email)
                 .username(username)
@@ -97,33 +103,32 @@ public class UserTest {
 
     @Test
     void missingMandatoryEmailTest() {
-        try{
+        try {
             userTest = User.builder()
                     .username(username)
                     .clearTextPassword(clearTextPassword)
                     .build();
             fail("did not throw expected exception");
-        } catch(final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
     }
 
     @Test
     void missingMandatoryClearTextPasswordTest() {
-
-        try{
+        try {
             userTest = User.builder()
                     .email(email)
                     .username(username)
                     .build();
             fail("did not throw expected exception");
-        } catch(final IllegalArgumentException e){
+        } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
     }
 
     @Test
-    void loginTest(){
+    void loginTest() {
         userTest = User.builder()
                 .username(username)
                 .email(email)
@@ -134,38 +139,17 @@ public class UserTest {
     }
 
     @Test
-    void passwordUpdateTest(){
+    void passwordUpdateTest() {
         userTest = User.builder()
                 .username(username)
                 .email(email)
                 .clearTextPassword(clearTextPassword)
                 .build();
 
-        if(!userTest.updatePassword(clearTextPassword,newClearTextPassword)){
-            fail("clearTextPassword is not the old password");
+        if (!userTest.updatePassword(clearTextPassword, newClearTextPassword)) {
+            fail("login failed, see loginTest");
         }
         assertTrue(BCrypt.checkpw(newClearTextPassword, userTest.getHashedPassword()));
     }
-
-    @Test
-    void deepCloneTest(){
-        userTest = User.builder()
-                .id(userId)
-                .email(email)
-                .username(username)
-                .aboutMe(aboutMe)
-                .hashedPassword(preHashedPassword)
-                .build();
-        userTest = userTest.deepClone();
-
-        assertNotNull(userTest);
-        assertEquals(userId, userTest.getId());
-        assertEquals(email, userTest.getEmail());
-        assertEquals(username, userTest.getUsername());
-        assertEquals(aboutMe, userTest.getAboutMe());
-        assertEquals(preHashedPassword, userTest.getHashedPassword());
-    }
-
-
 
 }
