@@ -1,6 +1,7 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
+import ch.heigvd.amt.project.application.commentmgmt.CommentsDTO;
 import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class QuestionsDTO {
         private Collection<String> tags;*/
 
         private AnswersDTO answers;
+        private CommentsDTO comments;
     }
 
     @Singular
