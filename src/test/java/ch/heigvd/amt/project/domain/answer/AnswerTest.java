@@ -1,5 +1,6 @@
-package ch.heigvd.amt.project.domain.question;
+package ch.heigvd.amt.project.domain.answer;
 
+import ch.heigvd.amt.project.domain.question.QuestionId;
 import ch.heigvd.amt.project.domain.user.UserId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,77 +12,76 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QuestionTest {
+public class AnswerTest {
+    static Answer answerTest;
 
-    static Question questionTest;
+    static AnswerId answerId;
     static QuestionId questionId;
+    static UserId ownerId;
     static Date creationDate;
     static Date lastEditDate;
-    static UserId ownerId;
-    static String title;
     static String body;
 
     @BeforeAll
     static void setBeforeAll() {
+        answerId = new AnswerId();
         questionId = new QuestionId();
+        ownerId = new UserId();
         creationDate = new Date(1483225200);// January 2017
         lastEditDate = new Date(1498860000);// July 2017
-        ownerId = new UserId();
-        title = "exiting with vim";
-        body = "How do I exit vim? I'm stuck in the terminal since this morning." +
-                " My computer is an Apple 2, gtx3080 I9 128 GB RAM";
+        body = "you have to enter `:wq` to exit vi/vim";
     }
 
-
     @BeforeEach
-    void setBeforeEach() {
-        questionTest = null;
+    void serBeforeEach() {
+        answerTest = null;
     }
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    void buildFullQuestionAndDeepCloneTest(boolean isDeepCloneTest) {
-        questionTest = Question.builder()
-                .id(questionId)
+    void buildFullAnswerAndDeepCloneTest(boolean isDeepCloneTest) {
+        answerTest = Answer.builder()
+                .id(answerId)
                 .creationDate(creationDate)
                 .lastEditDate(lastEditDate)
                 .ownerId(ownerId)
-                .title(title)
+                .questionId(questionId)
                 .body(body)
                 .build();
 
         if (isDeepCloneTest) {
-            questionTest = questionTest.deepClone();
+            answerTest = answerTest.deepClone();
         }
 
-        assertNotNull(questionTest);
-        assertEquals(questionId, questionTest.getId());
-        assertEquals(creationDate, questionTest.getCreationDate());
-        assertEquals(lastEditDate, questionTest.getLastEditDate());
-        assertEquals(ownerId, questionTest.getOwnerId());
-        assertEquals(title, questionTest.getTitle());
-        assertEquals(body, questionTest.getBody());
+        assertNotNull(answerTest);
+        assertEquals(answerId, answerTest.getId());
+        assertEquals(creationDate, answerTest.getCreationDate());
+        assertEquals(lastEditDate, answerTest.getLastEditDate());
+        assertEquals(ownerId, answerTest.getOwnerId());
+        assertEquals(questionId, answerTest.getQuestionId());
+        assertEquals(body, answerTest.getBody());
+
     }
 
     @Test
-    void buildMinimalQuestionTest() {
-        questionTest = Question.builder()
+    void buildMinimalAnswerTest() {
+        answerTest = Answer.builder()
                 .ownerId(ownerId)
-                .title(title)
+                .questionId(questionId)
                 .body(body)
                 .build();
 
-        assertNotNull(questionTest);
-        assertNotNull(questionTest.getId());
-        assertNotNull(questionTest.getCreationDate());
-        assertEquals(questionTest.getCreationDate(), questionTest.getLastEditDate());
+        assertNotNull(answerTest);
+        assertNotNull(answerTest.getId());
+        assertNotNull(answerTest.getCreationDate());
+        assertEquals(answerTest.getCreationDate(), answerTest.getLastEditDate());
     }
 
     @Test
     void missingMandatoryOwnerIdTest() {
         try {
-            questionTest = Question.builder()
-                    .title(title)
+            answerTest = Answer.builder()
+                    .questionId(questionId)
                     .body(body)
                     .build();
             fail("did not throw expected exception");
@@ -91,9 +91,9 @@ public class QuestionTest {
     }
 
     @Test
-    void missingMandatoryTitleTest() {
+    void missingMandatoryQuestionIdTest() {
         try {
-            questionTest = Question.builder()
+            answerTest = Answer.builder()
                     .ownerId(ownerId)
                     .body(body)
                     .build();
@@ -106,9 +106,9 @@ public class QuestionTest {
     @Test
     void missingMandatoryBodyTest() {
         try {
-            questionTest = Question.builder()
+            answerTest = Answer.builder()
                     .ownerId(ownerId)
-                    .title(title)
+                    .questionId(questionId)
                     .build();
             fail("did not throw expected exception");
         } catch (final IllegalArgumentException e) {

@@ -8,12 +8,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class User implements IEntity<User, UserId> {
 
-    @Setter(AccessLevel.NONE)
     private UserId id;
 
     private String username;
@@ -23,7 +21,6 @@ public class User implements IEntity<User, UserId> {
     private String aboutMe;
 
     @EqualsAndHashCode.Exclude
-    @Setter(AccessLevel.NONE)
     private String hashedPassword;
 
     public boolean login(String clearTextPassword){

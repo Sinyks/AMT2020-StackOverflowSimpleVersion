@@ -1,20 +1,19 @@
 package ch.heigvd.amt.project.domain.tag;
 
 import ch.heigvd.amt.project.domain.IEntity;
-import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Tag implements IEntity<Tag, TagId> {
-    @Setter(AccessLevel.NONE)
     private TagId id;
 
-    private String name;
+    private String name; // should this be final?
 
-    @Override
+    // should we declare all possible tags statically?
+
+    @Override // does a deep clone really make sense in a situation where tags are predetermined?
     public Tag deepClone() {
         return this.toBuilder()
                 .id(new TagId(id.asString()))
