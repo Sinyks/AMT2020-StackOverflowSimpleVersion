@@ -22,7 +22,7 @@ public class QuestionTest {
     static String body;
 
     @BeforeAll
-    static void setForBeforeAll() {
+    static void setBeforeAll() {
         questionId = new QuestionId();
         creationDate = new Date(1483225200);// January 2017
         lastEditDate = new Date(1498860000);// July 2017
@@ -34,7 +34,7 @@ public class QuestionTest {
 
 
     @BeforeEach
-    void setForBeforeEach() {
+    void setBeforeEach() {
         questionTest = null;
     }
 

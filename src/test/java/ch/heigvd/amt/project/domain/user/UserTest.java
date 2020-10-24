@@ -21,7 +21,7 @@ public class UserTest {
     static String preHashedPassword;
 
     @BeforeAll
-    static void setForBeforeAll() {
+    static void setBeforeAll() {
         userId = new UserId();
         username = "jean";
         email = "test@test.te";
@@ -32,7 +32,7 @@ public class UserTest {
     }
 
     @BeforeEach
-    void setForBeforeEach() {
+    void setBeforeEach() {
         userTest = null;
     }
 

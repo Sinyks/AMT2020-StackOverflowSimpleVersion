@@ -11,7 +11,7 @@ public class Tag implements IEntity<Tag, TagId> {
     @Setter(AccessLevel.NONE)
     private TagId id;
 
-    private String name;
+    private String name; // should we declare all possible tags statically?
 
     @Override
     public Tag deepClone() {

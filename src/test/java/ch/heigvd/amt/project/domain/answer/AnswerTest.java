@@ -23,7 +23,7 @@ public class AnswerTest {
     static String body;
 
     @BeforeAll
-    static void setForBeforeAll() {
+    static void setBeforeAll() {
         answerId = new AnswerId();
         questionId = new QuestionId();
         ownerId = new UserId();
@@ -33,7 +33,7 @@ public class AnswerTest {
     }
 
     @BeforeEach
-    void serForBeforeEach() {
+    void serBeforeEach() {
         answerTest = null;
     }
 

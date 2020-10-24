@@ -27,7 +27,7 @@ public class CommentTest {
     static String body;
 
     @BeforeAll
-    static void setForBeforeAll() {
+    static void setBeforeAll() {
         commentId = new CommentId();
         ownerId = new UserId(); // Richard Stallman
         answerId = new AnswerId();
@@ -46,7 +46,7 @@ public class CommentTest {
     }
 
     @BeforeEach
-    void setForBeforeEach() {
+    void setBeforeEach() {
         commentTest = null;
     }
 
