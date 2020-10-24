@@ -2,18 +2,15 @@ package ch.heigvd.amt.project.domain.question;
 
 import ch.heigvd.amt.project.domain.IEntity;
 import ch.heigvd.amt.project.domain.user.UserId;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date; // WARNING is a dependency, should we write our own date
 
-
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Question implements IEntity<Question, QuestionId> {
 

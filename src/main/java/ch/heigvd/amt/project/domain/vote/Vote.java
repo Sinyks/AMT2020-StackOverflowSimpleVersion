@@ -7,7 +7,6 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Vote implements IEntity<Vote, VoteId> {

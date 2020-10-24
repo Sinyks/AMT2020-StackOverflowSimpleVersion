@@ -156,17 +156,6 @@ public class CommentTest {
         }
     }
 
-    @Test
-    void invalidObjectWithSetterTest(){
-        commentTest= Comment.builder()
-                .ownerId(ownerId)
-                .questionId(questionId)
-                .body(body)
-                .build();
-
-        commentTest.setOwnerId(null);
-        assertNotEquals(null,commentTest.getOwnerId());
-    }
 
 
 }

@@ -8,7 +8,8 @@ import lombok.*;
 import java.time.Instant;
 import java.util.Date;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Answer implements IEntity<Answer, AnswerId> {
 

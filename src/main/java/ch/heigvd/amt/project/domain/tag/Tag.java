@@ -5,7 +5,6 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Tag implements IEntity<Tag, TagId> {

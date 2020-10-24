@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.util.Date;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Comment implements IEntity<Comment, CommentId> {
