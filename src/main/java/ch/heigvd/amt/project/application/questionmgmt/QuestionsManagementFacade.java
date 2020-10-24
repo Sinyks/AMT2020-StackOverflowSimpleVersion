@@ -93,12 +93,6 @@ public class QuestionsManagementFacade {
                 .ownerName(getUserNameById(question.getOwnerId()))
                 .body(question.getBody())
                 .title(question.getTitle())
-                .answers(
-                        answerManagementFacade.getAnswers(question.getId())
-                )
-                .comments(
-                        commentManagementFacade.getComments(question.getId())
-                )
                 /*.voteTotal(question.getVoteTotal())
                 .tags(question.getTags())*/
                 .build()).collect(Collectors.toList());

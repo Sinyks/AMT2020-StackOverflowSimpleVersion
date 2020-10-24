@@ -146,10 +146,13 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
     protected Optional<Comment> createEntite(ResultSet result) throws DataCorruptionException {
         Optional<Comment> Comme = Optional.empty();
         try {
+            String answerIDString = result.getString(TABLE_ATTRIBUT_ANSWER);
+            String questionIDString = result.getString(TABLE_ATTRIBUT_QUESTION);
+
             Comme = Optional.ofNullable(Comment.builder().id(new CommentId(result.getString(TABLE_ATTRIBUT_CLE)))
                     .ownerId(new UserId(result.getString(TABLE_ATTRIBUT_OWNER)))
-                    .questionId(new QuestionId(result.getString(TABLE_ATTRIBUT_QUESTION)))
-                    .answerId(new AnswerId(result.getString(TABLE_ATTRIBUT_ANSWER)))
+                    .questionId(questionIDString == null?null:new QuestionId(questionIDString))
+                    .answerId(answerIDString == null?null:new AnswerId(answerIDString))
                     .creationDate(result.getDate(TABLE_ATTRIBUT_CREATION_DATE))
                     .lastEditDate(result.getDate(TABLE_ATTRIBUT_LAST_EDIT_DATE))
                     .body(result.getString(TABLE_ATTRIBUT_BODY))
