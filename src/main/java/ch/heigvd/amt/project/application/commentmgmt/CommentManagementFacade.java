@@ -1,8 +1,7 @@
 package ch.heigvd.amt.project.application.commentmgmt;
 
-import ch.heigvd.amt.project.application.answermgmt.answer.CommentCommand;
+import ch.heigvd.amt.project.application.commentmgmt.comment.CommentCommand;
 import ch.heigvd.amt.project.application.answermgmt.answer.CommentFailedException;
-import ch.heigvd.amt.project.domain.answer.Answer;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.comment.Comment;
@@ -77,11 +76,20 @@ public class CommentManagementFacade {
     }
 
     public void comment(CommentCommand command) throws CommentFailedException {
-        Comment newComment = Comment.builder()
-                .body(command.getBody())
-                .ownerId(command.getOwnerID())
-                .questionId(command.getQuestionId())
-                .build();
+        Comment newComment = null;
+        if(command.getAnswerId() != null){
+            newComment = Comment.builder()
+                    .body(command.getBody())
+                    .ownerId(command.getOwnerID())
+                    .answerId(command.getAnswerId())
+                    .build();
+        }else{
+            newComment = Comment.builder()
+                    .body(command.getBody())
+                    .ownerId(command.getOwnerID())
+                    .questionId(command.getQuestionId())
+                    .build();
+        }
 
         commentRepository.save(newComment);
     }

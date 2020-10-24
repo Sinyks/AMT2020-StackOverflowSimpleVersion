@@ -14,10 +14,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -86,8 +83,14 @@ public class PgsqlCommentRepository extends PgsqlRepository<Comment, CommentId> 
 
             ps.setObject(1, entity.getId().getId());
             ps.setObject(2, entity.getOwnerId().getId());
-            ps.setObject(3, entity.getQuestionId().getId());
-            ps.setObject(4,entity.getAnswerId().getId());
+            if(entity.getQuestionId() != null){
+                ps.setObject(3, entity.getQuestionId().getId());
+                ps.setObject(4, null, Types.OTHER);
+            }
+            if(entity.getAnswerId() != null){
+                ps.setObject(3, null, Types.OTHER);
+                ps.setObject(4,entity.getAnswerId().getId());
+            }
             ps.setDate(5, new java.sql.Date(entity.getCreationDate().getTime()));
             ps.setDate(6, new java.sql.Date(entity.getLastEditDate().getTime()));
             ps.setString(7, entity.getBody());
