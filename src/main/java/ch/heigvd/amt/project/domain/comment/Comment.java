@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.util.Date;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Comment implements IEntity<Comment, CommentId> {
@@ -37,7 +36,7 @@ public class Comment implements IEntity<Comment, CommentId> {
                 id = new CommentId();
             }
             if(ownerId==null){
-                throw new IllegalArgumentException("userId mandatory");
+                throw new IllegalArgumentException("ownerId mandatory");
             }
             if(answerId == null && questionId == null){
                 throw new IllegalArgumentException("answerId or questionId mandatory");

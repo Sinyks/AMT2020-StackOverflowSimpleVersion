@@ -7,18 +7,20 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Vote implements IEntity<Vote, VoteId> {
 
-    @Setter(AccessLevel.NONE)
-    private VoteId id;
+    private VoteId id; // this is really artificial
 
     private QuestionId questionId;
     private AnswerId answerId;
     private UserId ownerId;
     private boolean isUpVote;
+
+    public void invertVote() {
+        isUpVote = !isUpVote;
+    }
 
     @Override
     public Vote deepClone() {
@@ -27,20 +29,22 @@ public class Vote implements IEntity<Vote, VoteId> {
                 .build();
     }
 
-    public static class VoteBuilder{
-        public Vote build(){
-            if(id == null){
+    public static class VoteBuilder {
+        public Vote build() {
+            if (id == null) {
                 id = new VoteId();
             }
-            if(questionId==null){
-                throw new IllegalArgumentException("questionId mandatory");
+            if (answerId == null && questionId == null) {
+                throw new IllegalArgumentException("answerId or questionId mandatory");
             }
-            if(answerId==null){
-                throw new IllegalArgumentException("answerId mandatory");
+            if (answerId != null && questionId != null) {
+                throw new IllegalArgumentException("one and only one of answerId or questionId");
             }
-            if(ownerId==null){
+            if (ownerId == null) {
                 throw new IllegalArgumentException("userId mandatory");
             }
+
+            //isUpvote is false by default per java standard
 
             Vote newVote = new Vote(id, questionId, answerId, ownerId, isUpVote);
             return newVote;

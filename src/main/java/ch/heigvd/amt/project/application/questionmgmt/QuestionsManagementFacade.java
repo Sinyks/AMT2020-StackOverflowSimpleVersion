@@ -1,9 +1,16 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
+import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
+import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
+import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
+import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
+import ch.heigvd.amt.project.domain.user.IUserRepository;
+import ch.heigvd.amt.project.domain.user.User;
+import ch.heigvd.amt.project.domain.user.UserId;
 
 import java.util.stream.Collectors;
 import java.util.List;
@@ -12,9 +19,21 @@ import java.util.Collection;
 public class QuestionsManagementFacade {
 
     private IQuestionRepository questionRepository;
+    private IUserRepository userRepository;
 
-    public QuestionsManagementFacade(IQuestionRepository questionRepository) {
+    private AnswerManagementFacade answerManagementFacade;
+    private CommentManagementFacade commentManagementFacade;
+
+    public QuestionsManagementFacade(IQuestionRepository questionRepository,
+                                     IUserRepository userRepository,
+                                     AnswerManagementFacade answerManagementFacade,
+                                     CommentManagementFacade commentManagementFacade)
+    {
+
         this.questionRepository = questionRepository;
+        this.userRepository = userRepository;
+        this.answerManagementFacade = answerManagementFacade;
+        this.commentManagementFacade = commentManagementFacade;
     }
 
     public void ask (AskCommand command) throws AskFailedException {
@@ -25,6 +44,16 @@ public class QuestionsManagementFacade {
                 /*.tags(command.getTags())*/
                 .build();
         questionRepository.save(newQuestion);
+    }
+
+    private String getUserNameById(UserId id){
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user != null){
+            return user.getUsername();
+        }else {
+            throw new NullPointerException("No user with this id found");
+        }
     }
 
     public QuestionsDTO.QuestionDTO getQuestion(QuestionId id){
@@ -39,8 +68,15 @@ public class QuestionsManagementFacade {
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
                 .ownerId(question.getOwnerId())
+                .ownerName(getUserNameById(question.getOwnerId()))
                 .body(question.getBody())
                 .title(question.getTitle())
+                .answers(
+                        answerManagementFacade.getAnswers(question.getId())
+                )
+                .comments(
+                        commentManagementFacade.getComments(question.getId())
+                )
                 /*.voteTotal(question.getVoteTotal())
                 .tags(question.getTags())*/
                 .build();
@@ -54,6 +90,7 @@ public class QuestionsManagementFacade {
                 .creationDate(question.getCreationDate())
                 .lastEditDate(question.getLastEditDate())
                 .ownerId(question.getOwnerId())
+                .ownerName(getUserNameById(question.getOwnerId()))
                 .body(question.getBody())
                 .title(question.getTitle())
                 /*.voteTotal(question.getVoteTotal())
