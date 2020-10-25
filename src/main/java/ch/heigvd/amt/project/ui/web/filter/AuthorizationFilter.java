@@ -58,6 +58,8 @@ public class AuthorizationFilter implements Filter {
             return true;
         } else if (uri.equals("/questions")){ // to extend accordingly with the questions modification
             return true;
+        } else if (uri.equals("/question")){
+            return true;
         } else if (uri.startsWith("/assets")){
                 return true;
         } else if (uri.startsWith("/arquillian-managed")){
