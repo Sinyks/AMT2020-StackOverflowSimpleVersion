@@ -8,7 +8,9 @@
 
 <c:if test="${not empty sessionScope.currentUser.username}">
     <div class="container" style="margin-top:50px">
-        <h1>Ask your question</h1>
+        <div class="container" style="margin-bottom:20px">
+            <h1>Ask your question</h1>
+        </div>
         <form class="form-horizontal" action="/askQuestion.do" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" id="title" name="title" placeholder="Question title...">
@@ -21,11 +23,17 @@
     </div>
 </c:if>
 <div class="container" style="margin-top:50px">
-    <h1>Others asked these questions</h1>
+    <div class="container" style="margin-bottom:20px">
+        <h1>Others asked these questions</h1>
+    </div>
     <c:forEach var="question" items="${questions.questions}">
-        <div class well onclick="location.href='/question?questionId=${question.id}'">
-            <h2>${question.title}</h2>
-            <p>${question.body}</p>
+        <div class="card text-white bg-primary mb-3" onclick="location.href='/question?questionId=${question.id}'">
+            <div class="card-header">
+                <h5>${question.title}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">${question.body}</p>
+            </div>
         </div>
     </c:forEach>
 </div>
