@@ -21,6 +21,7 @@ public class AnswerTest {
     static Date creationDate;
     static Date lastEditDate;
     static String body;
+    static String editedBody;
 
     @BeforeAll
     static void setBeforeAll() {
@@ -30,6 +31,7 @@ public class AnswerTest {
         creationDate = new Date(1483225200);// January 2017
         lastEditDate = new Date(1498860000);// July 2017
         body = "you have to enter `:wq` to exit vi/vim";
+        editedBody = "Hello, you have to enter `:wq` to exit vi/vim properly.";
     }
 
     @BeforeEach
@@ -75,6 +77,7 @@ public class AnswerTest {
         assertNotNull(answerTest.getId());
         assertNotNull(answerTest.getCreationDate());
         assertEquals(answerTest.getCreationDate(), answerTest.getLastEditDate());
+
     }
 
     @Test
@@ -114,6 +117,21 @@ public class AnswerTest {
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
+    }
+
+    @Test
+    void editionTest(){
+        answerTest = Answer.builder()
+                .creationDate(creationDate)
+                .ownerId(ownerId)
+                .questionId(questionId)
+                .body(body)
+                .build();
+
+        assertFalse(answerTest.isEdited());
+        answerTest.editAnswer(editedBody);
+        assertEquals(editedBody,answerTest.getBody());
+        assertTrue(answerTest.isEdited());
     }
 
 }
