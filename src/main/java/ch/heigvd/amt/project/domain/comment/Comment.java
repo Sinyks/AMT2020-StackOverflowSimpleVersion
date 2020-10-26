@@ -23,6 +23,19 @@ public class Comment implements IEntity<Comment, CommentId> {
     private Date lastEditDate;
     private String body;
 
+    public boolean isEdited() {
+        return !this.creationDate.equals(this.lastEditDate);
+    }
+
+    public void editComment(String newBody) {
+        if (newBody == null || newBody.isEmpty()) {
+            throw new IllegalArgumentException("the new body must contain something");
+        }
+        this.body = newBody;
+        this.lastEditDate = Date.from(Instant.now());
+    }
+
+
     @Override
     public Comment deepClone() {
         return this.toBuilder()

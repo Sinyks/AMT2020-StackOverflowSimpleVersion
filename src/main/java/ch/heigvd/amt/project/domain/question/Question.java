@@ -5,16 +5,13 @@ import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date; // WARNING is a dependency, should we write our own date
+import java.util.Date;
 
 @Getter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Question implements IEntity<Question, QuestionId> {
 
-    @Setter(AccessLevel.NONE)
     private QuestionId id;
 
     private Date creationDate;
@@ -22,8 +19,37 @@ public class Question implements IEntity<Question, QuestionId> {
     private UserId ownerId;
     private String title;
     private String body;
-    //private int voteTotal=0;
-    //private Collection<String> tags; // will probably be replaced with enum of predefinte tags
+
+
+    public boolean isEdited() {
+        return !this.creationDate.equals(this.lastEditDate);
+    }
+
+    /**
+     * edit both body and title.
+     * if you want to only edit one attribute, let the other null or empty
+     * correctly update lastEditDate
+     *
+     * @param newTitle
+     * @param newBody
+     * @throws IllegalArgumentException if this is called but both attributes are null or empty
+     */
+    public void editQuestion(String newTitle, String newBody) {
+        if ((newBody == null || newBody.isEmpty()) && (newTitle == null || newTitle.isEmpty())) { // if both are empty/null
+            throw new IllegalArgumentException("the new body or title must contain something");
+        }
+
+        if (newBody == null || newBody.isEmpty()) {
+            newBody = this.body;
+        } else if (newTitle == null || newTitle.isEmpty()) {
+            newTitle = this.title;
+        }
+
+        this.body = newBody;
+        this.title = newTitle;
+        this.lastEditDate = Date.from(Instant.now());
+    }
+
 
     @Override
     public Question deepClone() {
@@ -33,33 +59,27 @@ public class Question implements IEntity<Question, QuestionId> {
     }
 
     public static class QuestionBuilder {
-        public Question build(){
-            if(id == null){
+        public Question build() {
+            if (id == null) {
                 id = new QuestionId();
             }
-            if(creationDate == null){
-                creationDate=Date.from(Instant.now());
+            if (creationDate == null) {
+                creationDate = Date.from(Instant.now());
             }
-            if(lastEditDate == null){
-                lastEditDate=creationDate;
+            if (lastEditDate == null) {
+                lastEditDate = creationDate;
             }
-            if(ownerId==null){
+            if (ownerId == null) {
                 throw new IllegalArgumentException("Owner mandatory");
             }
-            if(title == null || title.isEmpty()){
+            if (title == null || title.isEmpty()) {
                 throw new IllegalArgumentException("title mandatory");
             }
-            if(body == null || body.isEmpty()){
+            if (body == null || body.isEmpty()) {
                 throw new IllegalArgumentException("body mandatory");
             }
-            /* voteTotal init to 0 by default in java
-            if(tags==null){
-                tags=new ArrayList<String>(); // until enum is done
-            }
-            // answerTo can be null for questions
-            */
 
-            return new Question(id, creationDate, lastEditDate, ownerId, title, body /*,voteTotal,tags*/);
+            return new Question(id, creationDate, lastEditDate, ownerId, title, body);
         }
     }
 }
