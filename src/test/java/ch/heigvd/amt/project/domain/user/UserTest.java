@@ -146,9 +146,12 @@ public class UserTest {
                 .clearTextPassword(clearTextPassword)
                 .build();
 
-        if (!userTest.updatePassword(clearTextPassword, newClearTextPassword)) {
-            fail("login failed, see loginTest");
+        try {
+            userTest.updatePassword(newClearTextPassword);
+        } catch (final IllegalArgumentException e) {
+            fail(e.getMessage());
         }
+
         assertTrue(BCrypt.checkpw(newClearTextPassword, userTest.getHashedPassword()));
     }
 
