@@ -25,6 +25,7 @@ public class CommentTest {
     static Date creationDate;
     static Date lastEditDate;
     static String body;
+    static String editedBody;
 
     @BeforeAll
     static void setBeforeAll() {
@@ -43,6 +44,7 @@ public class CommentTest {
                 " useful by the GNU corelibs, shell utilities and" +
                 " vital system components comprising a full OS as" +
                 " defined by POSIX.";
+        editedBody = "<this comment has been auto-removed by 'microsoft-ninja-bot'>";
     }
 
     @BeforeEach
@@ -79,6 +81,7 @@ public class CommentTest {
         assertEquals(creationDate, commentTest.getCreationDate());
         assertEquals(lastEditDate, commentTest.getLastEditDate());
         assertEquals(body, commentTest.getBody());
+
     }
 
     @ParameterizedTest
@@ -95,6 +98,7 @@ public class CommentTest {
         assertNotNull(commentTest.getId());
         assertNotNull(commentTest.getCreationDate());
         assertEquals(commentTest.getCreationDate(), commentTest.getLastEditDate());
+
     }
 
 
@@ -156,5 +160,21 @@ public class CommentTest {
         }
     }
 
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void editionTest(boolean isQuestion){
+        commentTest = Comment.builder()
+                .ownerId(ownerId)
+                .creationDate(creationDate)
+                .questionId(isQuestion ? questionId : null)
+                .answerId(isQuestion ? null : answerId)
+                .body(body)
+                .build();
+
+        assertFalse(commentTest.isEdited());
+        commentTest.editComment(editedBody);
+        assertEquals(editedBody,commentTest.getBody());
+        assertTrue(commentTest.isEdited());
+    }
 
 }
