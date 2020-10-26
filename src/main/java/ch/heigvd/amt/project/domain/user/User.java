@@ -14,9 +14,7 @@ public class User implements IEntity<User, UserId> {
     private UserId id;
 
     private String username;
-
     private String email;
-
     private String aboutMe;
 
     @EqualsAndHashCode.Exclude
@@ -39,6 +37,40 @@ public class User implements IEntity<User, UserId> {
             throw new IllegalArgumentException("Password can't be empty or null");
         }
         this.hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+    }
+
+    /**
+     * Update personal information except password
+     * if you don't want to update all field, just let them empty or null
+     * at least one field must be not empty or not null
+     *
+     * @param newUsername
+     * @param newAboutMe
+     * @param newEmail
+     * @throws IllegalArgumentException if all three fields are empty or null
+     */
+    public void updatePersonalInformations(String newUsername, String newAboutMe, String newEmail) {
+        if ((newUsername == null || newUsername.isEmpty())
+                && (newAboutMe == null || newAboutMe.isEmpty())
+                && (newEmail == null || newEmail.isEmpty())) {
+            throw new IllegalArgumentException("at least one attribute should be not null or not empty");
+        }
+
+        if (newUsername == null || newUsername.isEmpty()) {
+            newUsername = this.username;
+        }
+
+        if (newAboutMe == null || newAboutMe.isEmpty()) {
+            newAboutMe = this.aboutMe;
+        }
+
+        if (newEmail == null || newEmail.isEmpty()) {
+            newEmail = this.email;
+        }
+
+        this.email = newEmail;
+        this.aboutMe = newAboutMe;
+        this.username = newUsername;
     }
 
     @Override
@@ -77,7 +109,7 @@ public class User implements IEntity<User, UserId> {
                 throw new IllegalArgumentException("Password mandatory");
             }
 
-            User newUser = new User(id, username, email, aboutMe, hashedPassword); // this line is for debugger purpose
+            User newUser = new User(id, username, email, aboutMe, hashedPassword); // this line is for debugging purpose
             return newUser;
         }
     }

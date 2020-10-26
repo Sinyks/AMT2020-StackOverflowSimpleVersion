@@ -19,6 +19,9 @@ public class UserTest {
     static String clearTextPassword;
     static String newClearTextPassword;
     static String preHashedPassword;
+    static String newEmail;
+    static String newUsername;
+    static String newAboutMe;
 
     @BeforeAll
     static void setBeforeAll() {
@@ -29,6 +32,9 @@ public class UserTest {
         clearTextPassword = "p4ssw0rd";
         newClearTextPassword = "&WrWQbYUt8L#)Pc5";
         preHashedPassword = BCrypt.hashpw(clearTextPassword, BCrypt.gensalt());
+        newEmail = "new@new.ne";
+        newUsername = "xX_Jean_Xx";
+        newAboutMe = "I'm an updated test user";
     }
 
     @BeforeEach
@@ -154,5 +160,36 @@ public class UserTest {
 
         assertTrue(BCrypt.checkpw(newClearTextPassword, userTest.getHashedPassword()));
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
+    void updatePersonalInformation(int passNumber) {
+        userTest = User.builder()
+                .username(username)
+                .email(email)
+                .aboutMe(aboutMe)
+                .clearTextPassword(clearTextPassword)
+                .build();
+
+        try {
+            userTest.updatePersonalInformations((passNumber / 4 == 1) ? newUsername : null,
+                    ((passNumber % 4) / 2 == 1) ? newAboutMe : null,
+                    (passNumber % 2 == 1) ? newEmail : null);
+        } catch (final IllegalArgumentException e) {
+            if (passNumber == 0) {
+                assertTrue(true);
+            } else {
+                fail(e.getMessage());
+            }
+        }
+
+        assertEquals((passNumber / 4 == 1) ? newUsername : username,
+                userTest.getUsername());
+        assertEquals(((passNumber % 4) / 2 == 1) ? newAboutMe : aboutMe,
+                userTest.getAboutMe());
+        assertEquals((passNumber % 2 == 1) ? newEmail : email,
+                userTest.getEmail());
+    }
+
 
 }
