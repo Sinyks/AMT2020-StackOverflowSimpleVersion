@@ -20,6 +20,8 @@ public class QuestionTest {
     static UserId ownerId;
     static String title;
     static String body;
+    static String editedTitle;
+    static String editedBody;
 
     @BeforeAll
     static void setBeforeAll() {
@@ -28,7 +30,9 @@ public class QuestionTest {
         lastEditDate = new Date(1498860000);// July 2017
         ownerId = new UserId();
         title = "exiting with vim";
-        body = "How do I exit vim? I'm stuck in the terminal since this morning." +
+        body = "How do I exit vim? I'm stuck in the terminal since this morning.";
+        editedTitle = "Exiting with vim";
+        editedBody = "How do I exit vim? I'm stuck in the terminal since this morning." +
                 " My computer is an Apple 2, gtx3080 I9 128 GB RAM";
     }
 
@@ -114,6 +118,46 @@ public class QuestionTest {
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void oneAttributeEditionTest(boolean isTitleEdit) {
+        questionTest = Question.builder()
+                .creationDate(creationDate)
+                .ownerId(ownerId)
+                .title(title)
+                .body(body)
+                .build();
+
+        assertFalse(questionTest.isEdited());
+        questionTest.editQuestion(isTitleEdit ? editedTitle : null,
+                isTitleEdit ? null : editedBody);
+
+        if (isTitleEdit) {
+            assertEquals(editedTitle, questionTest.getTitle());
+            assertEquals(body, questionTest.getBody());
+        } else {
+            assertEquals(title, questionTest.getTitle());
+            assertEquals(editedBody, questionTest.getBody());
+        }
+        assertTrue(questionTest.isEdited());
+    }
+
+    @Test
+    void bothAttributeEditionTest() {
+        questionTest = Question.builder()
+                .creationDate(creationDate)
+                .ownerId(ownerId)
+                .title(title)
+                .body(body)
+                .build();
+
+        assertFalse(questionTest.isEdited());
+        questionTest.editQuestion(editedTitle, editedBody);
+        assertEquals(editedTitle, questionTest.getTitle());
+        assertEquals(editedBody, questionTest.getBody());
+        assertTrue(questionTest.isEdited());
     }
 
 }
