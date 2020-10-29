@@ -5,7 +5,7 @@
 
     <dataSource id="jdbc/postgres"  jndiName="jdbc/stackoverflowsimple" >
         <jdbcDriver libraryRef="postgresql-library" />
-        <properties serverName="localhost"
+        <properties serverName="db"
                     portNumber="5432"
                     databaseName="postgres"
                     user="postgres"
