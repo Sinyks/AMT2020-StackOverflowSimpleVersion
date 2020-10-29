@@ -69,18 +69,19 @@ public class questionmgmtFacadeIT {
     }
 
 
+    /*
     @Test
-    public void aksQuestionWithInvalidUserMustThrowException(){
-
+    public void aksQuestionWithInvalidUserMustNotThrowException(){
+        
         AskCommand command = testUtils.getAskCommand(currentUserDTO.getId(),currentUserDTO.getUsername());
 
         try {
-            questionsManagementFacade.ask(command);
+            questionsManagementFacade.ask(testUtils.getAskCommand(currentUserDTO.getId(),currentUserDTO.getUsername()));
         } catch (AskFailedException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
-    }
+    }*/
 
     @Test
     public void getQuestionsMustReturnValidObjects(){

@@ -2,6 +2,7 @@ package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
 import ch.heigvd.amt.project.application.commentmgmt.CommentsDTO;
+import ch.heigvd.amt.project.application.votemgmt.VotesDTO;
 import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
@@ -26,11 +27,12 @@ public class QuestionsDTO {
         private String ownerName;
         private String title;
         private String body;
-        /*private int voteTotal;
-        private Collection<String> tags;*/
+        private int voteTotal;
+        //private Collection<String> tags;
 
         private AnswersDTO answers;
         private CommentsDTO comments;
+        private VotesDTO votes;
     }
 
     @Singular
