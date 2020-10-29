@@ -37,7 +37,7 @@
 
     <div class="container">
         <h2>Password change</h2>
-        <form class="form-horizontal" action="/passwordInfo.do" method="post">
+        <form class="form-horizontal" action="/profilePassword.do" method="post">
             <div class="form-group">
                 <label for="oldPassword">Password</label>
                 <input class="form-control" type="password" name="oldPassword" id="oldPassword"

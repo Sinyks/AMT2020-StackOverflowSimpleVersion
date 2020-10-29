@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.application.profilemgmt.password.info;
+package ch.heigvd.amt.project.application.profilemgmt.password;
 
 import ch.heigvd.amt.project.application.BusinessException;
 

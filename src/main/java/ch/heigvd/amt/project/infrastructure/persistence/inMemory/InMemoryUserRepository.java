@@ -31,6 +31,11 @@ public class InMemoryUserRepository extends InMemoryRepository<User, UserId> imp
 
     }
 
+    //@Override
+    public void updateById(UserId id, String username, String aboutMe, String email, String hashedPassword) {
+
+    }
+
     @Override
     public void remove(UserId userId) {
         super.remove(userId); // should we do synchronization here?

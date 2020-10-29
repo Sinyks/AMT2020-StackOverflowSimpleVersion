@@ -14,8 +14,6 @@ import javax.servlet.ServletException;
 public class ProfilePageServlet extends HttpServlet {
 
 
-    //we already have all info in CurrentUserDTO
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

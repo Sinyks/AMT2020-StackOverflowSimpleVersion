@@ -35,7 +35,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
 
     public static final String SQL_UPDATE_BY_ID = "UPDATE postgres.stackoverflowsimple.users "
             + "SET "+TABLE_ATTRIBUT_USERNAME+" = ?,"
-            + TABLE_ATTRIBUT_USERNAME+" = ?, "
+            + TABLE_ATTRIBUT_EMAIL+" = ?, "
             + TABLE_ATTRIBUT_ABOUT_ME +" = ?, "
             + TABLE_ATTRIBUT_PASSWORD +" = ? "
             + "WHERE " + TABLE_ATTRIBUT_CLE +" = ? ";
@@ -97,6 +97,28 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
         }
         return user;
     }
+
+    /*
+    @Override
+    public void updateById(UserId id, String username, String aboutMe, String email, String hashedPassword) {
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_UPDATE_BY_ID);
+
+            ps.setObject(1, username);
+            ps.setString(2, email);
+            ps.setString(3, aboutMe);
+            ps.setString(4, hashedPassword);
+            ps.setObject(5, id.getId());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+
+
+        } catch (Exception e) {
+            throw new DataCorruptionException(e.toString());
+        }
+    }*/
 
 
 
