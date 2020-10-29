@@ -4,7 +4,6 @@ Feature('login');
 
 Scenario('Check Access to login page', (I, Wordlist) => {
     I.amOnPage(Wordlist.pageUrl.login);
-    // I.seeCurrentUrlEquals(Wordlist.pageUrl.login)
     I.see('Login')
 });
 
@@ -17,9 +16,7 @@ Scenario('Check form submit non-existing account',(I, Wordlist) => {
     I.amOnPage(Wordlist.pageUrl.login);
     I.login('Null','Null');
 
-    /**
-     * Error message must be returned (To Implement)
-     */
+    I.amOnPage(Wordlist.pageUrl.login);
 });
 
 /**
