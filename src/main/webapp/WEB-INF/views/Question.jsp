@@ -6,7 +6,7 @@
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
-<div class="container" style="margin-top:50px">
+<div class="jumbotron">
     <div class="card bg-light mb-3">
         <div class="card-header">
             <h1>${question.title}</h1>
@@ -48,9 +48,14 @@
                 </div>
                 </c:if>
             </div>
+            <footer class="blockquote-footer">
+                <small class="text-muted">
+                    Posted by ${question.ownerName} on ${question.creationDate} (last edited on ${question.lastEditDate})
+                </small>
+            </footer>
         </div>
     </div>
-    <div class="container" style="margin-left:30px">
+    <div class="container-fluid" style="margin-left:30px;padding-right:80px">
         <c:if test="${not empty sessionScope.currentUser.username}">
             <div class="card bg-light mb-3">
                 <div class="card-header">
@@ -71,6 +76,11 @@
             <div class="card bg-light mb-3">
                 <div class="card-body">
                     <p>${comment.body}</p>
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Posted by ${comment.ownerName} on ${comment.creationDate} (last edited on ${comment.lastEditDate})
+                        </small>
+                    </footer>
                 </div>
             </div>
         </c:forEach>
@@ -141,6 +151,11 @@
                                 </div>
                             </c:if>
                         </div>
+                        <footer class="blockquote-footer">
+                            <small class="text-muted">
+                                Posted by ${answer.ownerName} on ${answer.creationDate} (last edited on ${answer.lastEditDate})
+                            </small>
+                        </footer>
                     </div>
                 </div>
                 <div class="container" style="margin-left:30px">
@@ -166,6 +181,11 @@
                         <div class="card bg-light mb-3">
                             <div class="card-body">
                                 <p>${comment.body}</p>
+                                <footer class="blockquote-footer">
+                                    <small class="text-muted">
+                                        Posted by ${comment.ownerName} on ${comment.creationDate} (last edited on ${comment.lastEditDate})
+                                    </small>
+                                </footer>
                             </div>
                         </div>
                     </c:forEach>
