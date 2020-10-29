@@ -67,6 +67,12 @@ public class PgsqlVoteRepository extends PgsqlRepository<Vote, VoteId> implement
    public static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL
             + " WHERE "+TABLE_ATTRIBUT_CLE+" = ? ";
 
+    public static final String SQL_SELECT_BY_QUESTIONID = SQL_SELECT_ALL
+            + " WHERE "+TABLE_ATTRIBUT_QUESTION + " = ?" ;
+
+    public static final String SQL_SELECT_BY_ANSWERID = SQL_SELECT_ALL
+            + " WHERE "+TABLE_ATTRIBUT_ANSWER + " = ?" ;
+
 
     @Override
     public void save(Vote entity) {
@@ -131,10 +137,13 @@ public class PgsqlVoteRepository extends PgsqlRepository<Vote, VoteId> implement
     protected Optional<Vote> createEntite(ResultSet result) throws DataCorruptionException {
         Optional<Vote> vote = Optional.empty();
         try {
+            String answerIDString = result.getString(TABLE_ATTRIBUT_ANSWER);
+            String questionIDString = result.getString(TABLE_ATTRIBUT_QUESTION);
+
             vote = Optional.ofNullable(Vote.builder().id(new VoteId(result.getString(TABLE_ATTRIBUT_CLE)))
                     .ownerId(new UserId(result.getString(TABLE_ATTRIBUT_OWNER)))
-                    .questionId(new QuestionId(result.getString(TABLE_ATTRIBUT_QUESTION)))
-                    .answerId(new AnswerId(result.getString(TABLE_ATTRIBUT_ANSWER)))
+                    .questionId(questionIDString == null?null:new QuestionId(questionIDString))
+                    .answerId(answerIDString == null?null:new AnswerId(answerIDString))
                     .isUpVote(result.getBoolean(TABLE_ATTRIBUT_UP_VOTE))
                     .build());
 
@@ -150,6 +159,57 @@ public class PgsqlVoteRepository extends PgsqlRepository<Vote, VoteId> implement
         try {
             Connection con = dataSource.getConnection();
             PreparedStatement ps = con.prepareStatement(SQL_SELECT_ALL);
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Vote> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
+    }
+
+    @Override
+    public Collection<Vote> findByQuestionID(QuestionId questionId) {
+
+        Collection<Vote> list = new ArrayList<>();
+
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_QUESTIONID);
+            ps.setObject(1, questionId.getId());
+
+            try (ResultSet result = ps.executeQuery()) {
+                while (result.next()) {
+                    Optional<Vote> entite = this.createEntite(result);
+                    list.add(entite.get());
+                }
+            }
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new DataCorruptionException(e.toString());
+        }
+
+        return list;
+
+    }
+
+    @Override
+    public Collection<Vote> findByAnswerID(AnswerId answerId) {
+
+        Collection<Vote> list = new ArrayList<>();
+
+        try {
+            Connection con = dataSource.getConnection();
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT_BY_ANSWERID);
+            ps.setObject(1, answerId.getId());
 
             try (ResultSet result = ps.executeQuery()) {
                 while (result.next()) {
