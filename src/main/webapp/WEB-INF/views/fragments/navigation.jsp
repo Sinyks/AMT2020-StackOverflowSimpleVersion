@@ -7,7 +7,7 @@
             </li>
             <c:if test="${not empty sessionScope.currentUser.username}">
                 <li class="nav-item">
-                    <a class="nav-link" href="/private">My Profile</a>
+                    <a class="nav-link" href="/profile">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout.do">Logout</a>
