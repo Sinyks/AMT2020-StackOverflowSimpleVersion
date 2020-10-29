@@ -13,6 +13,9 @@
         </div>
         <div class="card-body">
             <p>${question.body}</p>
+            <div class="container">
+                <p><%request.getParameter("voteCount");%></p>
+            </div>
         </div>
     </div>
     <div class="container" style="margin-left:30px">

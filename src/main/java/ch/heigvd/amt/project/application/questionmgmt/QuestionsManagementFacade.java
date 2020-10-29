@@ -4,6 +4,7 @@ import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
 import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
+import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
@@ -23,17 +24,20 @@ public class QuestionsManagementFacade {
 
     private AnswerManagementFacade answerManagementFacade;
     private CommentManagementFacade commentManagementFacade;
+    private VoteManagementFacade voteManagementFacade;
 
     public QuestionsManagementFacade(IQuestionRepository questionRepository,
                                      IUserRepository userRepository,
                                      AnswerManagementFacade answerManagementFacade,
-                                     CommentManagementFacade commentManagementFacade)
+                                     CommentManagementFacade commentManagementFacade,
+                                     VoteManagementFacade voteManagementFacade)
     {
 
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.answerManagementFacade = answerManagementFacade;
         this.commentManagementFacade = commentManagementFacade;
+        this.voteManagementFacade = voteManagementFacade;
     }
 
     public void ask (AskCommand command) throws AskFailedException {
@@ -76,6 +80,9 @@ public class QuestionsManagementFacade {
                 )
                 .comments(
                         commentManagementFacade.getComments(question.getId())
+                )
+                .votes(
+                        voteManagementFacade.getVotes(question.getId())
                 )
                 /*.voteTotal(question.getVoteTotal())
                 .tags(question.getTags())*/
