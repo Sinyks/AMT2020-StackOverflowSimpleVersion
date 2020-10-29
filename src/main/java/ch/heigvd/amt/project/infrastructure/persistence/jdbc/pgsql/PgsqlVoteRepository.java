@@ -17,10 +17,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -82,8 +79,14 @@ public class PgsqlVoteRepository extends PgsqlRepository<Vote, VoteId> implement
 
             ps.setObject(1, entity.getId().getId());
             ps.setObject(2, entity.getOwnerId().getId());
-            ps.setObject(3, entity.getQuestionId().getId());
-            ps.setObject(4,entity.getAnswerId().getId());
+            if(entity.getQuestionId() != null){
+                ps.setObject(3, entity.getQuestionId().getId());
+                ps.setObject(4, null, Types.OTHER);
+            }
+            if(entity.getAnswerId() != null){
+                ps.setObject(3, null, Types.OTHER);
+                ps.setObject(4,entity.getAnswerId().getId());
+            }
             ps.setBoolean(5, entity.isUpVote());
             ps.executeUpdate();
             ps.close();

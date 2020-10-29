@@ -1,11 +1,10 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
-import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
 import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
-import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.project.application.votemgmt.VotesDTO;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
@@ -67,6 +66,18 @@ public class QuestionsManagementFacade {
             throw new NullPointerException("No question exists with this id.");
         }
 
+        VotesDTO votesDTO = voteManagementFacade.getVotes(question.getId());
+
+        int voteTotal = 0;
+
+        for (VotesDTO.VoteDTO vote : votesDTO.getVotes()) {
+            if(vote.isUpVote()){
+                voteTotal++;
+            }else{
+                voteTotal--;
+            }
+        }
+
         return QuestionsDTO.QuestionDTO.builder()
                 .id(question.getId().getId())
                 .creationDate(question.getCreationDate())
@@ -82,10 +93,12 @@ public class QuestionsManagementFacade {
                         commentManagementFacade.getComments(question.getId())
                 )
                 .votes(
-                        voteManagementFacade.getVotes(question.getId())
+                        votesDTO
                 )
-                /*.voteTotal(question.getVoteTotal())
-                .tags(question.getTags())*/
+                .voteTotal(
+                        voteTotal
+                )
+                //.tags(question.getTags())*/
                 .build();
     }
 

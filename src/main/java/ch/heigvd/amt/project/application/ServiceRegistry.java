@@ -63,7 +63,7 @@ public class ServiceRegistry {
         authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
         voteManagementFacade = new VoteManagementFacade(voteRepository, commentRepository, answerRepository);
         commentManagementFacade = new CommentManagementFacade(commentRepository, answerRepository, userRepository);
-        answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade);
+        answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade, voteManagementFacade);
         questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade,commentManagementFacade, voteManagementFacade);
     }
 

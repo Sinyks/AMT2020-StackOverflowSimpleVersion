@@ -27,8 +27,8 @@ public class QuestionsDTO {
         private String ownerName;
         private String title;
         private String body;
-        /*private int voteTotal;
-        private Collection<String> tags;*/
+        private int voteTotal;
+        //private Collection<String> tags;
 
         private AnswersDTO answers;
         private CommentsDTO comments;

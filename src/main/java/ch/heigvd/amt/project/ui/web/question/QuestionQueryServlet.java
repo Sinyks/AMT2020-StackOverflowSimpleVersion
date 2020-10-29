@@ -3,7 +3,6 @@ package ch.heigvd.amt.project.ui.web.question;
 import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsDTO;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
-import ch.heigvd.amt.project.application.votemgmt.VotesDTO;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 
 import javax.inject.Inject;
@@ -34,18 +33,9 @@ public class QuestionQueryServlet extends HttpServlet {
         QuestionId questionId = new QuestionId(req.getParameter("questionId"));
         QuestionsDTO.QuestionDTO questionDTO = questionsManagementFacade.getQuestion(questionId);
 
-        int voteCount = 0;
-        for (VotesDTO.VoteDTO voteDTO : questionDTO.getVotes().getVotes()) {
-            if(voteDTO.isUpVote()){
-                voteCount++;
-            }else{
-                voteCount--;
-            }
-        }
 
         //redirect to specific question
         req.setAttribute("question", questionDTO);
-        req.setAttribute("voteCount", voteCount);
         req.getRequestDispatcher("/WEB-INF/views/Question.jsp").forward(req, resp);
     }
 }

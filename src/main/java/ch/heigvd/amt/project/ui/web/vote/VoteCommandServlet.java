@@ -4,6 +4,7 @@ import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
 import ch.heigvd.amt.project.application.votemgmt.vote.VoteCommand;
+import ch.heigvd.amt.project.application.votemgmt.vote.VoteFailedException;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "VoteCommandServlet", urlPatterns = "/vote.do")
 public class VoteCommandServlet extends HttpServlet {
@@ -28,7 +30,7 @@ public class VoteCommandServlet extends HttpServlet {
         final String questionId = req.getParameter("questionId");
         final String answerString = req.getParameter("answerId");
 
-        final boolean isUpVote = (req.getParameter("isUpVote") == "true");
+        final boolean isUpVote = (req.getParameter("vote").equals("up"));
 
         AnswerId answerId = (answerString != null) ? new AnswerId(answerString) : null;
 
@@ -38,5 +40,14 @@ public class VoteCommandServlet extends HttpServlet {
                 .answerId(answerId)
                 .isUpVote(isUpVote)
                 .build();
+
+        try {
+            voteManagementFacade.vote(voteCommand);
+        } catch (VoteFailedException e){
+            req.getSession().setAttribute("error", List.of(e.getMessage()));
+            resp.sendRedirect("/questions");
+        }
+
+        resp.sendRedirect("/question?questionId=" + questionId);
     }
 }
