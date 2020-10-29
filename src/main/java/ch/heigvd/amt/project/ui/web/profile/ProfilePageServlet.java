@@ -22,6 +22,7 @@ public class ProfilePageServlet extends HttpServlet {
 
         CurrentUserDTO currentUserDTO = (CurrentUserDTO)req.getSession().getAttribute("currentUser");
 
+        req.setAttribute("profileInfo", currentUserDTO);
         req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
     }
 }

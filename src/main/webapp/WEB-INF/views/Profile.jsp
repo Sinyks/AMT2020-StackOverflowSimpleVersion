@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:useBean scope="request" id="profileInfo" type="ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO"/>
+
+
 <%@include file="fragments/header.jsp" %>
 <%@include file="fragments/navigation.jsp" %>
 
@@ -11,21 +14,21 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="getFromServlet">
+                <input class="form-control" type="text" name="username" id="username" placeholder="${profileInfo.username}">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="text" name="email" id="email" placeholder="getFromServlet">
+                <input class="form-control" type="text" name="email" id="email" placeholder="${profileInfo.email}">
             </div>
 
             <div class="form-group">
                 <label for="aboutMe">About me</label>
-                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3" placeholder="getFromServlet"></textarea>
+                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3" placeholder="${profileInfo.aboutMe}"></textarea>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Update info">
             </div>
         </form>
 
@@ -54,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Change password">
             </div>
 
         </form>
