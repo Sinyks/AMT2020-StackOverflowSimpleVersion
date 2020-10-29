@@ -5,11 +5,12 @@ import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.application.testUtil.testUtils;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -19,16 +20,23 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.inject.Inject;
+import java.util.Random;
 import static org.junit.Assert.*;
 
 
 @RunWith(Arquillian.class)
 @FixMethodOrder(MethodSorters.JVM)
-public class AuthenticationmgmtFacadeIT {
+public class AuthenticationmgmtIT {
 
     private final static String WARNAME = "arquillian-managed.war";
 
-    private AuthenticationManagementFacade authenticationManagementFacade;
+    private AuthenticationManagementFacade authMF;
+
+    private static final Random rand = new Random();
+
+    private static final String USERNAME = "Carl" + rand.nextInt();
+    private static final String EMAIL = USERNAME + "@mail.com";
+    private static final String PASSWORD = "pass1234";
 
     @Inject
     ServiceRegistry serviceRegistry;
@@ -42,61 +50,68 @@ public class AuthenticationmgmtFacadeIT {
 
     @Before
     public void init(){
-        authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
+        authMF = serviceRegistry.getAuthenticationManagementFacade();
     }
 
     @Test
     public void registerUserMustReturnValidObject() {
 
+        RegisterCommand registerCmd = RegisterCommand.builder()
+                .username(USERNAME)
+                .email(EMAIL)
+                .clearTextPassword(PASSWORD)
+                .clearTextPasswordConfirm(PASSWORD)
+                .build();
+
         CurrentUserDTO currentUserDTO = null;
 
         try {
-            currentUserDTO = this.authenticationManagementFacade.register(testUtils.testRegCommand);
+            currentUserDTO = this.authMF.register(registerCmd);
         } catch (RegisterFailedException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
 
         assertNotNull(currentUserDTO);
-        assertEquals(currentUserDTO.getUsername(), testUtils.USERNAME);
-        assertEquals(currentUserDTO.getEmail(), testUtils.USER_EMAIL);
+        assertEquals(currentUserDTO.getUsername(), USERNAME);
+        assertEquals(currentUserDTO.getEmail(), EMAIL);
     }
 
     @Test
     public void loginWithValidUserMustReturnValidObject(){
         LoginCommand loginCmd = LoginCommand.builder()
-                .username(testUtils.USERNAME)
-                .clearTextPassword(testUtils.USER_PASSWORD)
+                .username(USERNAME)
+                .clearTextPassword(PASSWORD)
                 .build();
 
         CurrentUserDTO currentUserDTO = null;
 
         try {
-            currentUserDTO = this.authenticationManagementFacade.login(loginCmd);
+            currentUserDTO = this.authMF.login(loginCmd);
         } catch (LoginFailedException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
 
         assertNotNull(currentUserDTO);
-        assertEquals(currentUserDTO.getUsername(),testUtils.USERNAME);
-        assertEquals(currentUserDTO.getEmail(),testUtils.USER_EMAIL);
+        assertEquals(currentUserDTO.getUsername(),USERNAME);
+        assertEquals(currentUserDTO.getEmail(),EMAIL);
     }
 
     @Test
     public void registerUserWithWrongPasswordConfirmMustFailed(){
 
-        String username = testUtils.USERNAME;
+        String username = "test"+rand.nextInt();
 
         RegisterCommand registerCmd = RegisterCommand.builder()
                 .username(username)
                 .email(username +"@mail.com")
-                .clearTextPassword(testUtils.USER_PASSWORD)
+                .clearTextPassword(PASSWORD)
                 .clearTextPasswordConfirm("wrong")
                 .build();
 
         try {
-            this.authenticationManagementFacade.register(registerCmd);
+            this.authMF.register(registerCmd);
             fail("Wrong password Must failed");
         } catch (RegisterFailedException e) {
             assertNotNull(e);

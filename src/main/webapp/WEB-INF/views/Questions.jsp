@@ -27,17 +27,12 @@
         <h1>Others asked these questions</h1>
     </div>
     <c:forEach var="question" items="${questions.questions}">
-        <div class="card bg-light mb-3" onclick="location.href='/question?questionId=${question.id}'">
+        <div class="card text-white bg-primary mb-3" onclick="location.href='/question?questionId=${question.id}'">
             <div class="card-header">
                 <h5>${question.title}</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">${question.body}</p>
-                <footer class="blockquote-footer">
-                    <small class="text-muted">
-                        Posted by ${question.ownerName} on ${question.creationDate} (last edited on ${question.lastEditDate})
-                    </small>
-                </footer>
             </div>
         </div>
     </c:forEach>
