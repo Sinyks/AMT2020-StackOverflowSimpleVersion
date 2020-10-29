@@ -5,10 +5,12 @@ import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManage
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 //import ch.heigvd.amt.project.application.profilemgmt.ProfileManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
+import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.project.domain.comment.ICommentRepository;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
+import ch.heigvd.amt.project.domain.vote.IVoteRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -31,13 +33,16 @@ public class ServiceRegistry {
     @Inject @Named("PgsqlCommentRepository")
     ICommentRepository commentRepository;
 
+    @Inject @Named("PgsqlVoteRepository")
+    IVoteRepository voteRepository;
+
     //Management facades
     private static QuestionsManagementFacade questionsManagementFacade;
     private static AuthenticationManagementFacade authenticationManagementFacade;
     private static AnswerManagementFacade answerManagementFacade;
     private static CommentManagementFacade commentManagementFacade;
     //private static ProfileManagementFacade profileManagementFacade;
-
+    private static VoteManagementFacade voteManagementFacade;
 
     public AuthenticationManagementFacade getAuthenticationManagementFacade(){
         return authenticationManagementFacade;
@@ -52,16 +57,19 @@ public class ServiceRegistry {
     public CommentManagementFacade getCommentManagementFacade(){ return commentManagementFacade;}
 
     //public ProfileManagementFacade getProfileManagementFacade() { return profileManagementFacade;}
+    
+    public VoteManagementFacade getVoteManagementFacade(){ return voteManagementFacade;}
 
     public ServiceRegistry(){}
 
     @PostConstruct
     private void initInjection(){
         authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
+        voteManagementFacade = new VoteManagementFacade(voteRepository, commentRepository, answerRepository);
         commentManagementFacade = new CommentManagementFacade(commentRepository, answerRepository, userRepository);
-        answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade);
-        questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade,commentManagementFacade);
         //profileManagementFacade = new ProfileManagementFacade(userRepository);
+        answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade, voteManagementFacade);
+        questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade,commentManagementFacade, voteManagementFacade);
     }
 
 

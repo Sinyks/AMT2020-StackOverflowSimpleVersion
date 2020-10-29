@@ -33,6 +33,7 @@ public class QuestionQueryServlet extends HttpServlet {
         QuestionId questionId = new QuestionId(req.getParameter("questionId"));
         QuestionsDTO.QuestionDTO questionDTO = questionsManagementFacade.getQuestion(questionId);
 
+
         //redirect to specific question
         req.setAttribute("question", questionDTO);
         req.getRequestDispatcher("/WEB-INF/views/Question.jsp").forward(req, resp);
