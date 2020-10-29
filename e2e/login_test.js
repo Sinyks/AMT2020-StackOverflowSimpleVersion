@@ -16,12 +16,5 @@ Scenario('Check form submit non-existing account',(I, Wordlist) => {
     I.amOnPage(Wordlist.pageUrl.login);
     I.login('Null','Null');
 
-    I.amOnPage(Wordlist.pageUrl.login);
 });
 
-/**
- * TODO:
- * 
- * Check login with existing account
- * Check login with 
- */

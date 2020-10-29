@@ -10,14 +10,10 @@ Scenario('Answer to a question', (I, Wordlist) => {
     I.click("//div[contains(@class,'card')]");
 
     I.wait(5);
+    const answerContent = Wordlist.Data.answerContent;
 
-    I.fillField('answerBody','answer');
+    I.fillField('answerBody',answerContent);
     I.click('post answer');
-    I.wait(5);
-    I.see('answer');
-
-    I.fillField('commentBody','comment');
-    I.click('Post');
-    I.see('comment');
-
+    I.wait(1);
+    I.see(answerContent);
 });

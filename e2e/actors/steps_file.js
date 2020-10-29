@@ -26,10 +26,11 @@ module.exports = function() {
       const email = Wordlist.Data.emailUnique
       this.register(username,email,password);
     },
-    askQuestions : function(){
-      I.fillField(Wordlist.formField.Qlabel,Wordlist.Data.questionLabel);
-      I.fillField(Wordlist.formField.Qcontent,Wordlist.Data.questionContent);
-      I.click(Wordlist.formField.SubmitButton);
+    askQuestion : function(){
+      this.amOnPage(Wordlist.pageUrl.askQuestion);
+      this.fillField(Wordlist.formField.Qlabel,Wordlist.Data.questionTitle);
+      this.fillField(Wordlist.formField.Qcontent,Wordlist.Data.questionContent);
+      this.click(Wordlist.formField.SubmitButton);
     },
     
   });

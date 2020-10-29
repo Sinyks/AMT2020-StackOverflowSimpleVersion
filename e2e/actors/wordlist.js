@@ -7,8 +7,8 @@ module.exports = function() {
             email: 'Email',
             passwordConfirmation: 'Confirm Password',
             SubmitButton: 'Submit',
-            Qlabel: 'label',
-            Qcontent: 'content'
+            Qlabel: 'title',
+            Qcontent: 'body'
         },
         pageUrl: {
             login: '/login',
@@ -21,10 +21,10 @@ module.exports = function() {
             usernameUnique: `User-${Date.now()}`,
             emailUnique: `${Date.now()}@mail.com`,
             password: 'pass1234',
-            questionLabel: 'the question',
+            questionTitle: 'the question',
             questionContent: 'to be or not to be?',
-            answerContent : '... not to be',
-            commentContent : 'I see you are a man of culture'
+            answerContent : `... not to be ${Date.now()}`,
+            commentContent : `I see you are a man of culture ${Date.now()}`
         }
 
     });

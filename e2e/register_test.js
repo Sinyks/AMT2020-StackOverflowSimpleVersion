@@ -15,15 +15,6 @@ Scenario('Check Form and form method', (I, Wordlist) =>{
 
 Scenario('Check register with correct attribute', (I, Wordlist) => {
     I.registerRandomUser();
-
-    /** TODO
-     * Page must return the Home page with logged user
-     */
+    I.seeInCurrentUrl(Wordlist.Data.root);
 });
 
-/**
- * TODO:
- * check submit with uncorrect password
- * check sumbit with empty username
- * check submit with already existing user
- */
