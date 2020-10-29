@@ -5,13 +5,9 @@ import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManage
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
-import ch.heigvd.amt.project.domain.comment.Comment;
 import ch.heigvd.amt.project.domain.comment.ICommentRepository;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryUserRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.inMemory.InMemoryQuestionRepository;
-import ch.heigvd.amt.project.infrastructure.persistence.jdbc.pgsql.PgsqlUserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

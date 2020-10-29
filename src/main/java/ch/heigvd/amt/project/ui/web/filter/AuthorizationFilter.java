@@ -1,6 +1,5 @@
 package ch.heigvd.amt.project.ui.web.filter;
 
-import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 
 import javax.servlet.*;
