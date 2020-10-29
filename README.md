@@ -37,6 +37,18 @@ $ cd AMT2020-StackOverflowSimpleVersion
 $ mvn liberty:run
 ```
 
+# Run this code production
+
+```bash
+# clone this repository
+$ git clone git@github.com:Sinyks/AMT2020-StackOverflowSimpleVersion.git
+
+$ cd AMT2020-StackOverflowSimpleVersion/docker
+
+$ ./deploy.sh
+```
+
+
 There you can visit the http://localhost:9080 page on your browser
 
 ## Docker Image
@@ -54,6 +66,8 @@ Or directly run this container with the following command :
 ```bash
 $ docker run -it -p 9080:9080 ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty:latest
 ```
+
+NB: don't forget to link a database
 
 ## Ressources
 
