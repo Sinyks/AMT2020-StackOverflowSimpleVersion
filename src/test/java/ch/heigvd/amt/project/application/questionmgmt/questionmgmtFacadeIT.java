@@ -69,9 +69,10 @@ public class questionmgmtFacadeIT {
     }
 
 
+    /*
     @Test
     public void aksQuestionWithInvalidUserMustNotThrowException(){
-
+        
         AskCommand command = testUtils.getAskCommand(currentUserDTO.getId(),currentUserDTO.getUsername());
 
         try {
@@ -80,7 +81,7 @@ public class questionmgmtFacadeIT {
             e.printStackTrace();
             fail(e.getMessage());
         }
-    }
+    }*/
 
     @Test
     public void getQuestionsMustReturnValidObjects(){
