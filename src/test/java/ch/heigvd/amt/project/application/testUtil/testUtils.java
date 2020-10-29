@@ -3,8 +3,10 @@ package ch.heigvd.amt.project.application.testUtil;
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
+import ch.heigvd.amt.project.application.commentmgmt.comment.CommentCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.domain.answer.Answer;
+import ch.heigvd.amt.project.domain.answer.AnswerId;
 import ch.heigvd.amt.project.domain.comment.Comment;
 import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
@@ -50,6 +52,22 @@ public class testUtils {
                 .body(ANSWER_BODY)
                 .ownerID(ownerId)
                 .questionId(questionId)
+                .build();
+    }
+
+    public static CommentCommand getCommentCommandAnswer(UserId ownerId, AnswerId answerId){
+        return CommentCommand.builder()
+                .answerId(answerId)
+                .ownerID(ownerId)
+                .body(COMMENT_BODY)
+                .build();
+    }
+
+    public static CommentCommand getCommentCommandQuestion(UserId ownerId, QuestionId questionId){
+        return CommentCommand.builder()
+                .questionId(questionId)
+                .ownerID(ownerId)
+                .body(COMMENT_BODY)
                 .build();
     }
 }
