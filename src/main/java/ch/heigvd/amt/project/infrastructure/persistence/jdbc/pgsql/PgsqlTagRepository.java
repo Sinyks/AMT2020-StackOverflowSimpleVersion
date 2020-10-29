@@ -142,7 +142,5 @@ public class PgsqlTagRepository extends PgsqlRepository<Tag, TagId> implements I
         }
 
         return list;
-        
-
     }
 }
