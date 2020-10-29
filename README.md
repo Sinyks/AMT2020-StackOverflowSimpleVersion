@@ -37,7 +37,7 @@ $ cd AMT2020-StackOverflowSimpleVersion
 $ mvn liberty:run
 ```
 
-# Run this code production
+# Run this code (for production)
 
 ```bash
 # clone this repository
