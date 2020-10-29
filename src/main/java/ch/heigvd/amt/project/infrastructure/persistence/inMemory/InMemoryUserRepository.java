@@ -31,7 +31,7 @@ public class InMemoryUserRepository extends InMemoryRepository<User, UserId> imp
 
     }
 
-    //@Override
+    @Override
     public void updateById(UserId id, String username, String aboutMe, String email, String hashedPassword) {
 
     }

@@ -98,7 +98,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
         return user;
     }
 
-    /*
+
     @Override
     public void updateById(UserId id, String username, String aboutMe, String email, String hashedPassword) {
         try {
@@ -118,7 +118,7 @@ public class PgsqlUserRepository extends PgsqlRepository<User, UserId> implement
         } catch (Exception e) {
             throw new DataCorruptionException(e.toString());
         }
-    }*/
+    }
 
 
 
