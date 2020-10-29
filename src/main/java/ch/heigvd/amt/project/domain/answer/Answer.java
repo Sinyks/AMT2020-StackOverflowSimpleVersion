@@ -8,7 +8,8 @@ import lombok.*;
 import java.time.Instant;
 import java.util.Date;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @Builder(toBuilder = true)
 public class Answer implements IEntity<Answer, AnswerId> {
 
@@ -22,6 +23,18 @@ public class Answer implements IEntity<Answer, AnswerId> {
     private Date lastEditDate;
     private String body;
 
+    public boolean isEdited() {
+        return !this.creationDate.equals(this.lastEditDate);
+    }
+
+    public void editAnswer(String newBody) {
+        if (newBody == null || newBody.isEmpty()) {
+            throw new IllegalArgumentException("the new body must contain something");
+        }
+        this.body = newBody;
+        this.lastEditDate = Date.from(Instant.now());
+    }
+
     @Override
     public Answer deepClone() {
         return this.toBuilder()
@@ -30,23 +43,23 @@ public class Answer implements IEntity<Answer, AnswerId> {
     }
 
     public static class AnswerBuilder {
-        public Answer build(){
-            if(id == null){
+        public Answer build() {
+            if (id == null) {
                 id = new AnswerId();
             }
-            if(creationDate == null){
-                creationDate=Date.from(Instant.now());
+            if (creationDate == null) {
+                creationDate = Date.from(Instant.now());
             }
-            if(lastEditDate == null){
-                lastEditDate=creationDate;
+            if (lastEditDate == null) {
+                lastEditDate = creationDate;
             }
-            if(ownerId==null){
+            if (ownerId == null) {
                 throw new IllegalArgumentException("ownerId mandatory");
             }
-            if(questionId==null){
+            if (questionId == null) {
                 throw new IllegalArgumentException("questionId mandatory");
             }
-            if(body == null || body.isEmpty()){
+            if (body == null || body.isEmpty()) {
                 throw new IllegalArgumentException("body mandatory");
             }
 

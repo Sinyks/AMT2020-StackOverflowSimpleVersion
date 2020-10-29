@@ -3,13 +3,15 @@ package ch.heigvd.amt.project.domain.user;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mindrot.jbcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
 
-    static User testUser;
+    static User userTest;
     static UserId userId;
     static String username;
     static String email;
@@ -17,79 +19,89 @@ public class UserTest {
     static String clearTextPassword;
     static String newClearTextPassword;
     static String preHashedPassword;
+    static String newEmail;
+    static String newUsername;
+    static String newAboutMe;
 
     @BeforeAll
-    static void setForBeforeAll(){
+    static void setBeforeAll() {
         userId = new UserId();
         username = "jean";
         email = "test@test.te";
         aboutMe = "I'm a test user";
         clearTextPassword = "p4ssw0rd";
         newClearTextPassword = "&WrWQbYUt8L#)Pc5";
-        preHashedPassword = BCrypt.hashpw(clearTextPassword,BCrypt.gensalt());
+        preHashedPassword = BCrypt.hashpw(clearTextPassword, BCrypt.gensalt());
+        newEmail = "new@new.ne";
+        newUsername = "xX_Jean_Xx";
+        newAboutMe = "I'm an updated test user";
     }
 
     @BeforeEach
-    void setForBeforeEach(){
-        testUser = null;
+    void setBeforeEach() {
+        userTest = null;
     }
 
 
-    @Test
-    void buildFullUserTest(){
-            testUser = User.builder()
-                    .id(userId)
-                    .email(email)
-                    .username(username)
-                    .aboutMe(aboutMe)
-                    .clearTextPassword(clearTextPassword)
-                    .build();
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void buildFullUserAndDeepCloneTest(boolean isDeepCloneTest) {
+        userTest = User.builder()
+                .id(userId)
+                .email(email)
+                .username(username)
+                .aboutMe(aboutMe)
+                .clearTextPassword(clearTextPassword)
+                .build();
 
-        assertNotNull(testUser);
-        assertEquals(userId,testUser.getId());
-        assertEquals(email,testUser.getEmail());
-        assertEquals(username,testUser.getUsername());
-        assertEquals(aboutMe,testUser.getAboutMe());
-        assertTrue(BCrypt.checkpw(clearTextPassword,testUser.getHashedPassword()));
+        if (isDeepCloneTest) {
+            userTest = userTest.deepClone();
+        }
+
+        assertNotNull(userTest);
+        assertEquals(userId, userTest.getId());
+        assertEquals(email, userTest.getEmail());
+        assertEquals(username, userTest.getUsername());
+        assertEquals(aboutMe, userTest.getAboutMe());
+        assertTrue(BCrypt.checkpw(clearTextPassword, userTest.getHashedPassword()));
 
     }
 
     @Test
-    void buildMinimalUserTest(){
-        testUser = User.builder()
+    void buildMinimalUserTest() {
+        userTest = User.builder()
                 .username(username)
                 .email(email)
                 .clearTextPassword(clearTextPassword)
                 .build();
 
-        assertNotNull(testUser);
-        assertNotNull(testUser.getId());
-        assertEquals("no informations",testUser.getAboutMe());
+        assertNotNull(userTest);
+        assertNotNull(userTest.getId());
+        assertEquals("no informations", userTest.getAboutMe());
     }
 
     @Test
-    void buildWithHashedPasswordTest(){
-
-        testUser = User.builder()
+    void buildWithHashedPasswordTest() {
+        userTest = User.builder()
                 .email(email)
                 .username(username)
                 .hashedPassword(preHashedPassword)
                 .build();
 
-        assertNotNull(testUser);
-        assertEquals(email,testUser.getEmail());
-        assertEquals(username,testUser.getUsername());
-        assertEquals(preHashedPassword,testUser.getHashedPassword());
+        assertNotNull(userTest);
+        assertEquals(email, userTest.getEmail());
+        assertEquals(username, userTest.getUsername());
+        assertEquals(preHashedPassword, userTest.getHashedPassword());
     }
 
     @Test
     void missingMandatoryUsernameTest() {
         try {
-            testUser = User.builder()
+            userTest = User.builder()
                     .email(email)
                     .clearTextPassword(clearTextPassword)
                     .build();
-            fail("did not return expected exception");
+            fail("did not throw expected exception");
         } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
@@ -97,75 +109,87 @@ public class UserTest {
 
     @Test
     void missingMandatoryEmailTest() {
-        try{
-            testUser = User.builder()
+        try {
+            userTest = User.builder()
                     .username(username)
                     .clearTextPassword(clearTextPassword)
                     .build();
-            fail("did not return expected exception");
-        } catch(final IllegalArgumentException e){
+            fail("did not throw expected exception");
+        } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
     }
 
     @Test
     void missingMandatoryClearTextPasswordTest() {
-
-        try{
-            testUser = User.builder()
+        try {
+            userTest = User.builder()
                     .email(email)
                     .username(username)
                     .build();
-            fail("did not return expected exception");
-        } catch(final IllegalArgumentException e){
+            fail("did not throw expected exception");
+        } catch (final IllegalArgumentException e) {
             assertTrue(true);
         }
     }
 
     @Test
-    void loginTest(){
-        testUser = User.builder()
+    void loginTest() {
+        userTest = User.builder()
                 .username(username)
                 .email(email)
                 .clearTextPassword(clearTextPassword)
                 .build();
 
-        assertTrue(testUser.login(clearTextPassword));
+        assertTrue(userTest.login(clearTextPassword));
     }
 
     @Test
-    void passwordUpdateTest(){
-        testUser = User.builder()
+    void passwordUpdateTest() {
+        userTest = User.builder()
                 .username(username)
                 .email(email)
                 .clearTextPassword(clearTextPassword)
                 .build();
 
-        if(!testUser.updatePassword(clearTextPassword,newClearTextPassword)){
-            fail("clearTextPassword is not the old password");
+        try {
+            userTest.updatePassword(newClearTextPassword);
+        } catch (final IllegalArgumentException e) {
+            fail(e.getMessage());
         }
-        assertTrue(BCrypt.checkpw(newClearTextPassword,testUser.getHashedPassword()));
+
+        assertTrue(BCrypt.checkpw(newClearTextPassword, userTest.getHashedPassword()));
     }
 
-    @Test
-    void deepCloneTest(){
-        testUser = User.builder()
-                .id(userId)
-                .email(email)
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
+    void updatePersonalInformation(int passNumber) {
+        userTest = User.builder()
                 .username(username)
+                .email(email)
                 .aboutMe(aboutMe)
-                .hashedPassword(preHashedPassword)
+                .clearTextPassword(clearTextPassword)
                 .build();
-        testUser = testUser.deepClone();
 
-        assertNotNull(testUser);
-        assertEquals(userId,testUser.getId());
-        assertEquals(email,testUser.getEmail());
-        assertEquals(username,testUser.getUsername());
-        assertEquals(aboutMe,testUser.getAboutMe());
-        assertEquals(preHashedPassword,testUser.getHashedPassword());
+        try {
+            userTest.updatePersonalInformations((passNumber / 4 == 1) ? newUsername : null,
+                    ((passNumber % 4) / 2 == 1) ? newAboutMe : null,
+                    (passNumber % 2 == 1) ? newEmail : null);
+        } catch (final IllegalArgumentException e) {
+            if (passNumber == 0) {
+                assertTrue(true);
+            } else {
+                fail(e.getMessage());
+            }
+        }
+
+        assertEquals((passNumber / 4 == 1) ? newUsername : username,
+                userTest.getUsername());
+        assertEquals(((passNumber % 4) / 2 == 1) ? newAboutMe : aboutMe,
+                userTest.getAboutMe());
+        assertEquals((passNumber % 2 == 1) ? newEmail : email,
+                userTest.getEmail());
     }
-
 
 
 }
