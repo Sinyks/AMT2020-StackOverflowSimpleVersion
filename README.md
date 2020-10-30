@@ -80,6 +80,7 @@ https://drive.google.com/drive/folders/1nZA1BNT6IPRA33JpV597dQgbJ2IBXqPw?usp=sha
 Some bugs and failures occur in the actual project
 
 - E2E tests fails if launch all at the same time
+- Integration test for questions failed in the pipeline sometimes :(
 
 ## Changes made after the presentation
 
