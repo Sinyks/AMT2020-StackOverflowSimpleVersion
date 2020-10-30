@@ -24,6 +24,7 @@ Our application is build over the Jakarta EE standard (Java EE). We are using th
 | Build/dependency Manager      | [Maven](https://maven.apache.org/)                        | __>= 3.6__   |
 | E2E testing tools             | [CodeceptJS](codecept.io/) (with **Puppeteer**)           | __>=2.6__    |
 | Unit Testing Framework        | [Junit](https://junit.org/junit5/)                        | __>= 5.6__   |
+| Integration Testing tool      | [Arquilian](http://arquillian.org/)                       | __>= 1.1__   |
 | Containerization tools        | [Docker](https://www.docker.com/)                         | __>= 19.03__ |
 
 ## Run this code (for developpement)
