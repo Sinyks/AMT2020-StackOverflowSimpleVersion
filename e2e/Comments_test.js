@@ -12,7 +12,7 @@ Scenario('Comment a Question', (I, Wordlist) => {
 
     const commentContent = Wordlist.Data.commentContent;
     I.fillField('commentBody',commentContent);
-    I.click('Post');
+    I.click('Comment');
     I.wait(1);
     I.see(commentContent);
 });

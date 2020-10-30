@@ -13,7 +13,7 @@ Scenario('Answer to a question', (I, Wordlist) => {
     const answerContent = Wordlist.Data.answerContent;
 
     I.fillField('answerBody',answerContent);
-    I.click('post answer');
+    I.click('Answer');
     I.wait(1);
     I.see(answerContent);
 });
