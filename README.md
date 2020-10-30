@@ -85,6 +85,10 @@ Some bugs and failures occur in the actual project
   * unauthenticated users shouldn't be able to see the voting interface, this is solved with a simple jstl ``<c:if>`` tag
   * in the view, when checking if a user has already voted on an answer, we incorrectly check if he has answered the question by checking the questionDTO instead of the answerDTO contained within the questionDTO, which means the voting button on answers disappears
 
+## Changes made after the presentation
+
+- The issues mentioned before on the ``/question`` page were taken care of, the vote buttons behave as intended.
+
 ## Not Implemented
 
 - The Jmeter load were not correctly adapted to the new feature
