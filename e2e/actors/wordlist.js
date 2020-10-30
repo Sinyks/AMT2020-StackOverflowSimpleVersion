@@ -2,12 +2,13 @@
 module.exports = function() {
     return actor({
         formField: {
-            password : 'password',
-            username: 'username',
+            password : 'Password',
+            username: 'Username',
+            email: 'Email',
             passwordConfirmation: 'Confirm Password',
             SubmitButton: 'Submit',
-            Qlabel: 'label',
-            Qcontent: 'content'
+            Qlabel: 'title',
+            Qcontent: 'body'
         },
         pageUrl: {
             login: '/login',
@@ -18,9 +19,12 @@ module.exports = function() {
         },
         Data: {
             usernameUnique: `User-${Date.now()}`,
+            emailUnique: `${Date.now()}@mail.com`,
             password: 'pass1234',
-            questionLabel: 'to be or not to be?',
-            questionContent: '... not to be'
+            questionTitle: `the question${Date.now()}`,
+            questionContent: 'to be or not to be',
+            answerContent : `... not to be ${Date.now()}`,
+            commentContent : `I see you are a man of culture ${Date.now()}`
         }
 
     });

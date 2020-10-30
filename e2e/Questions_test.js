@@ -2,19 +2,17 @@ const { I, Wordlist } = inject();
 
 Feature('Questions');
 
-Scenario('Visit the Question Page', (I, Wordlist) => {
+Scenario('Visit the Question Page wile not logged', (I, Wordlist) => {
     I.amOnPage(Wordlist.pageUrl.askQuestion);
-    I.see('Ask your question')
+    I.dontSee('Ask your question');
 });
 
-Scenario('Submit a Question', (I, Wordlist) => {
+Scenario('Visit the Question Page wile logged', (I, Wordlist) => {
     I.registerRandomUser();
     I.amOnPage(Wordlist.pageUrl.askQuestion);
-
-    I.fillField(Wordlist.formField.Qlabel,Wordlist.Data.questionLabel);
-    I.fillField(Wordlist.formField.Qcontent,Wordlist.Data.questionContent);
-    I.click(Wordlist.formField.SubmitButton);
+    I.see('Ask your question');
     I.wait(1);
-    I.see(Wordlist.Data.questionLabel);
-
+    I.askQuestion();
+    I.see(Wordlist.Data.questionContent);
 });
+

@@ -12,9 +12,10 @@ module.exports = function() {
       this.click(Wordlist.formField.SubmitButton);
     },
 
-    register: function(username, password) {
+    register: function(username,email,password) {
       this.amOnPage(Wordlist.pageUrl.register);
       this.fillField(Wordlist.formField.username, username);
+      this.fillField(Wordlist.formField.email, email);
       this.fillField(Wordlist.formField.password, password);
       this.fillField(Wordlist.formField.passwordConfirmation, password);
       this.click(Wordlist.formField.SubmitButton);
@@ -22,8 +23,15 @@ module.exports = function() {
     registerRandomUser: function(){
       const username = Wordlist.Data.usernameUnique;
       const password = Wordlist.Data.password;
-      this.register(username,password);
-    }
+      const email = Wordlist.Data.emailUnique
+      this.register(username,email,password);
+    },
+    askQuestion : function(){
+      this.amOnPage(Wordlist.pageUrl.askQuestion);
+      this.fillField(Wordlist.formField.Qlabel,Wordlist.Data.questionTitle);
+      this.fillField(Wordlist.formField.Qcontent,Wordlist.Data.questionContent);
+      this.click(Wordlist.formField.SubmitButton);
+    },
     
   });
 }
