@@ -23,7 +23,6 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProfileManagementFacade profileManagementFacade = serviceRegistry.getProfileManagementFacade();
-        req.getSession().removeAttribute("errors");
 
         ProfileInfoCommand profileInfoCommand = ProfileInfoCommand.builder()
                 .id(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
@@ -36,10 +35,11 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
         try{
             currentUserDTO = profileManagementFacade.updateInfo(profileInfoCommand);
             req.getSession().setAttribute("currentUser",currentUserDTO);
-            resp.sendRedirect("/profile");
+            req.setAttribute("success","Info updated successfully!");
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         } catch (ProfileInfoFailedException e){
-            req.getSession().setAttribute("errors", List.of(e.getMessage()));
-            resp.sendRedirect("/profile");
+            req.setAttribute("failure",e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         }
 
     }

@@ -7,7 +7,11 @@
 <%@include file="fragments/navigation.jsp" %>
 
 <c:if test="${not empty requestScope.success}">
-    <div class="alert alert-success" role="alert">${requestScope.success}</div>
+    <div class="alert alert-success text-center" role="alert">${requestScope.success}</div>
+</c:if>
+
+<c:if test="${not empty requestScope.failure}">
+    <div class="alert alert-danger text-center" role="alert">${requestScope.failure}</div>
 </c:if>
 
 

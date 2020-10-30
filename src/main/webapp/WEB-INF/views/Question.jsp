@@ -96,7 +96,7 @@
     <div class="container" style="margin-bottom:20px">
         <div class="card">
             <div class="card-header">
-                <h5>Post an answer...</h5>
+                <h5>Answer...</h5>
             </div>
             <div class="card card-body">
                 <form action="/answerQuestion.do" method="post">

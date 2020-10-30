@@ -38,7 +38,7 @@ public class ProfileManagementFacade {
                     .build();
 
         } catch (IllegalArgumentException e){
-            throw new ProfileInfoFailedException("Command for user "+userToEdit.getUsername()+" is empty");
+            throw new ProfileInfoFailedException(e.getMessage());
         }
 
 
@@ -48,26 +48,25 @@ public class ProfileManagementFacade {
         User userToEdit = personRepository.findById(command.getId()).orElse(null);
 
         if (userToEdit == null){
-            throw new ProfilePasswordFailedException("user doesn't exist");
+            throw new ProfilePasswordFailedException("User doesn't exist.");
         }
 
         if(!userToEdit.login(command.getCurrentClearPassword())){
-            throw new ProfilePasswordFailedException("Wrong old password");
+            throw new ProfilePasswordFailedException("You did not enter the correct password.");
         }
 
         if(!command.getNewClearTextPassword().equals(command.getNewClearTextPasswordConfirm())){
-            throw new ProfilePasswordFailedException("Pasword mismatch");
+            throw new ProfilePasswordFailedException("Passwords dont match.");
         }
 
 
         try{
-
             userToEdit.updatePassword(command.getNewClearTextPassword());
 
             personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
 
         } catch (IllegalArgumentException e){
-            throw new ProfilePasswordFailedException("Command for user "+userToEdit.getUsername()+" is empty");
+            throw new ProfilePasswordFailedException(e.getMessage());
         }
     }
 }

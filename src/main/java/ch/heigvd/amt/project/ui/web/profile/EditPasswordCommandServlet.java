@@ -23,8 +23,6 @@ public class EditPasswordCommandServlet extends HttpServlet{
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProfileManagementFacade profileManagementFacade = serviceRegistry.getProfileManagementFacade();
-        req.getSession().removeAttribute("errors");
-
 
         ProfilePasswordCommand profilePasswordCommand = ProfilePasswordCommand.builder()
                 .id(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
@@ -35,11 +33,11 @@ public class EditPasswordCommandServlet extends HttpServlet{
 
         try{
             profileManagementFacade.updatePassword(profilePasswordCommand);
-            req.setAttribute("success","Password changed!");
-            resp.sendRedirect("/profile");
+            req.setAttribute("success","Password changed successfully!");
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         } catch (ProfilePasswordFailedException e){
-            req.getSession().setAttribute("errors", List.of(e.getMessage()));
-            resp.sendRedirect("/profile");
+            req.setAttribute("failure",e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         }
     }
 
