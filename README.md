@@ -88,6 +88,7 @@ Some bugs and failures occur in the actual project
 ## Changes made after the presentation
 
 - The issues mentioned before on the ``/question`` page were taken care of, the vote buttons behave as intended.
+- The homepage only showed wrong static values : the homepage servlet now sends correct statistics to the view which displays them.
 
 ## Not Implemented
 
