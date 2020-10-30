@@ -32,8 +32,10 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
                 .newAboutMe(req.getParameter("aboutMe"))
                 .build();
 
+        CurrentUserDTO currentUserDTO = null;
         try{
-            profileManagementFacade.updateInfo(profileInfoCommand);
+            currentUserDTO = profileManagementFacade.updateInfo(profileInfoCommand);
+            req.getSession().setAttribute("currentUser",currentUserDTO);
             resp.sendRedirect("/profile");
         } catch (ProfileInfoFailedException e){
             req.getSession().setAttribute("errors", List.of(e.getMessage()));

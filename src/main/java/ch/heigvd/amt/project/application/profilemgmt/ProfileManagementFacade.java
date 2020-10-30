@@ -1,5 +1,6 @@
 package ch.heigvd.amt.project.application.profilemgmt;
 
+import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.profilemgmt.info.ProfileInfoCommand;
 import ch.heigvd.amt.project.application.profilemgmt.info.ProfileInfoFailedException;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
@@ -13,7 +14,7 @@ public class ProfileManagementFacade {
         this.personRepository = personRepository;
     }
 
-    public void updateInfo(ProfileInfoCommand profileInfoCommand) throws ProfileInfoFailedException {
+    public CurrentUserDTO updateInfo(ProfileInfoCommand profileInfoCommand) throws ProfileInfoFailedException {
         User userToEdit = personRepository.findById(profileInfoCommand.getId()).orElse(null);
 
         if (userToEdit == null){
@@ -24,10 +25,20 @@ public class ProfileManagementFacade {
         userToEdit.updatePersonalInformations(profileInfoCommand.getNewUsername(),
                 profileInfoCommand.getNewAboutMe(),
                 profileInfoCommand.getNewEmail());
+
+            personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
+
+            return CurrentUserDTO.builder()
+                    .id(userToEdit.getId())
+                    .username((userToEdit.getUsername()))
+                    .email(userToEdit.getEmail())
+                    .aboutMe(userToEdit.getAboutMe())
+                    .build();
+
         } catch (IllegalArgumentException e){
             throw new ProfileInfoFailedException("Command for user "+userToEdit.getUsername()+" is empty");
         }
 
-        personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
+
     }
 }
