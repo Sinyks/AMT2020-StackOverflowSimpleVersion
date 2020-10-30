@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <p>${question.body}</p>
-            <c:if test="${not empty sessionScope.currentUser.username}">
+
                 <div class="row">
                     <c:set var="alreadyVotedOnQuestion" value="false" />
                     <c:forEach var="vote" items="${question.votes.votes}">
@@ -21,35 +21,38 @@
                             <c:set var="alreadyVotedOnQuestion" value="true" />
                         </c:if>
                     </c:forEach>
-                    <c:if test="${alreadyVotedOnQuestion == 'false'}">
-                    <div class="col-sm-1">
-                        <form action="/vote.do" method="post">
-                            <div class="form">
-                                <input type="hidden" name="questionId" value="${question.id}"/>
-                                <input type="hidden" name="vote" value="up"/>
-                                <input type="submit" class="btn btn-success" value="Upvote"/>
+                    <c:if test="${not empty sessionScope.currentUser.username}">
+                        <c:if test="${alreadyVotedOnQuestion == 'false'}">
+                            <div class="col-sm-1">
+                                <form action="/vote.do" method="post">
+                                    <div class="form">
+                                        <input type="hidden" name="questionId" value="${question.id}"/>
+                                        <input type="hidden" name="vote" value="up"/>
+                                        <input type="submit" class="btn btn-success" value="Upvote"/>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
+                        </c:if>
                     </c:if>
                     <div class="col-sm-1">
                         <div class="text-center">
-                            ${question.voteTotal}
+                            <p class="text-primary">${question.voteTotal}</p>
                         </div>
                     </div>
-                    <c:if test="${alreadyVotedOnQuestion == 'false'}">
-                    <div class="col-sm-1">
-                        <form action="/vote.do" method="post">
-                            <div class="form">
-                                <input type="hidden" name="questionId" value="${question.id}"/>
-                                <input type="hidden" name="vote" value="down"/>
-                                <input type="submit" class="btn btn-danger" value="Downvote"/>
+                    <c:if test="${not empty sessionScope.currentUser.username}">
+                        <c:if test="${alreadyVotedOnQuestion == 'false'}">
+                            <div class="col-sm-1">
+                                <form action="/vote.do" method="post">
+                                    <div class="form">
+                                        <input type="hidden" name="questionId" value="${question.id}"/>
+                                        <input type="hidden" name="vote" value="down"/>
+                                        <input type="submit" class="btn btn-danger" value="Downvote"/>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
+                        </c:if>
                     </c:if>
                 </div>
-            </c:if>
             <footer class="blockquote-footer">
                 <small class="text-muted">
                     Posted by ${question.ownerName} on ${question.creationDate} (last edited on ${question.lastEditDate})
@@ -116,7 +119,6 @@
                 <div class="card bg-light mb-3">
                     <div class="card-body">
                         <p>${answer.body}</p>
-                        <c:if test="${not empty sessionScope.currentUser.username}">
                             <div class="row">
                                 <c:set var="alreadyVotedOnAnswer" value="false" />
                                 <c:forEach var="vote" items="${answer.votes.votes}">
@@ -124,37 +126,40 @@
                                         <c:set var="alreadyVotedOnAnswer" value="true" />
                                     </c:if>
                                 </c:forEach>
-                                <c:if test="${alreadyVotedOnAnswer == 'false'}">
-                                    <div class="col-sm-1">
-                                        <form action="/vote.do" method="post">
-                                            <div class="form">
-                                                <input type="hidden" name="questionId" value="${question.id}"/>
-                                                <input type="hidden" name="answerId" value="${answer.id}"/>
-                                                <input type="hidden" name="vote" value="up"/>
-                                                <input type="submit" class="btn btn-success" value="Upvote"/>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <c:if test="${not empty sessionScope.currentUser.username}">
+                                    <c:if test="${alreadyVotedOnAnswer == 'false'}">
+                                        <div class="col-sm-1">
+                                            <form action="/vote.do" method="post">
+                                                <div class="form">
+                                                    <input type="hidden" name="questionId" value="${question.id}"/>
+                                                    <input type="hidden" name="answerId" value="${answer.id}"/>
+                                                    <input type="hidden" name="vote" value="up"/>
+                                                    <input type="submit" class="btn btn-success" value="Upvote"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </c:if>
                                 </c:if>
                                 <div class="col-sm-1">
                                     <div class="text-center">
-                                            ${answer.voteTotal}
+                                        <p class="text-primary">${answer.voteTotal}</p>
                                     </div>
                                 </div>
-                                <c:if test="${alreadyVotedOnAnswer == 'false'}">
-                                    <div class="col-sm-1">
-                                        <form action="/vote.do" method="post">
-                                            <div class="form">
-                                                <input type="hidden" name="questionId" value="${question.id}"/>
-                                                <input type="hidden" name="answerId" value="${answer.id}"/>
-                                                <input type="hidden" name="vote" value="down"/>
-                                                <input type="submit" class="btn btn-danger" value="Downvote"/>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <c:if test="${not empty sessionScope.currentUser.username}">
+                                    <c:if test="${alreadyVotedOnAnswer == 'false'}">
+                                        <div class="col-sm-1">
+                                            <form action="/vote.do" method="post">
+                                                <div class="form">
+                                                    <input type="hidden" name="questionId" value="${question.id}"/>
+                                                    <input type="hidden" name="answerId" value="${answer.id}"/>
+                                                    <input type="hidden" name="vote" value="down"/>
+                                                    <input type="submit" class="btn btn-danger" value="Downvote"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </c:if>
                                 </c:if>
                             </div>
-                        </c:if>
                         <footer class="blockquote-footer">
                             <small class="text-muted">
                                 Posted by ${answer.ownerName} on ${answer.creationDate} (last edited on ${answer.lastEditDate})
