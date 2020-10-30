@@ -1,10 +1,10 @@
 package ch.heigvd.amt.project.ui.web.comment;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
+import ch.heigvd.amt.project.application.answermgmt.answer.CommentFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.commentmgmt.comment.CommentCommand;
-import ch.heigvd.amt.project.application.commentmgmt.comment.CommentFailedException;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 
@@ -40,7 +40,7 @@ public class CommentCommandServlet extends HttpServlet {
                 .build();
         try {
             commentManagementFacade.comment(commentCommand);
-        } catch (CommentFailedException e) {
+        } catch (CommentFailedException e){
             req.getSession().setAttribute("error", List.of(e.getMessage()));
             resp.sendRedirect("/questions");
         }

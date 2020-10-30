@@ -36,7 +36,7 @@ public class AnswerCommandServlet extends HttpServlet {
 
         try {
             answerManagementFacade.answer(answComm);
-        } catch (AnswerFailedException e) {
+        } catch (AnswerFailedException e){
             req.getSession().setAttribute("error", List.of(e.getMessage()));
             resp.sendRedirect("/questions");
         }

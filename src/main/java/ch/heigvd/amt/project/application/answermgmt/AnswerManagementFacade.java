@@ -31,17 +31,17 @@ public class AnswerManagementFacade {
         this.voteManagementFacade = voteManagementFacade;
     }
 
-    private String getUserNameById(UserId id) {
+    private String getUserNameById(UserId id){
         User user = userRepository.findById(id).orElse(null);
 
-        if (user != null) {
+        if(user != null){
             return user.getUsername();
-        } else {
+        }else {
             throw new NullPointerException("No user with this id found");
         }
     }
 
-    private int voteScore(VotesDTO votesDTO) {
+    private int voteScore(VotesDTO votesDTO){
         int voteTotal = 0;
         for (VotesDTO.VoteDTO vote : votesDTO.getVotes()) {
             if (vote.isUpVote()) {
@@ -53,11 +53,11 @@ public class AnswerManagementFacade {
         return voteTotal;
     }
 
-    public int getAnswerCount() {
+    public int getAnswerCount(){
         return answerRepository.findAll().size();
     }
 
-    public AnswersDTO getAnswers(QuestionId id) {
+    public AnswersDTO getAnswers(QuestionId id){
         Collection<Answer> allAnswers = answerRepository.findByQuestionID(id);
 
         List<AnswersDTO.AnswerDTO> allAnswersDTO = allAnswers.stream().map(answer -> AnswersDTO.AnswerDTO.builder()
