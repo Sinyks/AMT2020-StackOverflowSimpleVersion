@@ -1,4 +1,4 @@
-/* package ch.heigvd.amt.project.ui.web.profile;
+package ch.heigvd.amt.project.ui.web.profile;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/profileInfo.do", name = "ProfilePage")
+@WebServlet(urlPatterns = "/profileUpdate.do", name = "ProfileInfoCommandServlet")
 public class EditProfileInfoCommandServlet extends HttpServlet {
 
     @Inject
@@ -43,4 +43,4 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
     }
 
 
-}*/
+}

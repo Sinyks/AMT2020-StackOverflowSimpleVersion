@@ -3,7 +3,7 @@ package ch.heigvd.amt.project.application;
 import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
-//import ch.heigvd.amt.project.application.profilemgmt.ProfileManagementFacade;
+import ch.heigvd.amt.project.application.profilemgmt.ProfileManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
@@ -41,7 +41,7 @@ public class ServiceRegistry {
     private static AuthenticationManagementFacade authenticationManagementFacade;
     private static AnswerManagementFacade answerManagementFacade;
     private static CommentManagementFacade commentManagementFacade;
-    //private static ProfileManagementFacade profileManagementFacade;
+    private static ProfileManagementFacade profileManagementFacade;
     private static VoteManagementFacade voteManagementFacade;
 
     public AuthenticationManagementFacade getAuthenticationManagementFacade(){
@@ -56,7 +56,7 @@ public class ServiceRegistry {
 
     public CommentManagementFacade getCommentManagementFacade(){ return commentManagementFacade;}
 
-    //public ProfileManagementFacade getProfileManagementFacade() { return profileManagementFacade;}
+    public ProfileManagementFacade getProfileManagementFacade() { return profileManagementFacade;}
     
     public VoteManagementFacade getVoteManagementFacade(){ return voteManagementFacade;}
 
@@ -67,7 +67,7 @@ public class ServiceRegistry {
         authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
         voteManagementFacade = new VoteManagementFacade(voteRepository, commentRepository, answerRepository);
         commentManagementFacade = new CommentManagementFacade(commentRepository, answerRepository, userRepository);
-        //profileManagementFacade = new ProfileManagementFacade(userRepository);
+        profileManagementFacade = new ProfileManagementFacade(userRepository);
         answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade, voteManagementFacade);
         questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade,commentManagementFacade, voteManagementFacade);
     }

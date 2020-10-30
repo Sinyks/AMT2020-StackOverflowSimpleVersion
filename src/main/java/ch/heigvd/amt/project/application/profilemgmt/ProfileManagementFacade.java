@@ -1,4 +1,4 @@
-/* package ch.heigvd.amt.project.application.profilemgmt;
+package ch.heigvd.amt.project.application.profilemgmt;
 
 import ch.heigvd.amt.project.application.profilemgmt.info.ProfileInfoCommand;
 import ch.heigvd.amt.project.application.profilemgmt.info.ProfileInfoFailedException;
@@ -30,4 +30,4 @@ public class ProfileManagementFacade {
 
         personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
     }
-}*/
+}

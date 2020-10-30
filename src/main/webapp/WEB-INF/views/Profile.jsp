@@ -10,7 +10,7 @@
 <div class="container" style="margin-top:50px">
     <div class="container">
         <h1>Profile info</h1>
-        <form class="form-horizontal" action="/profileInfo.do" method="post">
+        <form class="form-horizontal" action="/profileUpdate.do" method="post">
 
             <div class="form-group">
                 <label for="username">Username</label>
