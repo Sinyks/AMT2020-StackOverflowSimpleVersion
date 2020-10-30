@@ -13,10 +13,7 @@ import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
 import ch.heigvd.amt.project.application.testUtil.testUtils;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
-import ch.heigvd.amt.project.domain.comment.Comment;
 import ch.heigvd.amt.project.domain.question.QuestionId;
-import ch.heigvd.amt.project.domain.user.User;
-import org.checkerframework.checker.units.qual.C;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -66,7 +63,7 @@ public class commentmgmtFacadeIT {
         // prepare the environement for test
 
         try {
-            currentUserDTO = authenticationManagementFacade.register(testUtils.testRegCommand);
+            currentUserDTO = authenticationManagementFacade.register(testUtils.getRegCommand(testUtils.USERNAME,testUtils.USER_EMAIL));
         } catch (RegisterFailedException e) {
             e.printStackTrace();
         }

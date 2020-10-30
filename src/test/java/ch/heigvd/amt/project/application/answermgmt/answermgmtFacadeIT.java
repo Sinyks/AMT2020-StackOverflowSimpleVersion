@@ -5,13 +5,10 @@ import ch.heigvd.amt.project.application.answermgmt.answer.AnswerFailedException
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
-import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsDTO;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsQuery;
-import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
 import ch.heigvd.amt.project.application.testUtil.testUtils;
-import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -58,7 +55,7 @@ public class answermgmtFacadeIT {
         // prepare the environement for test
 
         try {
-            currentUserDTO = authenticationManagementFacade.register(testUtils.testRegCommand);
+            currentUserDTO = authenticationManagementFacade.register(testUtils.getRegCommand(testUtils.USERNAME,testUtils.USER_EMAIL));
         } catch (RegisterFailedException e) {
             e.printStackTrace();
         }
