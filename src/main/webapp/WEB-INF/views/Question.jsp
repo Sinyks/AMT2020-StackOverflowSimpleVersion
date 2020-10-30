@@ -69,7 +69,7 @@
                 <div class="card-body">
                     <form action="/comment.do" method="post">
                         <div class="form-group">
-                            <textarea class="form-control" name="commentBody" id="commentBody" rows="3"></textarea>
+                            <textarea class="form-control" name="commentBody" id="commentBody" rows="3" required></textarea>
                             <input type="hidden" name="questionId" value="${question.id}"/>
                             <input type="submit" class="btn btn-primary" name="submit" value="Comment" style="margin-top:10px"/>
                         </div>
@@ -102,7 +102,7 @@
                 <form action="/answerQuestion.do" method="post">
                     <div class="form-group">
                         <label for="answerBody"></label>
-                        <textarea class="form-control" name="answerBody" id="answerBody" rows="3"></textarea>
+                        <textarea class="form-control" name="answerBody" id="answerBody" rows="3" required></textarea>
                         <input type="hidden" name="questionId" value="${question.id}"/>
                         <input type="submit" class="btn btn-primary" name="submit" value="Answer" style="margin-top:10px"/>
                     </div>
@@ -177,7 +177,7 @@
                                 <form action="/comment.do" method="post">
                                     <div class="form-group">
                                         <label for="answerCommentBody"></label>
-                                        <textarea class="form-control" name="commentBody" id="answerCommentBody" rows="3"></textarea>
+                                        <textarea class="form-control" name="commentBody" id="answerCommentBody" rows="3" required></textarea>
                                         <input type="hidden" name="questionId" value="${question.id}"/>
                                         <input type="hidden" name="answerId" value="${answer.id}"/>
                                         <input type="submit" class="btn btn-primary" name="submit" value="Comment" style="margin-top:10px"/>

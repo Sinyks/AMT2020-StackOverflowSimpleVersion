@@ -13,10 +13,10 @@
         </div>
         <form class="form-horizontal" action="/askQuestion.do" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Question title...">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Question title..." required>
             </div>
             <div class="form-group">
-                <textarea class="form-control" id="body" name="body" rows="3" placeholder="Question..."></textarea>
+                <textarea class="form-control" id="body" name="body" rows="3" placeholder="Question..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit Question</button>
         </form>
