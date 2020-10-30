@@ -19,14 +19,14 @@ public class ProfileManagementFacade {
     public CurrentUserDTO updateInfo(ProfileInfoCommand command) throws ProfileInfoFailedException {
         User userToEdit = personRepository.findById(command.getId()).orElse(null);
 
-        if (userToEdit == null){
+        if (userToEdit == null) {
             throw new ProfileInfoFailedException("user doesn't exist");
         }
 
-        try{
-        userToEdit.updatePersonalInformations(command.getNewUsername(),
-                command.getNewAboutMe(),
-                command.getNewEmail());
+        try {
+            userToEdit.updatePersonalInformations(command.getNewUsername(),
+                    command.getNewAboutMe(),
+                    command.getNewEmail());
 
             personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
 
@@ -37,35 +37,33 @@ public class ProfileManagementFacade {
                     .aboutMe(userToEdit.getAboutMe())
                     .build();
 
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new ProfileInfoFailedException(e.getMessage());
         }
-
-
     }
 
     public void updatePassword(ProfilePasswordCommand command) throws ProfilePasswordFailedException {
         User userToEdit = personRepository.findById(command.getId()).orElse(null);
 
-        if (userToEdit == null){
+        if (userToEdit == null) {
             throw new ProfilePasswordFailedException("User doesn't exist.");
         }
 
-        if(!userToEdit.login(command.getCurrentClearPassword())){
+        if (!userToEdit.login(command.getCurrentClearPassword())) {
             throw new ProfilePasswordFailedException("You did not enter the correct password.");
         }
 
-        if(!command.getNewClearTextPassword().equals(command.getNewClearTextPasswordConfirm())){
+        if (!command.getNewClearTextPassword().equals(command.getNewClearTextPasswordConfirm())) {
             throw new ProfilePasswordFailedException("Passwords dont match.");
         }
 
 
-        try{
+        try {
             userToEdit.updatePassword(command.getNewClearTextPassword());
 
             personRepository.updateById(userToEdit.getId(), userToEdit.getUsername(), userToEdit.getAboutMe(), userToEdit.getEmail(), userToEdit.getHashedPassword());
 
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new ProfilePasswordFailedException(e.getMessage());
         }
     }

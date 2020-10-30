@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/profileUpdate.do", name = "ProfileInfoCommandServlet")
 public class EditProfileInfoCommandServlet extends HttpServlet {
@@ -25,20 +24,20 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
         ProfileManagementFacade profileManagementFacade = serviceRegistry.getProfileManagementFacade();
 
         ProfileInfoCommand profileInfoCommand = ProfileInfoCommand.builder()
-                .id(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
+                .id(((CurrentUserDTO) req.getSession().getAttribute("currentUser")).getId())
                 .newUsername(req.getParameter("username"))
                 .newEmail(req.getParameter("email"))
                 .newAboutMe(req.getParameter("aboutMe"))
                 .build();
 
         CurrentUserDTO currentUserDTO = null;
-        try{
+        try {
             currentUserDTO = profileManagementFacade.updateInfo(profileInfoCommand);
-            req.getSession().setAttribute("currentUser",currentUserDTO);
-            req.setAttribute("success","Info updated successfully!");
+            req.getSession().setAttribute("currentUser", currentUserDTO);
+            req.setAttribute("success", "Info updated successfully!");
             req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
-        } catch (ProfileInfoFailedException e){
-            req.setAttribute("failure",e.getMessage());
+        } catch (ProfileInfoFailedException e) {
+            req.setAttribute("failure", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         }
 

@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/profilePassword.do", name = "ProfilePasswordCommandServlet")
-public class EditPasswordCommandServlet extends HttpServlet{
+public class EditPasswordCommandServlet extends HttpServlet {
 
     @Inject
     ServiceRegistry serviceRegistry;
@@ -25,18 +24,18 @@ public class EditPasswordCommandServlet extends HttpServlet{
         ProfileManagementFacade profileManagementFacade = serviceRegistry.getProfileManagementFacade();
 
         ProfilePasswordCommand profilePasswordCommand = ProfilePasswordCommand.builder()
-                .id(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
+                .id(((CurrentUserDTO) req.getSession().getAttribute("currentUser")).getId())
                 .currentClearPassword(req.getParameter("oldPassword"))
                 .newClearTextPassword(req.getParameter("newPassword"))
                 .newClearTextPasswordConfirm(req.getParameter("newPasswordConfirm"))
                 .build();
 
-        try{
+        try {
             profileManagementFacade.updatePassword(profilePasswordCommand);
-            req.setAttribute("success","Password changed successfully!");
+            req.setAttribute("success", "Password changed successfully!");
             req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
-        } catch (ProfilePasswordFailedException e){
-            req.setAttribute("failure",e.getMessage());
+        } catch (ProfilePasswordFailedException e) {
+            req.setAttribute("failure", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         }
     }

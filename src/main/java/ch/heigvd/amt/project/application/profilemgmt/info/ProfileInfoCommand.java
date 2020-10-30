@@ -9,7 +9,6 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class ProfileInfoCommand {
-
     private UserId id;
     private String newUsername;
     private String newEmail;

@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <%@include file="fragments/header.jsp" %>
 <%@include file="fragments/navigation.jsp" %>
 
@@ -22,17 +21,20 @@
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="${sessionScope.currentUser.username}">
+                <input class="form-control" type="text" name="username" id="username"
+                       placeholder="${sessionScope.currentUser.username}">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="text" name="email" id="email" placeholder="${sessionScope.currentUser.email}">
+                <input class="form-control" type="text" name="email" id="email"
+                       placeholder="${sessionScope.currentUser.email}">
             </div>
 
             <div class="form-group">
                 <label for="aboutMe">About me</label>
-                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3" placeholder="${sessionScope.currentUser.aboutMe}"></textarea>
+                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3"
+                          placeholder="${sessionScope.currentUser.aboutMe}"></textarea>
             </div>
 
             <div class="form-group">
