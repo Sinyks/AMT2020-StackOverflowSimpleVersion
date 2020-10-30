@@ -69,27 +69,26 @@ public class questionmgmtFacadeIT {
     }
 
 
-    /*
     @Test
     public void aksQuestionWithInvalidUserMustNotThrowException(){
         
         AskCommand command = testUtils.getAskCommand(currentUserDTO.getId(),currentUserDTO.getUsername());
 
         try {
-            questionsManagementFacade.ask(testUtils.getAskCommand(currentUserDTO.getId(),currentUserDTO.getUsername()));
+            questionsManagementFacade.ask(command);
         } catch (AskFailedException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
-    }*/
+    }
 
     @Test
     public void getQuestionsMustReturnValidObjects(){
-            QuestionsQuery query = QuestionsQuery.builder().build();
+        QuestionsQuery query = QuestionsQuery.builder().build();
 
-            QuestionsDTO questions = questionsManagementFacade.getQuestions(query);
+        QuestionsDTO questions = questionsManagementFacade.getQuestions(query);
 
-            assertNotNull(questions);
+        assertNotNull(questions);
     }
 
 }
