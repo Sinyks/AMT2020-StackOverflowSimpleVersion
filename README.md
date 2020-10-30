@@ -38,7 +38,7 @@ $ cd AMT2020-StackOverflowSimpleVersion
 $ mvn liberty:run
 ```
 
-# Run this code (for production)
+## Run this code (for production)
 
 ```bash
 # clone this repository
@@ -87,12 +87,14 @@ Some bugs and failures occur in the actual project
 - The issues mentioned before on the ``/question`` page were taken care of, the vote buttons behave as intended.
 - The homepage only showed wrong static values : the homepage servlet now sends correct statistics to the view which displays them.
 - The profile update post servlet not working has been fixed, profile info can be updated and has a nice feedback.
+- The Jmeter load were not correctly adapted to the new feature, but still remain in ``./jmeter``
+- It is not possible to submit an empty form for questions, answers, comments, login or register.
+- Changed the run script
+- Cleaned up the code
+
 ## Not Implemented
 
-- The Jmeter load were not correctly adapted to the new feature
 - The pagination on the questions and answer page
 - The tag repository exist but has not been added to the front-end logic
 - ``VoteManagementFacade`` has not been tested with Arquilian IT
 - The code has not been documented (ie:Javadoc)
-- Update methods in the domain exist but has not been implemented in front-end
-
