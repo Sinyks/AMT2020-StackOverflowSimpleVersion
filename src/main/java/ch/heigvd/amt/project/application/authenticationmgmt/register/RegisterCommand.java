@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class RegisterCommand {
-    //no aboutMe in register command, only in user modification
     private String username;
     private String email;
     private String clearTextPassword;

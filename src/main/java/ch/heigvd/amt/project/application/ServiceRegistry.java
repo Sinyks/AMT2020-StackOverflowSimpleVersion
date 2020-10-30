@@ -21,19 +21,24 @@ import javax.inject.Named;
 public class ServiceRegistry {
 
     //Injecting the repositories
-    @Inject @Named("PgsqlUserRepository")
+    @Inject
+    @Named("PgsqlUserRepository")
     IUserRepository userRepository;
 
-    @Inject @Named("PgsqlQuestionRepository")
+    @Inject
+    @Named("PgsqlQuestionRepository")
     IQuestionRepository questionRepository;
 
-    @Inject @Named("PgsqlAnswerRepository")
+    @Inject
+    @Named("PgsqlAnswerRepository")
     IAnswerRepository answerRepository;
 
-    @Inject @Named("PgsqlCommentRepository")
+    @Inject
+    @Named("PgsqlCommentRepository")
     ICommentRepository commentRepository;
 
-    @Inject @Named("PgsqlVoteRepository")
+    @Inject
+    @Named("PgsqlVoteRepository")
     IVoteRepository voteRepository;
 
     //Management facades
@@ -44,32 +49,41 @@ public class ServiceRegistry {
     private static ProfileManagementFacade profileManagementFacade;
     private static VoteManagementFacade voteManagementFacade;
 
-    public AuthenticationManagementFacade getAuthenticationManagementFacade(){
+    public AuthenticationManagementFacade getAuthenticationManagementFacade() {
         return authenticationManagementFacade;
     }
 
-    public QuestionsManagementFacade getQuestionManagementFacade(){
+    public QuestionsManagementFacade getQuestionManagementFacade() {
         return questionsManagementFacade;
     }
 
-    public AnswerManagementFacade getAnswerManagementFacade(){ return answerManagementFacade;}
+    public AnswerManagementFacade getAnswerManagementFacade() {
+        return answerManagementFacade;
+    }
 
-    public CommentManagementFacade getCommentManagementFacade(){ return commentManagementFacade;}
+    public CommentManagementFacade getCommentManagementFacade() {
+        return commentManagementFacade;
+    }
 
-    public ProfileManagementFacade getProfileManagementFacade() { return profileManagementFacade;}
-    
-    public VoteManagementFacade getVoteManagementFacade(){ return voteManagementFacade;}
+    public ProfileManagementFacade getProfileManagementFacade() {
+        return profileManagementFacade;
+    }
 
-    public ServiceRegistry(){}
+    public VoteManagementFacade getVoteManagementFacade() {
+        return voteManagementFacade;
+    }
+
+    public ServiceRegistry() {
+    }
 
     @PostConstruct
-    private void initInjection(){
+    private void initInjection() {
         authenticationManagementFacade = new AuthenticationManagementFacade(userRepository);
         voteManagementFacade = new VoteManagementFacade(voteRepository, commentRepository, answerRepository);
         commentManagementFacade = new CommentManagementFacade(commentRepository, answerRepository, userRepository);
         profileManagementFacade = new ProfileManagementFacade(userRepository);
         answerManagementFacade = new AnswerManagementFacade(answerRepository, userRepository, commentManagementFacade, voteManagementFacade);
-        questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade,commentManagementFacade, voteManagementFacade);
+        questionsManagementFacade = new QuestionsManagementFacade(questionRepository, userRepository, answerManagementFacade, commentManagementFacade, voteManagementFacade);
     }
 
 

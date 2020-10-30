@@ -26,7 +26,7 @@ public class VoteManagementFacade {
         this.answerRepository = answerRepository;
     }
 
-    public VotesDTO getVotes(QuestionId id){
+    public VotesDTO getVotes(QuestionId id) {
         Collection<Vote> allVotes = voteRepository.findByQuestionID(id);
 
         List<VotesDTO.VoteDTO> allVotesDTO = allVotes.stream().map(vote -> VotesDTO.VoteDTO.builder()
@@ -42,7 +42,7 @@ public class VoteManagementFacade {
                 .build();
     }
 
-    public VotesDTO getVotes(AnswerId id){
+    public VotesDTO getVotes(AnswerId id) {
         Collection<Vote> allVotes = voteRepository.findByAnswerID(id);
 
         List<VotesDTO.VoteDTO> allVotesDTO = allVotes.stream().map(vote -> VotesDTO.VoteDTO.builder()
@@ -60,13 +60,13 @@ public class VoteManagementFacade {
 
     public void vote(VoteCommand command) throws VoteFailedException {
         Vote newVote = null;
-        if(command.getAnswerId() != null){
+        if (command.getAnswerId() != null) {
             newVote = Vote.builder()
                     .isUpVote(command.isUpVote())
                     .ownerId(command.getOwnerId())
                     .answerId(command.getAnswerId())
                     .build();
-        }else{
+        } else {
             newVote = Vote.builder()
                     .isUpVote(command.isUpVote())
                     .ownerId(command.getOwnerId())

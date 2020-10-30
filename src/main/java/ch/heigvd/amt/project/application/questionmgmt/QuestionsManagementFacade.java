@@ -29,8 +29,7 @@ public class QuestionsManagementFacade {
                                      IUserRepository userRepository,
                                      AnswerManagementFacade answerManagementFacade,
                                      CommentManagementFacade commentManagementFacade,
-                                     VoteManagementFacade voteManagementFacade)
-    {
+                                     VoteManagementFacade voteManagementFacade) {
 
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
@@ -39,34 +38,33 @@ public class QuestionsManagementFacade {
         this.voteManagementFacade = voteManagementFacade;
     }
 
-    public void ask (AskCommand command) throws AskFailedException {
+    public void ask(AskCommand command) throws AskFailedException {
         Question newQuestion = Question.builder()
                 .ownerId(command.getOwnerId())
                 .title(command.getTitle())
                 .body(command.getBody())
-                /*.tags(command.getTags())*/
                 .build();
         questionRepository.save(newQuestion);
     }
 
-    private String getUserNameById(UserId id){
+    private String getUserNameById(UserId id) {
         User user = userRepository.findById(id).orElse(null);
 
-        if(user != null){
+        if (user != null) {
             return user.getUsername();
-        }else {
+        } else {
             throw new NullPointerException("No user with this id found");
         }
     }
 
-    public int getQuestionCount(){
+    public int getQuestionCount() {
         return questionRepository.findAll().size();
     }
 
-    public QuestionsDTO.QuestionDTO getQuestion(QuestionId id){
+    public QuestionsDTO.QuestionDTO getQuestion(QuestionId id) {
         Question question = questionRepository.findById(id).orElse(null);
 
-        if(question == null){
+        if (question == null) {
             throw new NullPointerException("No question exists with this id.");
         }
 
@@ -75,9 +73,9 @@ public class QuestionsManagementFacade {
         int voteTotal = 0;
 
         for (VotesDTO.VoteDTO vote : votesDTO.getVotes()) {
-            if(vote.isUpVote()){
+            if (vote.isUpVote()) {
                 voteTotal++;
-            }else{
+            } else {
                 voteTotal--;
             }
         }
@@ -102,7 +100,6 @@ public class QuestionsManagementFacade {
                 .voteTotal(
                         voteTotal
                 )
-                //.tags(question.getTags())*/
                 .build();
     }
 
@@ -117,8 +114,6 @@ public class QuestionsManagementFacade {
                 .ownerName(getUserNameById(question.getOwnerId()))
                 .body(question.getBody())
                 .title(question.getTitle())
-                /*.voteTotal(question.getVoteTotal())
-                .tags(question.getTags())*/
                 .build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder()

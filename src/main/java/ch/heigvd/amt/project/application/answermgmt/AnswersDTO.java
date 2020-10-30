@@ -25,7 +25,7 @@ public class AnswersDTO {
         private UserId ownerId;
         private String ownerName;
         private String body;
-        private  int VoteTotal;
+        private int VoteTotal;
 
         private CommentsDTO comments;
         private VotesDTO votes;

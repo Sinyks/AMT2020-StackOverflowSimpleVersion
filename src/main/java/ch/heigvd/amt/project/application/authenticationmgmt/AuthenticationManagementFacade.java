@@ -46,7 +46,7 @@ public class AuthenticationManagementFacade {
 
     }
 
-    public int getUserCount(){
+    public int getUserCount() {
         return personRepository.findAll().size();
     }
 

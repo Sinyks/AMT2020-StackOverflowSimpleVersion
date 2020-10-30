@@ -5,8 +5,6 @@ import ch.heigvd.amt.project.domain.question.QuestionId;
 import ch.heigvd.amt.project.domain.user.UserId;
 import lombok.*;
 
-import java.util.UUID;
-
 @Builder
 @Getter
 @EqualsAndHashCode

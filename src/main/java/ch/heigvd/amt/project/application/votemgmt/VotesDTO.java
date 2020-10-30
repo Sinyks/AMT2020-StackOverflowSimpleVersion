@@ -16,7 +16,7 @@ public class VotesDTO {
     @Builder
     @Getter
     @EqualsAndHashCode
-    public static class VoteDTO{
+    public static class VoteDTO {
         private VoteId id;
 
         private QuestionId questionId;

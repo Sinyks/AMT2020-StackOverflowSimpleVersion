@@ -1,4 +1,5 @@
-package ch.heigvd.amt.project.application.answermgmt.answer;
+package ch.heigvd.amt.project.application.commentmgmt.comment;
+
 
 import ch.heigvd.amt.project.application.BusinessException;
 

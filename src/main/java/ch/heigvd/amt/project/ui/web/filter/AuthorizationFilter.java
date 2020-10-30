@@ -17,51 +17,49 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         // HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        if(isPublicResource(req.getRequestURI())){
-            filterChain.doFilter(servletRequest,servletResponse);
+        if (isPublicResource(req.getRequestURI())) {
+            filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        CurrentUserDTO currentUser = (CurrentUserDTO)req.getSession().getAttribute("currentUser");
+        CurrentUserDTO currentUser = (CurrentUserDTO) req.getSession().getAttribute("currentUser");
 
 
-
-        if(currentUser == null){
-            String targetUrl=req.getRequestURI();
-            if(req.getQueryString() != null){
-                targetUrl = "?"+req.getQueryString();
+        if (currentUser == null) {
+            String targetUrl = req.getRequestURI();
+            if (req.getQueryString() != null) {
+                targetUrl = "?" + req.getQueryString();
             }
 
-            req.getSession().setAttribute("targetUrl",targetUrl);
+            req.getSession().setAttribute("targetUrl", targetUrl);
 
             ((HttpServletResponse) servletResponse).sendRedirect("/login");
             return;
         }
 
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
 
     }
 
 
-
-    boolean isPublicResource(String uri){
-        if(uri.startsWith("/login")) {
+    boolean isPublicResource(String uri) {
+        if (uri.startsWith("/login")) {
             return true;
-        } else if (uri.startsWith("/register")){
+        } else if (uri.startsWith("/register")) {
             return true;
-        }  else if (uri.equals("/")){
+        } else if (uri.equals("/")) {
             return true;
-        } else if (uri.startsWith("/favicon.ico")){ // to fix the mysterious favicon.ico
+        } else if (uri.startsWith("/favicon.ico")) { // to fix the mysterious favicon.ico
             return true;
-        }else if (uri.startsWith("/GzaPage")){
+        } else if (uri.startsWith("/GzaPage")) {
             return true;
-        } else if (uri.equals("/questions")){ // to extend accordingly with the questions modification
+        } else if (uri.equals("/questions")) { // to extend accordingly with the questions modification
             return true;
-        } else if (uri.equals("/question")){
+        } else if (uri.equals("/question")) {
             return true;
-        } else if (uri.startsWith("/assets")){
-                return true;
-        } else if (uri.startsWith("/arquillian-managed")){
+        } else if (uri.startsWith("/assets")) {
+            return true;
+        } else if (uri.startsWith("/arquillian-managed")) {
             return true;
         }
         return false;
