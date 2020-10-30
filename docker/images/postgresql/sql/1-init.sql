@@ -70,5 +70,3 @@ CREATE TABLE tags(
     CONSTRAINT tags_pk_tag PRIMARY KEY(pk_tag),
     CONSTRAINT tags_uk_tag UNIQUE (name)
 );
-
-
