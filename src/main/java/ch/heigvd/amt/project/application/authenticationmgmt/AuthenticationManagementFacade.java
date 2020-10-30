@@ -46,6 +46,10 @@ public class AuthenticationManagementFacade {
 
     }
 
+    public int getUserCount(){
+        return personRepository.findAll().size();
+    }
+
     public CurrentUserDTO login(LoginCommand command) throws LoginFailedException {
         User user = personRepository.findByUsername(command.getUsername()).orElse(null);
         if (user == null) {

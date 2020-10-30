@@ -1,10 +1,10 @@
 package ch.heigvd.amt.project.application.questionmgmt;
 
 import ch.heigvd.amt.project.application.answermgmt.AnswerManagementFacade;
-import ch.heigvd.amt.project.application.answermgmt.AnswersDTO;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.*;
-import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
+import ch.heigvd.amt.project.application.votemgmt.VotesDTO;
 import ch.heigvd.amt.project.domain.question.IQuestionRepository;
 import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
@@ -23,17 +23,20 @@ public class QuestionsManagementFacade {
 
     private AnswerManagementFacade answerManagementFacade;
     private CommentManagementFacade commentManagementFacade;
+    private VoteManagementFacade voteManagementFacade;
 
     public QuestionsManagementFacade(IQuestionRepository questionRepository,
                                      IUserRepository userRepository,
                                      AnswerManagementFacade answerManagementFacade,
-                                     CommentManagementFacade commentManagementFacade)
+                                     CommentManagementFacade commentManagementFacade,
+                                     VoteManagementFacade voteManagementFacade)
     {
 
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.answerManagementFacade = answerManagementFacade;
         this.commentManagementFacade = commentManagementFacade;
+        this.voteManagementFacade = voteManagementFacade;
     }
 
     public void ask (AskCommand command) throws AskFailedException {
@@ -56,11 +59,27 @@ public class QuestionsManagementFacade {
         }
     }
 
+    public int getQuestionCount(){
+        return questionRepository.findAll().size();
+    }
+
     public QuestionsDTO.QuestionDTO getQuestion(QuestionId id){
         Question question = questionRepository.findById(id).orElse(null);
 
         if(question == null){
             throw new NullPointerException("No question exists with this id.");
+        }
+
+        VotesDTO votesDTO = voteManagementFacade.getVotes(question.getId());
+
+        int voteTotal = 0;
+
+        for (VotesDTO.VoteDTO vote : votesDTO.getVotes()) {
+            if(vote.isUpVote()){
+                voteTotal++;
+            }else{
+                voteTotal--;
+            }
         }
 
         return QuestionsDTO.QuestionDTO.builder()
@@ -77,8 +96,13 @@ public class QuestionsManagementFacade {
                 .comments(
                         commentManagementFacade.getComments(question.getId())
                 )
-                /*.voteTotal(question.getVoteTotal())
-                .tags(question.getTags())*/
+                .votes(
+                        votesDTO
+                )
+                .voteTotal(
+                        voteTotal
+                )
+                //.tags(question.getTags())*/
                 .build();
     }
 

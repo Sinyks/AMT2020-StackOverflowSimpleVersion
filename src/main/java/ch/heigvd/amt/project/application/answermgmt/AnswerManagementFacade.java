@@ -3,15 +3,14 @@ package ch.heigvd.amt.project.application.answermgmt;
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerFailedException;
 import ch.heigvd.amt.project.application.commentmgmt.CommentManagementFacade;
+import ch.heigvd.amt.project.application.votemgmt.VoteManagementFacade;
+import ch.heigvd.amt.project.application.votemgmt.VotesDTO;
 import ch.heigvd.amt.project.domain.answer.Answer;
 import ch.heigvd.amt.project.domain.answer.IAnswerRepository;
-import ch.heigvd.amt.project.domain.comment.Comment;
-import ch.heigvd.amt.project.domain.comment.ICommentRepository;
 import ch.heigvd.amt.project.domain.question.QuestionId;
 import ch.heigvd.amt.project.domain.user.IUserRepository;
 import ch.heigvd.amt.project.domain.user.User;
 import ch.heigvd.amt.project.domain.user.UserId;
-import lombok.Builder;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,12 +21,14 @@ public class AnswerManagementFacade {
     private IUserRepository userRepository;
 
     private CommentManagementFacade commentManagementFacade;
+    private VoteManagementFacade voteManagementFacade;
 
 
-    public AnswerManagementFacade(IAnswerRepository answerRepository, IUserRepository userRepository, CommentManagementFacade commentManagementFacade) {
+    public AnswerManagementFacade(IAnswerRepository answerRepository, IUserRepository userRepository, CommentManagementFacade commentManagementFacade, VoteManagementFacade voteManagementFacade) {
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
         this.commentManagementFacade = commentManagementFacade;
+        this.voteManagementFacade = voteManagementFacade;
     }
 
     private String getUserNameById(UserId id){
@@ -38,6 +39,22 @@ public class AnswerManagementFacade {
         }else {
             throw new NullPointerException("No user with this id found");
         }
+    }
+
+    private int voteScore(VotesDTO votesDTO){
+        int voteTotal = 0;
+        for (VotesDTO.VoteDTO vote : votesDTO.getVotes()) {
+            if (vote.isUpVote()) {
+                voteTotal++;
+            } else {
+                voteTotal--;
+            }
+        }
+        return voteTotal;
+    }
+
+    public int getAnswerCount(){
+        return answerRepository.findAll().size();
     }
 
     public AnswersDTO getAnswers(QuestionId id){
@@ -53,6 +70,12 @@ public class AnswerManagementFacade {
                 .body(answer.getBody())
                 .comments(
                         commentManagementFacade.getComments(answer.getId())
+                )
+                .votes(
+                        voteManagementFacade.getVotes(answer.getId())
+                )
+                .VoteTotal(
+                        voteScore(voteManagementFacade.getVotes(answer.getId()))
                 )
                 .build()).collect(Collectors.toList());
 
