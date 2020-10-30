@@ -21,8 +21,8 @@ module.exports = function() {
             usernameUnique: `User-${Date.now()}`,
             emailUnique: `${Date.now()}@mail.com`,
             password: 'pass1234',
-            questionTitle: 'the question',
-            questionContent: 'to be or not to be?',
+            questionTitle: `the question${Date.now()}`,
+            questionContent: 'to be or not to be',
             answerContent : `... not to be ${Date.now()}`,
             commentContent : `I see you are a man of culture ${Date.now()}`
         }
