@@ -8,13 +8,11 @@ import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFai
 import ch.heigvd.amt.project.application.testUtil.testUtils;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.runners.MethodSorters;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -23,7 +21,6 @@ import static org.junit.Assert.*;
 
 
 @RunWith(Arquillian.class)
-@FixMethodOrder(MethodSorters.JVM)
 public class AuthenticationmgmtFacadeIT {
 
     private final static String WARNAME = "arquillian-managed.war";
@@ -51,7 +48,7 @@ public class AuthenticationmgmtFacadeIT {
         CurrentUserDTO currentUserDTO = null;
 
         try {
-            currentUserDTO = this.authenticationManagementFacade.register(testUtils.testRegCommand);
+            currentUserDTO = this.authenticationManagementFacade.register(testUtils.getRegCommand(testUtils.USERNAME,testUtils.USER_EMAIL));
         } catch (RegisterFailedException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -64,12 +61,21 @@ public class AuthenticationmgmtFacadeIT {
 
     @Test
     public void loginWithValidUserMustReturnValidObject(){
+        String currentUsername = testUtils.randUsername();
+        String currentEmail = currentUsername + "@mail.com";
+        CurrentUserDTO currentUserDTO = null;
+        try {
+            currentUserDTO = this.authenticationManagementFacade.register(testUtils.getRegCommand(currentUsername,currentEmail));
+        } catch (RegisterFailedException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+
         LoginCommand loginCmd = LoginCommand.builder()
-                .username(testUtils.USERNAME)
+                .username(currentUserDTO.getUsername())
                 .clearTextPassword(testUtils.USER_PASSWORD)
                 .build();
-
-        CurrentUserDTO currentUserDTO = null;
 
         try {
             currentUserDTO = this.authenticationManagementFacade.login(loginCmd);
@@ -79,8 +85,8 @@ public class AuthenticationmgmtFacadeIT {
         }
 
         assertNotNull(currentUserDTO);
-        assertEquals(currentUserDTO.getUsername(),testUtils.USERNAME);
-        assertEquals(currentUserDTO.getEmail(),testUtils.USER_EMAIL);
+        assertEquals(currentUserDTO.getUsername(),currentUsername);
+        assertEquals(currentUserDTO.getEmail(),currentEmail);
     }
 
     @Test

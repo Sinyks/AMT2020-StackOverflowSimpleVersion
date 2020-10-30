@@ -3,21 +3,13 @@ package ch.heigvd.amt.project.application.questionmgmt;
 import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.AuthenticationManagementFacade;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
-import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
-import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterFailedException;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
 import ch.heigvd.amt.project.application.testUtil.testUtils;
-import ch.heigvd.amt.project.domain.question.Question;
-import ch.heigvd.amt.project.domain.question.QuestionId;
-import ch.heigvd.amt.project.domain.user.User;
-import ch.heigvd.amt.project.domain.user.UserId;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -27,7 +19,6 @@ import org.junit.runners.MethodSorters;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.inject.Inject;
-import javax.swing.text.Utilities;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -61,7 +52,7 @@ public class questionmgmtFacadeIT {
         authenticationManagementFacade = serviceRegistry.getAuthenticationManagementFacade();
 
         try {
-            currentUserDTO = authenticationManagementFacade.register(testUtils.testRegCommand);
+            currentUserDTO = authenticationManagementFacade.register(testUtils.getRegCommand(testUtils.USERNAME,testUtils.USER_EMAIL ));
         } catch (RegisterFailedException e) {
             e.printStackTrace();
         }

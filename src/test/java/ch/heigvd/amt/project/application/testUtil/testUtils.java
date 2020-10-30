@@ -1,16 +1,11 @@
 package ch.heigvd.amt.project.application.testUtil;
 
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
-import ch.heigvd.amt.project.application.authenticationmgmt.login.LoginCommand;
 import ch.heigvd.amt.project.application.authenticationmgmt.register.RegisterCommand;
 import ch.heigvd.amt.project.application.commentmgmt.comment.CommentCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
-import ch.heigvd.amt.project.domain.answer.Answer;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
-import ch.heigvd.amt.project.domain.comment.Comment;
-import ch.heigvd.amt.project.domain.question.Question;
 import ch.heigvd.amt.project.domain.question.QuestionId;
-import ch.heigvd.amt.project.domain.user.User;
 import ch.heigvd.amt.project.domain.user.UserId;
 
 import java.util.Random;
@@ -18,7 +13,7 @@ import java.util.Random;
 public class testUtils {
     private static final Random rand = new Random();
 
-    public static final String USERNAME = "Popey" + rand.nextInt();
+    public static String USERNAME = "Popey" + rand.nextInt();
     public static final String USER_EMAIL = USERNAME + "@mail.com";
     public static final String USER_PASSWORD = "pass1234";
 
@@ -31,12 +26,18 @@ public class testUtils {
 
     public final static UserId testUserId = new UserId();
 
-    public final static RegisterCommand testRegCommand = RegisterCommand.builder()
-                                                                        .username(USERNAME)
-                                                                        .email(USER_EMAIL)
-                                                                        .clearTextPassword(USER_PASSWORD)
-                                                                        .clearTextPasswordConfirm(USER_PASSWORD)
-                                                                        .build();
+    public static String randUsername(){
+        return "Popey" + rand.nextInt();
+    }
+
+    public static RegisterCommand getRegCommand(String username, String email) {
+        return RegisterCommand.builder()
+                .username(username)
+                .email(email)
+                .clearTextPassword(USER_PASSWORD)
+                .clearTextPasswordConfirm(USER_PASSWORD)
+                .build();
+    }
 
     public static AskCommand getAskCommand(UserId ownerId, String ownerName){
         return AskCommand.builder()
