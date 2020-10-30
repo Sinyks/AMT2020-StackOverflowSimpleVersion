@@ -6,9 +6,9 @@
 
 <div class="jumbotron text-center">
     <h1>Welcome!</h1>
-    <p>Our application doesn't have any users yet!</p>
-    <p>0 questions have been asked!</p>
-    <p>0 answers have been given!</p>
+    <p>Our application has ${requestScope.userCount} user(s)!</p>
+    <p>${requestScope.questionCount} question(s) has(have) been asked!</p>
+    <p>${requestScope.answerCount} answer(s) has(have) been given!</p>
     <p>We are a QA webpage!</p>
 </div>
 <div class="d-flex justify-content-center">

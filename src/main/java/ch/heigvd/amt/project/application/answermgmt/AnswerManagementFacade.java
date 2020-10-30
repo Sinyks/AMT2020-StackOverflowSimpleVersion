@@ -53,6 +53,10 @@ public class AnswerManagementFacade {
         return voteTotal;
     }
 
+    public int getAnswerCount(){
+        return answerRepository.findAll().size();
+    }
+
     public AnswersDTO getAnswers(QuestionId id){
         Collection<Answer> allAnswers = answerRepository.findByQuestionID(id);
 

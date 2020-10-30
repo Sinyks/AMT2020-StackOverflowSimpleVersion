@@ -59,6 +59,10 @@ public class QuestionsManagementFacade {
         }
     }
 
+    public int getQuestionCount(){
+        return questionRepository.findAll().size();
+    }
+
     public QuestionsDTO.QuestionDTO getQuestion(QuestionId id){
         Question question = questionRepository.findById(id).orElse(null);
 
