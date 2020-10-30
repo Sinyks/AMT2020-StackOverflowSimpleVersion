@@ -80,10 +80,6 @@ https://drive.google.com/drive/folders/1nZA1BNT6IPRA33JpV597dQgbJ2IBXqPw?usp=sha
 Some bugs and failures occur in the actual project
 
 - E2E tests fails if launch all at the same time
-- User Profile update trigger an unexpected Error
-- The ``/question`` page has an issue with the voting buttons :
-  * unauthenticated users shouldn't be able to see the voting interface, this is solved with a simple jstl ``<c:if>`` tag
-  * in the view, when checking if a user has already voted on an answer, we incorrectly check if he has answered the question by checking the questionDTO instead of the answerDTO contained within the questionDTO, which means the voting button on answers disappears
 
 ## Changes made after the presentation
 
