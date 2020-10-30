@@ -45,17 +45,18 @@ $ git clone git@github.com:Sinyks/AMT2020-StackOverflowSimpleVersion.git
 
 $ cd AMT2020-StackOverflowSimpleVersion/docker
 
-$ ./deploy.sh
+$ ./run.sh
 ```
 
-
-There you can visit the http://localhost:9080 page on your browser
+There you can visit the http://localhost:9081 page on your browser
 
 ## Docker Image
 
 A workflow launch the tests and command for validate your push or your merge request, if it pass the test and build steps then a docker image of openliberty will be create on https://github.com/dev-zaretti?tab=packages.
 
 You can pull it with this command : 
+
+__IMPORTANT: this image is unexploitable without a correct database__ 
 
 ```bash
 $ docker pull ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty:latest
@@ -67,10 +68,28 @@ Or directly run this container with the following command :
 $ docker run -it -p 9080:9080 ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty:latest
 ```
 
-NB: don't forget to link a database
-
 ## Ressources
 
 All other ressources (Mockup, diagram,...) can be found on google Drive
 
 https://drive.google.com/drive/folders/1nZA1BNT6IPRA33JpV597dQgbJ2IBXqPw?usp=sharing
+
+## Known Issues
+
+Some bugs and failures occur in the actual project
+
+- E2E tests fails if launch all at the same time
+- User Profile update trigger an unexpected Error
+- The ``/question`` page has an issue with the voting buttons :
+  * unauthenticated users shouldn't be able to see the voting interface, this is solved with a simple jstl ``<c:if>`` tag
+  * in the view, when checking if a user has already voted on an answer, we incorrectly check if he has answered the question by checking the questionDTO instead of the answerDTO contained within the questionDTO, which means the voting button on answers disappears
+
+## Not Implemented
+
+- The Jmeter load were not correctly adapted to the new feature
+- The pagination on the questions and answer page
+- The tag repository exist but has not been added to the front-end logic
+- ``VoteManagementFacade`` has not been tested with Arquilian IT
+- The code has not been documented (ie:Javadoc)
+- Update methods in the domain exist but has not been implemented in front-end
+
