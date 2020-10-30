@@ -1,4 +1,4 @@
-/* package ch.heigvd.amt.project.ui.web.profile;
+package ch.heigvd.amt.project.ui.web.profile;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(urlPatterns = "/profileInfo.do", name = "ProfilePage")
+@WebServlet(urlPatterns = "/profileUpdate.do", name = "ProfileInfoCommandServlet")
 public class EditProfileInfoCommandServlet extends HttpServlet {
 
     @Inject
@@ -23,24 +22,26 @@ public class EditProfileInfoCommandServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProfileManagementFacade profileManagementFacade = serviceRegistry.getProfileManagementFacade();
-        req.getSession().removeAttribute("errors");
 
         ProfileInfoCommand profileInfoCommand = ProfileInfoCommand.builder()
-                .id(((CurrentUserDTO)req.getSession().getAttribute("currentUser")).getId())
+                .id(((CurrentUserDTO) req.getSession().getAttribute("currentUser")).getId())
                 .newUsername(req.getParameter("username"))
                 .newEmail(req.getParameter("email"))
                 .newAboutMe(req.getParameter("aboutMe"))
                 .build();
 
-        try{
-            profileManagementFacade.updateInfo(profileInfoCommand);
-            resp.sendRedirect("/profile");
-        } catch (ProfileInfoFailedException e){
-            req.getSession().setAttribute("errors", List.of(e.getMessage()));
-            resp.sendRedirect("/profile");
+        CurrentUserDTO currentUserDTO = null;
+        try {
+            currentUserDTO = profileManagementFacade.updateInfo(profileInfoCommand);
+            req.getSession().setAttribute("currentUser", currentUserDTO);
+            req.setAttribute("success", "Info updated successfully!");
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
+        } catch (ProfileInfoFailedException e) {
+            req.setAttribute("failure", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
         }
 
     }
 
 
-}*/
+}

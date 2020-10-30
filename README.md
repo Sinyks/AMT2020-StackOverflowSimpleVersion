@@ -89,7 +89,7 @@ Some bugs and failures occur in the actual project
 
 - The issues mentioned before on the ``/question`` page were taken care of, the vote buttons behave as intended.
 - The homepage only showed wrong static values : the homepage servlet now sends correct statistics to the view which displays them.
-
+- The profile update post servlet not working has been fixed, profile info can be updated and has a nice feedback.
 ## Not Implemented
 
 - The Jmeter load were not correctly adapted to the new feature

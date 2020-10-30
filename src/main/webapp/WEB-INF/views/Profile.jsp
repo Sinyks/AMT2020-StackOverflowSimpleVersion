@@ -1,30 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean scope="request" id="profileInfo" type="ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO"/>
-
 
 <%@include file="fragments/header.jsp" %>
 <%@include file="fragments/navigation.jsp" %>
 
+<c:if test="${not empty requestScope.success}">
+    <div class="alert alert-success text-center" role="alert">${requestScope.success}</div>
+</c:if>
+
+<c:if test="${not empty requestScope.failure}">
+    <div class="alert alert-danger text-center" role="alert">${requestScope.failure}</div>
+</c:if>
+
+
 <div class="container" style="margin-top:50px">
     <div class="container">
         <h1>Profile info</h1>
-        <form class="form-horizontal" action="/profileInfo.do" method="post">
+        <form class="form-horizontal" action="/profileUpdate.do" method="post">
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="${profileInfo.username}">
+                <input class="form-control" type="text" name="username" id="username"
+                       placeholder="${sessionScope.currentUser.username}">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="text" name="email" id="email" placeholder="${profileInfo.email}">
+                <input class="form-control" type="text" name="email" id="email"
+                       placeholder="${sessionScope.currentUser.email}">
             </div>
 
             <div class="form-group">
                 <label for="aboutMe">About me</label>
-                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3" placeholder="${profileInfo.aboutMe}"></textarea>
+                <textarea class="form-control" id="aboutMe" name="aboutMe" rows="3"
+                          placeholder="${sessionScope.currentUser.aboutMe}"></textarea>
             </div>
 
             <div class="form-group">
@@ -38,6 +48,7 @@
     <div class="container">
         <h2>Password change</h2>
         <form class="form-horizontal" action="/profilePassword.do" method="post">
+
             <div class="form-group">
                 <label for="oldPassword">Password</label>
                 <input class="form-control" type="password" name="oldPassword" id="oldPassword"

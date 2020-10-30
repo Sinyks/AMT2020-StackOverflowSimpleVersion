@@ -11,6 +11,6 @@ import lombok.Getter;
 public class ProfilePasswordCommand {
     private UserId id;
     private String currentClearPassword;
-    private String newClearTextNewPassword;
-    private String newClearTextNewPasswordConfirm;
+    private String newClearTextPassword;
+    private String newClearTextPasswordConfirm;
 }
