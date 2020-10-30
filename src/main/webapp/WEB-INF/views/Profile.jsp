@@ -6,6 +6,11 @@
 <%@include file="fragments/header.jsp" %>
 <%@include file="fragments/navigation.jsp" %>
 
+<c:if test="${not empty requestScope.success}">
+    <div class="alert alert-success" role="alert">${requestScope.success}</div>
+</c:if>
+
+
 <div class="container" style="margin-top:50px">
     <div class="container">
         <h1>Profile info</h1>
@@ -37,6 +42,7 @@
     <div class="container">
         <h2>Password change</h2>
         <form class="form-horizontal" action="/profilePassword.do" method="post">
+
             <div class="form-group">
                 <label for="oldPassword">Password</label>
                 <input class="form-control" type="password" name="oldPassword" id="oldPassword"
