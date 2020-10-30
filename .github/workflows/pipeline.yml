@@ -27,7 +27,7 @@ jobs:
       - name: Build the database with docker-compose
         run:  docker-compose -f ./docker/topologies/docker-compose.yml up --detach db
       
-      - name: Sleep for 10 seconds
+      - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
           time: '30s'
