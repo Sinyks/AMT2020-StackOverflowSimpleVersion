@@ -1,21 +1,22 @@
-# AMT2020-StackOverflowSimpleVersion
+# AMT2020 - Gamified StackOverflowSimple
 
 | Nom               | email                        |
 | ----------------- | ---------------------------- |
 | Alban Favre       | alban.favre@heig-vd.ch       |
 | Guillaume Zaretti | guillaume.zaretti@heig-vd.ch |
 | Sacha Perdrizat   | sacha.perdrizat@heig-vd.ch   |
-| Maximillian Vogel | maximillian.vogel@heig-vd.ch  |
+| Maximilian Vogel  | maximilian.vogel@heig-vd.ch  |
 
 
 
 ## Introduction
 
-The aim of this project is to create a simplified version of the famous StackOverflow website. We will be using concepts learned during the AMT 2020 class at HEIG-VD. This is the first project out of three this semester.
+The aim of this project is to link a simplified version of the famous StackOverflow website with a Gamification API which we both made as a team during the AMT 2020 class at HEIG-VD. We will be using concepts learned during that class. This is the final part of this semester's project.
 
-## Technical detail
 
-Our application is build over the Jakarta EE standard (Java EE). We are using the following tools/technology to bring this project up:)
+## Technical details
+
+Our application is built over the Jakarta EE standard (Java EE). We are using the following tools/technology to build this project :
 
 | Component                     | Name                                                      | Version      |
 | ----------------------------- | --------------------------------------------------------- | ------------ |
@@ -49,11 +50,11 @@ $ cd AMT2020-StackOverflowSimpleVersion/docker
 $ ./run.sh
 ```
 
-There you can visit the http://localhost:9081 page on your browser
+You can then visit the http://localhost:9081 page on your browser.
 
 ## Docker Image
 
-A workflow launch the tests and command for validate your push or your merge request, if it pass the test and build steps then a docker image of openliberty will be create on https://github.com/dev-zaretti?tab=packages.
+A workflow launches the tests and commands to validate your push or your merge request. If it pasess the test and build steps then a docker image of openliberty will be created on https://github.com/dev-zaretti?tab=packages.
 
 You can pull it with this command : 
 
@@ -69,28 +70,26 @@ Or directly run this container with the following command :
 $ docker run -it -p 9080:9080 ghcr.io/dev-zaretti/stackoverflowsimpleversion/openliberty:latest
 ```
 
-## Ressources
+## Resources
 
-All other ressources (Mockup, diagram,...) can be found on google Drive
+All other resources (Mockup, diagram, ...) can be found on Google Drive :
 
 https://drive.google.com/drive/folders/1nZA1BNT6IPRA33JpV597dQgbJ2IBXqPw?usp=sharing
 
 ## Known Issues
 
-Some bugs and failures occur in the actual project
+Some bugs and failures occur in the actual project :
 
-- E2E tests fails if launch all at the same time
-- Integration test for questions failed in the pipeline sometimes :(
+- E2E tests fail if they are all launched at the same time.
+- Integration test for questions fails in the pipeline sometimes.
 
-## Changes made after the presentation
+## Integration with the Gamification Engine API
 
-- The issues mentioned before on the ``/question`` page were taken care of, the vote buttons behave as intended.
-- The homepage only showed wrong static values : the homepage servlet now sends correct statistics to the view which displays them.
-- The profile update post servlet not working has been fixed, profile info can be updated and has a nice feedback.
-- The Jmeter load were not correctly adapted to the new feature, but still remain in ``./jmeter``
-- It is not possible to submit an empty form for questions, answers, comments, login or register.
-- Changed the run script
-- Cleaned up the code
+Three things need to be done in order to link both of our previous projects :
+
+- Create a script-enabled launch of the API, the databases and finally the StackOverflow application that links the API and the app.
+- The StackOverflow application sends HTTP POST requests to the API informing the API of user events that impact the gamification engine. 
+- The StackOverflow application sends HTTP GET requests to the API when it wants to display gamification information concerning one or all of the app's user(s).
 
 ## Not Implemented
 
