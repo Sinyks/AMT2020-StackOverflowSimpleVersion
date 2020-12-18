@@ -1,0 +1,15 @@
+version: "3"
+services:
+  GamificationAPI:
+    image: ghcr.io/gusamaal/gamification-engine-amt/gamificationengine@sha256:8a2c102346bcb6fe60dd3713677ea7bc50c133a11f37bda193860a91c8488570
+    ports:
+      - "8086:8080"
+    restart: always
+    depends_on:
+      - amtdb 
+  amtdb:  
+    image: amtdb
+    build: ../../images/mysql
+    restart: always
+    ports:
+      - "3306:3306"
