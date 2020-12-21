@@ -23,7 +23,8 @@ RULES = [{
     "then": {
         "action": {
             "name": "addBadge",
-            "target": "ciel"
+            "target": "ciel",
+            "amount": 0
             }
         }
     },{
@@ -33,7 +34,8 @@ RULES = [{
     "then": {
         "action": {
             "name": "addPoint",
-            "target": "point"
+            "target": "point",
+            "amount": 1
             }
         }
     }

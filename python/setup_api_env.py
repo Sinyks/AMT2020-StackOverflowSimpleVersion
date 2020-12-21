@@ -21,7 +21,7 @@ if __name__ == "__main__":
     try:
         resp = req.post(url=api_url + "/applications",data=json.dumps(data),headers=headers).json()
         headers["X-API-KEY"] = resp['key']
-        print("My api key is {}".format(headers["X-API-KEY"]))
+        print("Your api key is {}".format(headers["X-API-KEY"]))
 
         print("create badges")
         time.sleep(2)
