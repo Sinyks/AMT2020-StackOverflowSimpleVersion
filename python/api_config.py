@@ -34,7 +34,7 @@ RULES = [{
     "then": {
         "action": {
             "name": "addPoint",
-            "target": "point",
+            "target": "points",
             "amount": 1
             }
         }
