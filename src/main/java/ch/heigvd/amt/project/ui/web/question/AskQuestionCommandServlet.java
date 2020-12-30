@@ -56,7 +56,8 @@ public class AskQuestionCommandServlet extends HttpServlet {
         String api_host = dotenv.get("API_HOST");
         String api_port = dotenv.get("API_PORT");
 
-        String adress = "http://" + api_host + ":" + api_port + "/events";
+        String address = "http://" + api_host + ":" + api_port + "/events";
+        String username = ((CurrentUserDTO) req.getSession().getAttribute("currentUser")).getUsername();
 
         //POST event request
         HttpClient httpClient = HttpClient.newBuilder()
@@ -68,13 +69,13 @@ public class AskQuestionCommandServlet extends HttpServlet {
                 .append("{")
                 .append("\"eventType\":\"comment\",")
                 .append("\"eventparams\": {")
-                .append("\"username\":\"charlie\"")
+                .append("\"username\":\"" + username + "\"")
                 .append("}")
                 .append("}").toString();
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(json))
-                .uri(URI.create(adress))
+                .uri(URI.create(address))
                 .setHeader("X-API-KEY", api_key)
                 .header("Content-Type", "application/json")
                 .build();
