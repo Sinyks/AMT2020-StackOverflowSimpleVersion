@@ -67,7 +67,7 @@ public class AskQuestionCommandServlet extends HttpServlet {
 
         String json = new StringBuilder()
                 .append("{")
-                .append("\"eventType\":\"comment\",")
+                .append("\"eventType\":\"question\",")
                 .append("\"eventparams\": {")
                 .append("\"username\":\"" + username + "\"")
                 .append("}")
