@@ -13,8 +13,18 @@ BADGES = [{
 }]
 
 POINTSCALES = [{
-    "label": "points"
-}]
+        "label": "question"
+    },
+    {
+        "label": "comment"
+    },
+    {
+        "label": "answer"
+    },
+    {
+        "label": "vote"
+    }
+]
 
 RULES = [{
     "if": {
@@ -29,12 +39,45 @@ RULES = [{
         }
     },{
     "if": {
+        "eventType": "question"
+        },
+    "then": {
+        "action": {
+            "name": "addPoint",
+            "target": "question",
+            "amount": 1
+            }
+        }
+    },{
+    "if": {
         "eventType": "comment"
         },
     "then": {
         "action": {
             "name": "addPoint",
-            "target": "point",
+            "target": "comment",
+            "amount": 1
+            }
+        }
+    },{
+    "if": {
+        "eventType": "answer"
+        },
+    "then": {
+        "action": {
+            "name": "addPoint",
+            "target": "answer",
+            "amount": 1
+            }
+        }
+    },{
+    "if": {
+        "eventType": "vote"
+        },
+    "then": {
+        "action": {
+            "name": "addPoint",
+            "target": "vote",
             "amount": 1
             }
         }
