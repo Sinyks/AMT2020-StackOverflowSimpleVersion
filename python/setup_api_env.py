@@ -1,42 +1,60 @@
-import user_env as env
+# ---------------------------------------------------------------------------- #
+#                  Python automation script for stting up API                  #
+# ---------------------------------------------------------------------------- #
+
 import api_config as config
 import requests as req
+from dotenv import load_dotenv
+from pathlib import Path
+import os
 import json
 import time
 
 if __name__ == "__main__":
-    # create the host api url
-    api_url = "http://{}:{}".format(env.HOST,env.PORT)
+
+    # ------------------------- import environement value ------------------------ #
+
+    env_path = Path('..') / '.env'
+    load_dotenv(dotenv_path=env_path)
+
+    # ------------------------------ Prepare payload ----------------------------- #
+
+    api_url = "http://{}:{}".format(os.getenv('API_HOST'),os.getenv('API_PORT'))
 
     headers = {
         'accept': 'application/json',
         'Content-Type': 'application/json',
     }
 
-    # get the application key
     print(api_url + "/applications")
 
-    data = {"name": env.APP_NAME}
+    data = {"name": config.APPLICATION_NAME}
     
     try:
+
+        # -------------------------------- Get and set API-KEY ------------------------ #
+
         resp = req.post(url=api_url + "/applications",data=json.dumps(data),headers=headers).json()
         headers["X-API-KEY"] = resp['key']
         print("Your api key is {}".format(headers["X-API-KEY"]))
 
+        # -------------------------------- Set badges -------------------------------- #
+
         print("create badges")
-        time.sleep(2)
 
         for badge in config.BADGES:
             req.post(api_url+"/badges",data=json.dumps(badge),headers=headers)
         
+        # ------------------------------ Set pointScale ------------------------------ #
+
         print("create pointscales")
-        time.sleep(2)
         
         for pointScale in config.POINTSCALES:
             req.post(api_url+"/pointscale",data=json.dumps(pointScale),headers=headers)
         
+        # --------------------------------- Set Rules -------------------------------- #
+
         print("create rules")
-        time.sleep(2)
 
         for rule in config.RULES:
             req.post(api_url+"/rules",data=json.dumps(rule),headers=headers)

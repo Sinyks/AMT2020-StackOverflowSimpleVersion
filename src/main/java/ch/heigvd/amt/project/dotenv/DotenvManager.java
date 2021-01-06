@@ -3,7 +3,7 @@ package ch.heigvd.amt.project.dotenv;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public abstract class DotenvManager {
-    private static String ENV_PATH = "src/main/liberty/config";
+    private static String ENV_PATH = "./";
 
     public static Dotenv getDotenv(){
 
@@ -11,7 +11,7 @@ public abstract class DotenvManager {
                 .directory(ENV_PATH)
                 .ignoreIfMalformed()
                 .ignoreIfMissing()
-                .filename("server.env")
+                .filename(".env")
                 .load();
     }
 }
