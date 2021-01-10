@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------- #
+#               Contain default template for the setup of the API              #
+# ---------------------------------------------------------------------------- #
+
+APPLICATION_NAME = "Gusamaal"
+
 BADGES = [{
     "name": "terre",
     "color": "brun",

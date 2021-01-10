@@ -1,0 +1,4 @@
+API_HOST=localhost
+API_PORT=8086
+
+API_KEY=<Place your API key HERE>
