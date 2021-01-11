@@ -51,6 +51,7 @@ public class ProfilePageServlet extends HttpServlet {
 
         HttpResponse<String> apiResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
+        req.setAttribute("userReputation", apiResponse);
         req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
     }
 }

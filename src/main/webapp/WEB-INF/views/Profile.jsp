@@ -75,6 +75,10 @@
 
     </div>
 
+    <div class="container">
+        <p>${requestScope.userReputation}</p>
+    </div>
+
 </div>
 
 <%@include file="fragments/footer.jsp" %>

@@ -11,6 +11,11 @@
     <p>${requestScope.answerCount} answer(s) has(have) been given!</p>
     <p>We are a QA webpage!</p>
 </div>
+
+<div class="jumbotron text-center">
+    <p>${requestScope.scoreboard}</p>
+</div>
+
 <div class="d-flex justify-content-center">
     <button onclick="location.href='/questions'" type="button" class="btn-primary btn-lg">Browse questions...</button>
 </div>

@@ -7,6 +7,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,6 +62,7 @@ public class HomePageServlet extends HttpServlet {
         request.setAttribute("userCount", userCount);
         request.setAttribute("questionCount", questionCount);
         request.setAttribute("answerCount", answerCount);
+        request.setAttribute("scoreboard", apiResponse);
         request.getRequestDispatcher("/WEB-INF/views/Home.jsp").forward(request, response);
     }
 }
