@@ -1,13 +1,13 @@
 package ch.heigvd.amt.project.ui.web;
 
 import ch.heigvd.amt.project.application.ServiceRegistry;
-import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
-import ch.heigvd.amt.project.dotenv.DotenvManager;
+import ch.heigvd.amt.project.utils.DotenvManager;
+import ch.heigvd.amt.project.utils.UserReputation;
+import com.google.gson.Gson;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 
 import javax.inject.Inject;
-import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,10 +59,14 @@ public class HomePageServlet extends HttpServlet {
 
         HttpResponse<String> apiResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
+        Gson gson = new Gson();
+
+        UserReputation[] userReputations = gson.fromJson(apiResponse.body(), UserReputation[].class);
+
         request.setAttribute("userCount", userCount);
         request.setAttribute("questionCount", questionCount);
         request.setAttribute("answerCount", answerCount);
-        request.setAttribute("scoreboard", apiResponse);
+        request.setAttribute("scoreboard", userReputations);
         request.getRequestDispatcher("/WEB-INF/views/Home.jsp").forward(request, response);
     }
 }

@@ -1,4 +1,4 @@
-package ch.heigvd.amt.project.dotenv;
+package ch.heigvd.amt.project.utils;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

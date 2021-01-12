@@ -5,7 +5,7 @@ import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.application.questionmgmt.QuestionsManagementFacade;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskCommand;
 import ch.heigvd.amt.project.application.questionmgmt.ask.AskFailedException;
-import ch.heigvd.amt.project.dotenv.DotenvManager;
+import ch.heigvd.amt.project.utils.DotenvManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 

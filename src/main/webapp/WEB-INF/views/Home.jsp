@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:useBean scope="request" id="userReputation" type="ch.heigvd.amt.project.utils.UserReputation"/>
+
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
@@ -13,7 +15,43 @@
 </div>
 
 <div class="jumbotron text-center">
-    <p>${requestScope.scoreboard}</p>
+    <c:forEach var="userReputation" items="${requestScope.scoreboard.userReputations}">
+        <p>${userReputation.username}</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Pointscale</th>
+                <th scope="col">Points Amassed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="pointscale" items="${userReputation.pointscales}">
+                <tr>
+                    <td>${pointscale.label}</td>
+                    <td>${pointscale.pointCounter}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Badge</th>
+                <th scope="col">Color</th>
+                <th scope="col">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="badge" items="${userReputation.badges}">
+                <tr>
+                    <td>${badge.name}</td>
+                    <td>${badge.color}</td>
+                    <td>${badge.description}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:forEach>
 </div>
 
 <div class="d-flex justify-content-center">

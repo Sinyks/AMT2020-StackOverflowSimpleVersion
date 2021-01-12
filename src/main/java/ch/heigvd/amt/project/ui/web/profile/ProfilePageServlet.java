@@ -1,7 +1,9 @@
 package ch.heigvd.amt.project.ui.web.profile;
 
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
-import ch.heigvd.amt.project.dotenv.DotenvManager;
+import ch.heigvd.amt.project.utils.DotenvManager;
+import ch.heigvd.amt.project.utils.UserReputation;
+import com.google.gson.Gson;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 
@@ -51,7 +53,18 @@ public class ProfilePageServlet extends HttpServlet {
 
         HttpResponse<String> apiResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-        req.setAttribute("userReputation", apiResponse);
+        System.out.println(apiResponse.body());
+
+        Gson gson = new Gson();
+
+        UserReputation userReputation = gson.fromJson(apiResponse.body(), UserReputation.class);
+
+        System.out.println(userReputation.getBadges());
+        System.out.println(userReputation.getPointscales());
+        System.out.println(userReputation.getId());
+        System.out.println(userReputation.getUsername());
+
+        req.setAttribute("userReputation", userReputation);
         req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);
     }
 }

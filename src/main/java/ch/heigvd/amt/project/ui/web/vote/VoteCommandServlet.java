@@ -7,7 +7,7 @@ import ch.heigvd.amt.project.application.votemgmt.vote.VoteCommand;
 import ch.heigvd.amt.project.application.votemgmt.vote.VoteFailedException;
 import ch.heigvd.amt.project.domain.answer.AnswerId;
 import ch.heigvd.amt.project.domain.question.QuestionId;
-import ch.heigvd.amt.project.dotenv.DotenvManager;
+import ch.heigvd.amt.project.utils.DotenvManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 

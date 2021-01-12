@@ -6,7 +6,7 @@ import ch.heigvd.amt.project.application.answermgmt.answer.AnswerCommand;
 import ch.heigvd.amt.project.application.answermgmt.answer.AnswerFailedException;
 import ch.heigvd.amt.project.application.authenticationmgmt.CurrentUserDTO;
 import ch.heigvd.amt.project.domain.question.QuestionId;
-import ch.heigvd.amt.project.dotenv.DotenvManager;
+import ch.heigvd.amt.project.utils.DotenvManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 
