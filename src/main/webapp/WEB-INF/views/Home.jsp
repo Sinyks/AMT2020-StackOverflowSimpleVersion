@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
 
@@ -14,48 +12,57 @@
     <p>We are a QA webpage!</p>
 </div>
 
-<div class="jumbotron text-center">
-    <c:forEach var="userReputation" items="${requestScope.userReputations}">
-        <p>${userReputation.username}</p>
-        <table class="table">
-            <thead>
+
+<div class="d-flex justify-content-center">
+    <button onclick="location.href='/questions'" type="button" class="btn-primary btn-lg">Browse questions...</button>
+</div>
+
+<div class="container" style="margin-top:30px">
+    <table class="table table-dark">
+        <thead>
             <tr>
-                <th scope="col">Pointscale</th>
-                <th scope="col">Points Amassed</th>
+                <th scope="col">Username</th>
+                <th scope="col">Badges</th>
+                <th scope="col">Color</th>
+                <th scope="col">Description</th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
+            <c:forEach var="userReputation" items="${requestScope.userReputations}">
+                <c:forEach var="badge" items="${userReputation.badges}">
+                    <tr>
+                        <td>${userReputation.username}</td>
+                        <td>${badge.name}</td>
+                        <td>${badge.color}</td>
+                        <td>${badge.description}</td>
+                    </tr>
+                </c:forEach>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<div class="container" style="margin-top:30px">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Pointscale</th>
+            <th scope="col">Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="userReputation" items="${requestScope.userReputations}">
             <c:forEach var="pointscale" items="${userReputation.pointscales}">
                 <tr>
+                    <td>${userReputation.username}</td>
                     <td>${pointscale.label}</td>
                     <td>${pointscale.pointCounter}</td>
                 </tr>
             </c:forEach>
-            </tbody>
-        </table>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Badge</th>
-                <th scope="col">Color</th>
-                <th scope="col">Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="badge" items="${userReputation.badges}">
-                <tr>
-                    <td>${badge.name}</td>
-                    <td>${badge.color}</td>
-                    <td>${badge.description}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </c:forEach>
-</div>
-
-<div class="d-flex justify-content-center">
-    <button onclick="location.href='/questions'" type="button" class="btn-primary btn-lg">Browse questions...</button>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 
 <%@include file="fragments/footer.jsp"%>

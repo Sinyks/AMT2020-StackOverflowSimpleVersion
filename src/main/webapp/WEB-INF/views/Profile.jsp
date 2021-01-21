@@ -75,43 +75,50 @@
         </form>
 
     </div>
+</div>
 
-    <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Pointscale</th>
-                    <th scope="col">Points Amassed</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="pointscale" items="${requestScope.userReputation.pointscales}">
-                    <tr>
-                        <td>${pointscale.label}</td>
-                        <td>${pointscale.pointCounter}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Badge</th>
-                    <th scope="col">Color</th>
-                    <th scope="col">Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="badge" items="${requestScope.userReputation.badges}">
-                    <tr>
-                        <td>${badge.name}</td>
-                        <td>${badge.color}</td>
-                        <td>${badge.description}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+<div class="container" style="margin-top:30px">
+    <h2>Personal Score Information</h2>
+</div>
+
+<div class="container" style="margin-top:30px">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Pointscale</th>
+            <th scope="col">Points Amassed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="pointscale" items="${requestScope.userReputation.pointscales}">
+            <tr>
+                <td>${pointscale.label}</td>
+                <td>${pointscale.pointCounter}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<div class="container" style="margin-top:50px">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Badge</th>
+            <th scope="col">Color</th>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="badge" items="${requestScope.userReputation.badges}">
+            <tr>
+                <td>${badge.name}</td>
+                <td>${badge.color}</td>
+                <td>${badge.description}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 
 <%@include file="fragments/footer.jsp" %>
