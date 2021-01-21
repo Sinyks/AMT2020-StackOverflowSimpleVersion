@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean scope="request" id="userReputation" type="ch.heigvd.amt.project.utils.UserReputation"/>
+
 
 <%@include file="fragments/header.jsp"%>
 <%@include file="fragments/navigation.jsp"%>
@@ -15,7 +15,7 @@
 </div>
 
 <div class="jumbotron text-center">
-    <c:forEach var="userReputation" items="${requestScope.scoreboard.userReputations}">
+    <c:forEach var="userReputation" items="${requestScope.userReputations}">
         <p>${userReputation.username}</p>
         <table class="table">
             <thead>

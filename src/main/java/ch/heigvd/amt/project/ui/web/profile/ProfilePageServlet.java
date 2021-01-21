@@ -53,16 +53,9 @@ public class ProfilePageServlet extends HttpServlet {
 
         HttpResponse<String> apiResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(apiResponse.body());
-
         Gson gson = new Gson();
 
         UserReputation userReputation = gson.fromJson(apiResponse.body(), UserReputation.class);
-
-        System.out.println(userReputation.getBadges());
-        System.out.println(userReputation.getPointscales());
-        System.out.println(userReputation.getId());
-        System.out.println(userReputation.getUsername());
 
         req.setAttribute("userReputation", userReputation);
         req.getRequestDispatcher("/WEB-INF/views/Profile.jsp").forward(req, resp);

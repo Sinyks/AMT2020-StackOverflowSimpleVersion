@@ -4,6 +4,7 @@ import ch.heigvd.amt.project.application.ServiceRegistry;
 import ch.heigvd.amt.project.utils.DotenvManager;
 import ch.heigvd.amt.project.utils.UserReputation;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 
@@ -14,11 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 
 @WebServlet(urlPatterns = "", name = "HomePage")
 public class HomePageServlet extends HttpServlet {
@@ -61,12 +64,13 @@ public class HomePageServlet extends HttpServlet {
 
         Gson gson = new Gson();
 
-        UserReputation[] userReputations = gson.fromJson(apiResponse.body(), UserReputation[].class);
+        Type listType = new TypeToken<List<UserReputation>>(){}.getType();
+        List<UserReputation> userReputations = gson.fromJson(apiResponse.body(), listType);
 
         request.setAttribute("userCount", userCount);
         request.setAttribute("questionCount", questionCount);
         request.setAttribute("answerCount", answerCount);
-        request.setAttribute("scoreboard", userReputations);
+        request.setAttribute("userReputations", userReputations);
         request.getRequestDispatcher("/WEB-INF/views/Home.jsp").forward(request, response);
     }
 }
